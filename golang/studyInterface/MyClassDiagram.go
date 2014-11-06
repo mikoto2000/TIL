@@ -1,7 +1,7 @@
-package main
+package cld
 
 import (
-	"fmt"
+	"strings"
 )
 
 // Dot 形式の文字列に変換できることを表すインターフェース
@@ -25,6 +25,39 @@ func (this Field) ToDot() string {
 	return this.field
 }
 
+// フィールドリスト
+type Fields struct {
+	fields []Field
+}
+
+// フィールドリストを作成する
+func CreateFieldsFromStrings(defs []string) Fields {
+	// 必要な長さのスライスを作成
+	fields := make([]Field, len(defs))
+
+	// スライスにフィールド定義を格納
+	for i, v := range defs {
+		fields[i] = CreateFieldFromString(v)
+	}
+
+	// Fields 返却
+	return Fields{fields}
+}
+
+// Dot 形式の文字列を返却する
+func (this Fields) ToDot() string {
+	// 必要な長さのスライスを作成
+	defs := make([]string, len(this.fields))
+
+	// スライスにフィールド定義を格納
+	for i, v := range this.fields {
+		defs[i] = v.ToDot()
+	}
+
+	// Fields 返却
+	return strings.Join(defs, "\\l")
+}
+
 // メソッド
 type Method struct {
 	method string
@@ -40,12 +73,3 @@ func (this Method) ToDot() string {
 	return this.method
 }
 
-func main() {
-	dot := [...]Dot{
-		CreateFieldFromString("- field : string"),
-		CreateMethodFromString("+ method() : string")}
-
-	for _, v := range dot {
-		fmt.Printf("%s\n", v.ToDot())
-	}
-}
