@@ -68,15 +68,40 @@ func getMethods() Methods {
 }
 
 func TestMain(t *testing.T) {
-	fieldDefs := []string{"- field01 : string",
-		"- field02 : string"}
 	methodDefs := []string{"- method01() : string",
 		"- method02() : string"}
 
-	myIf := CreateClassFromDefs("Interface", "TestClass", fieldDefs, methodDefs)
+	//  インタフェース(ステレオタイプあり、フィールドなし)
+	myIf := CreateClassFromDefs("Interface", "TestInterface", nil, methodDefs)
 
 	actual1 := myIf.ToDot()
-	expected1 := "TestClass [label = \"{\\<\\<Interface\\>\\>\\nTestClass|- field01 : string\\l- field02 : string\\l|- method01() : string\\l- method02() : string\\l}\"];"
+	expected1 := "TestInterface [label = \"{\\<\\<Interface\\>\\>\\nTestInterface||- method01() : string\\l- method02() : string\\l}\"];"
+
+	if expected1 != actual1 {
+		t.Errorf("got\n \"%s\"\nbut want\n \"%s\"", actual1, expected1)
+	}
+
+	// クラス(ステレオタイプなし、フィールドあり)
+	fieldDefs := []string{"- field01 : string",
+		"- field02 : string"}
+
+	myClass := CreateClassFromDefs("", "TestClass", fieldDefs, methodDefs)
+
+	actual2 := myClass.ToDot()
+	expected2 := "TestClass [label = \"{TestClass|- field01 : string\\l- field02 : string\\l|- method01() : string\\l- method02() : string\\l}\"];"
+
+	if expected2 != actual2 {
+		t.Errorf("got\n \"%s\"\nbut want\n \"%s\"", actual2, expected2)
+	}
+}
+
+func TestNamespace(t *testing.T) {
+	namespace := Namespace{"TestNamespace", []Class{
+		Class{"", "TestClass1", getFields(), getMethods()},
+		Class{"", "TestClass2", getFields(), getMethods()}}}
+
+	actual1 := namespace.ToDot()
+	expected1 := "subgraph cluster_TestNamespace {\nlabel = \"TestNamespace\";\nTestClass1 [label = \"{TestClass1|- f1 : string\\l- f2 : string\\l- f3 : string\\l|- m1() : string\\l- m2() : string\\l- m3() : string\\l}\"];\nTestClass2 [label = \"{TestClass2|- f1 : string\\l- f2 : string\\l- f3 : string\\l|- m1() : string\\l- m2() : string\\l- m3() : string\\l}\"];\n}"
 
 	if expected1 != actual1 {
 		t.Errorf("got\n \"%s\"\nbut want\n \"%s\"", actual1, expected1)
@@ -90,7 +115,10 @@ func TestPrint(t *testing.T) {
 		getFields(),
 		getMethods(),
 		Class{"Interface", "TestClass", getFields(), getMethods()},
-		Class{"", "TestClass", getFields(), getMethods()}}
+		Class{"", "TestClass", getFields(), getMethods()},
+		Namespace{"TestNamespace", []Class{
+			Class{"", "TestClass1", getFields(), getMethods()},
+			Class{"", "TestClass2", getFields(), getMethods()}}}}
 
 	for _, v := range dot {
 		fmt.Printf("%s\n", v.ToDot())

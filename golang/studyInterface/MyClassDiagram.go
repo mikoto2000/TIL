@@ -135,3 +135,33 @@ func (this Class) ToDot() string {
 	// 文字列返却
 	return strings.Join(defs, "")
 }
+
+type Namespace struct {
+	name string
+	classes []Class
+}
+
+func (this Namespace) ToDot() string {
+	defs := []string{"subgraph cluster_" + this.name + " {"}
+
+	defs = append(defs, "label = \"" + this.name + "\";")
+
+	for _, v := range this.classes {
+		defs = append(defs, v.ToDot())
+	}
+
+	defs = append(defs, "}")
+
+	return strings.Join(defs, "\n")
+}
+
+type ClassDiagram struct {
+	namespaces []Namespace
+	classes []Class
+}
+
+func (this ClassDiagram) ToDot() string {
+
+	return ""
+}
+
