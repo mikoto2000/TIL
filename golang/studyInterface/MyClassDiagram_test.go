@@ -118,7 +118,20 @@ func TestPrint(t *testing.T) {
 		Class{"", "TestClass", getFields(), getMethods()},
 		Namespace{"TestNamespace", []Class{
 			Class{"", "TestClass1", getFields(), getMethods()},
-			Class{"", "TestClass2", getFields(), getMethods()}}}}
+			Class{"", "TestClass2", getFields(), getMethods()}}},
+		ClassDiagram{
+			"MyClassDiagram1",
+			[]Namespace{
+				Namespace{"TestNamespace",
+					[]Class{
+						Class{"", "TestClass1", getFields(), getMethods()},
+						Class{"", "TestClass2", getFields(), getMethods()},
+					},
+				},
+			},
+			[]Class{},
+		},
+	}
 
 	for _, v := range dot {
 		fmt.Printf("%s\n", v.ToDot())

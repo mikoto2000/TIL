@@ -136,11 +136,13 @@ func (this Class) ToDot() string {
 	return strings.Join(defs, "")
 }
 
+// 名前空間(パッケージ)
 type Namespace struct {
 	name string
 	classes []Class
 }
 
+// Dot 形式の文字列を返却する
 func (this Namespace) ToDot() string {
 	defs := []string{"subgraph cluster_" + this.name + " {"}
 
@@ -155,13 +157,28 @@ func (this Namespace) ToDot() string {
 	return strings.Join(defs, "\n")
 }
 
+// クラス図
 type ClassDiagram struct {
+	name string
 	namespaces []Namespace
 	classes []Class
 }
 
+// Dot 形式の文字列を返却する
 func (this ClassDiagram) ToDot() string {
 
-	return ""
+	defs := []string{"digraph " + this.name + " {\nnode [shape = record];\n"}
+
+	for _, v := range this.namespaces {
+		defs = append(defs, v.ToDot())
+	}
+
+	for _, v := range this.classes {
+		defs = append(defs, v.ToDot())
+	}
+
+	defs = append(defs, "}")
+
+	return strings.Join(defs, "\n")
 }
 
