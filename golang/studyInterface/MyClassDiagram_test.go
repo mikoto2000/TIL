@@ -34,6 +34,24 @@ func getFields() Fields {
 	return CreateFieldsFromStrings(defs)
 }
 
+func TestMethods(t *testing.T) {
+	defs := []string{"- method01() : string",
+		"- method02() : string"}
+	methods := CreateMethodsFromStrings(defs)
+
+	actual := methods.ToDot()
+	expected := defs[0] + "\\l" + defs[1]
+
+	if expected != actual {
+		t.Errorf("got \"%s\" but want \"%s\"", actual, expected)
+	}
+}
+func getMethods() Methods {
+	defs := []string{"- m1() : string", "- m2() : string", "- m3() : string"}
+
+	return CreateMethodsFromStrings(defs)
+}
+
 func main() {
 	dot := [...]Dot{
 		CreateFieldFromString("- field : string"),

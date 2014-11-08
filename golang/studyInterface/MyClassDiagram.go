@@ -73,3 +73,35 @@ func (this Method) ToDot() string {
 	return this.method
 }
 
+// メソッドリスト
+type Methods struct {
+	methods []Method
+}
+
+// メソッドリストを作成する
+func CreateMethodsFromStrings(defs []string) Methods {
+	// 必要な長さのスライスを作成
+	methods := make([]Method, len(defs))
+
+	// スライスにフィールド定義を格納
+	for i, v := range defs {
+		methods[i] = CreateMethodFromString(v)
+	}
+
+	// Methods 返却
+	return Methods{methods}
+}
+
+// Dot 形式の文字列を返却する
+func (this Methods) ToDot() string {
+	// 必要な長さのスライスを作成
+	defs := make([]string, len(this.methods))
+
+	// スライスにフィールド定義を格納
+	for i, v := range this.methods {
+		defs[i] = v.ToDot()
+	}
+
+	// Fields 返却
+	return strings.Join(defs, "\\l")
+}
