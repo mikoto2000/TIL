@@ -16,6 +16,7 @@ func TestField(t *testing.T) {
 		t.Errorf("got \"%s\" but want \"%s\"", actual, expected)
 	}
 }
+
 func TestFields(t *testing.T) {
 	defs := []string{"- field01 : string",
 		"- field02 : string"}
@@ -28,6 +29,7 @@ func TestFields(t *testing.T) {
 		t.Errorf("got \"%s\" but want \"%s\"", actual, expected)
 	}
 }
+
 func getFields() Fields {
 	defs := []string{"- f1 : string", "- f2 : string", "- f3 : string"}
 
@@ -46,6 +48,7 @@ func TestMethods(t *testing.T) {
 		t.Errorf("got \"%s\" but want \"%s\"", actual, expected)
 	}
 }
+
 func getMethods() Methods {
 	defs := []string{"- m1() : string", "- m2() : string", "- m3() : string"}
 
