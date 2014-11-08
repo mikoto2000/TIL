@@ -22,7 +22,7 @@ func CreateFieldFromString(def string) Field {
 
 // Dot 形式の文字列を返却する
 func (this Field) ToDot() string {
-	return this.field
+	return this.field + "\\l"
 }
 
 // フィールドリスト
@@ -55,7 +55,7 @@ func (this Fields) ToDot() string {
 	}
 
 	// Fields 返却
-	return strings.Join(defs, "\\l")
+	return strings.Join(defs, "")
 }
 
 // メソッド
@@ -70,7 +70,7 @@ func CreateMethodFromString(def string) Method {
 
 // Dot 形式の文字列を返却する
 func (this Method) ToDot() string {
-	return this.method
+	return this.method + "\\l"
 }
 
 // メソッドリスト
@@ -103,5 +103,35 @@ func (this Methods) ToDot() string {
 	}
 
 	// Fields 返却
-	return strings.Join(defs, "\\l")
+	return strings.Join(defs, "")
+}
+
+// クラス
+type Class struct {
+	stereotype string
+	name       string
+	fields     Fields
+	methods    Methods
+}
+
+// 文字列からクラスを作成する
+func CreateClassFromDefs(stereotype string, name string, fieldDefs []string, methodDefs []string) Class {
+	fields := CreateFieldsFromStrings(fieldDefs)
+	methods := CreateMethodsFromStrings(methodDefs)
+	return Class{stereotype, name, fields, methods}
+}
+
+// Dot 形式の文字列を返却する
+func (this Class) ToDot() string {
+	// 必要な長さのスライスを作成
+	defs := []string{this.name, " [label = \"{"}
+
+	if this.stereotype != "" {
+		defs = append(defs, "\\<\\<", this.stereotype, "\\>\\>\\n")
+	}
+
+	defs = append(defs, this.name, "|", this.fields.ToDot(), "|", this.methods.ToDot(), "}\"];")
+
+	// 文字列返却
+	return strings.Join(defs, "")
 }
