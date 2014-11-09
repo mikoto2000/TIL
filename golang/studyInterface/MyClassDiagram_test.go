@@ -122,4 +122,3 @@ func TestRelation(t *testing.T) {
 		t.Errorf("got\n \"%s\"\nbut want\n \"%s\"", actual1, expected1)
 	}
 }
-

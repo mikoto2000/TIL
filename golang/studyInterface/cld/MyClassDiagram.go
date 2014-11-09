@@ -249,11 +249,12 @@ type ClassDiagram struct {
 	name       string
 	namespaces []Namespace
 	classes    []Class
+	relations  []Relation
 }
 
 // クラス図作成
-func CreateClassDiagram(name string, namespaces []Namespace, classes []Class) ClassDiagram {
-	return ClassDiagram{name, namespaces, classes}
+func CreateClassDiagram(name string, namespaces []Namespace, classes []Class, relations []Relation) ClassDiagram {
+	return ClassDiagram{name, namespaces, classes, relations}
 }
 
 // Dot 形式の文字列を返却する
@@ -266,6 +267,10 @@ func (this ClassDiagram) ToDot() string {
 	}
 
 	for _, v := range this.classes {
+		defs = append(defs, v.ToDot())
+	}
+
+	for _, v := range this.relations {
 		defs = append(defs, v.ToDot())
 	}
 
