@@ -138,15 +138,20 @@ func (this Class) ToDot() string {
 
 // 名前空間(パッケージ)
 type Namespace struct {
-	name string
+	name    string
 	classes []Class
+}
+
+// Namespace を作成する
+func CreateNamespace(name string, classes []Class) Namespace {
+	return Namespace{name, classes}
 }
 
 // Dot 形式の文字列を返却する
 func (this Namespace) ToDot() string {
 	defs := []string{"subgraph cluster_" + this.name + " {"}
 
-	defs = append(defs, "label = \"" + this.name + "\";")
+	defs = append(defs, "label = \""+this.name+"\";")
 
 	for _, v := range this.classes {
 		defs = append(defs, v.ToDot())
@@ -161,12 +166,17 @@ type RelationType int
 
 // 関係
 type Relation struct {
-	name string
-	relationType RelationType
-	fromClassName string
-	toClassName string
+	name             string
+	relationType     RelationType
+	fromClassName    string
+	toClassName      string
 	fromMultiplicity string
-	toMultiplicity string
+	toMultiplicity   string
+}
+
+// Relation を作成する
+func CreateRelation(name string, relationType RelationType, fromClassName string, toClassName string, fromMultiplicity string, toMultiplicity string) Relation {
+	return Relation{name, relationType, fromClassName, toClassName, fromMultiplicity, toMultiplicity}
 }
 
 // 関係の種類
@@ -204,24 +214,24 @@ func (this Relation) ToDot() string {
 
 	// 基本
 	base := []string{"edge [style = \"" + style + "\", arrowhead = \"" + arrowhead + "\"];\n"}
-	base = append(base, this.fromClassName + " -> " + this.toClassName)
+	base = append(base, this.fromClassName+" -> "+this.toClassName)
 
 	// 詳細
 	detail := []string{}
 
 	// 関係名名前
 	if this.name != "" {
-		detail = append(detail, "label = \"" + this.name + "\"")
+		detail = append(detail, "label = \""+this.name+"\"")
 	}
 
 	// FROM の処理
 	if this.fromMultiplicity != "" {
-		detail = append(detail, "taillabel = \"" + this.fromMultiplicity + "\"")
+		detail = append(detail, "taillabel = \""+this.fromMultiplicity+"\"")
 	}
 
 	// TO の処理
 	if this.toMultiplicity != "" {
-		detail = append(detail, "headlabel = \"" + this.toMultiplicity + "\"")
+		detail = append(detail, "headlabel = \""+this.toMultiplicity+"\"")
 	}
 
 	var detailString string
@@ -236,9 +246,9 @@ func (this Relation) ToDot() string {
 
 // クラス図
 type ClassDiagram struct {
-	name string
+	name       string
 	namespaces []Namespace
-	classes []Class
+	classes    []Class
 }
 
 // クラス図作成
@@ -263,4 +273,3 @@ func (this ClassDiagram) ToDot() string {
 
 	return strings.Join(defs, "\n")
 }
-
