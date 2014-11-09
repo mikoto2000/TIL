@@ -130,7 +130,7 @@ func TestPrint(t *testing.T) {
 		Namespace{"TestNamespace", []Class{
 			Class{"", "TestClass1", getFields(), getMethods()},
 			Class{"", "TestClass2", getFields(), getMethods()}}},
-		ClassDiagram{
+		CreateClassDiagram(
 			"MyClassDiagram1",
 			[]Namespace{
 				Namespace{"TestNamespace",
@@ -141,7 +141,7 @@ func TestPrint(t *testing.T) {
 				},
 			},
 			[]Class{},
-		},
+		),
 		Relation{"RelationName", RELATION_INHERIT, "TestClass1", "TestClass2", "fromMultiplicity", "toMultiplicity"},
 	}
 

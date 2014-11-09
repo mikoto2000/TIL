@@ -241,6 +241,11 @@ type ClassDiagram struct {
 	classes []Class
 }
 
+// クラス図作成
+func CreateClassDiagram(name string, namespaces []Namespace, classes []Class) ClassDiagram {
+	return ClassDiagram{name, namespaces, classes}
+}
+
 // Dot 形式の文字列を返却する
 func (this ClassDiagram) ToDot() string {
 
