@@ -157,6 +157,83 @@ func (this Namespace) ToDot() string {
 	return strings.Join(defs, "\n")
 }
 
+type RelationType int
+
+// 関係
+type Relation struct {
+	name string
+	relationType RelationType
+	fromClassName string
+	toClassName string
+	fromMultiplicity string
+	toMultiplicity string
+}
+
+// 関係の種類
+const (
+	RELATION_NORMAL = iota
+	RELATION_INHERIT
+	RELATION_IMPLEMENT
+	RELATION_AGGREGATION
+	RELATION_COMPOSITION
+)
+
+func (this Relation) getEdgeStyles() (style string, arrowhead string) {
+
+	if this.relationType == RELATION_INHERIT {
+		style = "solid"
+		arrowhead = "onormal"
+	} else if this.relationType == RELATION_IMPLEMENT {
+		style = "dashed"
+		arrowhead = "onormal"
+	} else if this.relationType == RELATION_AGGREGATION {
+		style = "solid"
+		arrowhead = ""
+	} else if this.relationType == RELATION_COMPOSITION {
+		style = "solid"
+		arrowhead = ""
+	}
+
+	return style, arrowhead
+}
+
+// Dot 形式の文字列を返却する
+func (this Relation) ToDot() string {
+
+	style, arrowhead := this.getEdgeStyles()
+
+	// 基本
+	base := []string{"edge [style = \"" + style + "\", arrowhead = \"" + arrowhead + "\"];\n"}
+	base = append(base, this.fromClassName + " -> " + this.toClassName)
+
+	// 詳細
+	detail := []string{}
+
+	// 関係名名前
+	if this.name != "" {
+		detail = append(detail, "label = \"" + this.name + "\"")
+	}
+
+	// FROM の処理
+	if this.fromMultiplicity != "" {
+		detail = append(detail, "taillabel = \"" + this.fromMultiplicity + "\"")
+	}
+
+	// TO の処理
+	if this.toMultiplicity != "" {
+		detail = append(detail, "headlabel = \"" + this.toMultiplicity + "\"")
+	}
+
+	var detailString string
+	if len(detail) != 0 {
+		detailString = "[" + strings.Join(detail, ",") + "];"
+	} else {
+		detailString = ""
+	}
+
+	return strings.Join(base, "") + detailString
+}
+
 // クラス図
 type ClassDiagram struct {
 	name string
