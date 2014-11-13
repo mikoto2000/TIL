@@ -1,0 +1,9 @@
+やってみた
+==========
+
+~~~ { .sh }
+go get github.com/mattn/go-colorable
+go get github.com/Sirupsen/logrus
+go run GoColorable.go
+~~~
+
