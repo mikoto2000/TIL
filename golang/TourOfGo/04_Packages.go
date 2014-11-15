@@ -6,5 +6,7 @@ import (
 )
 
 func main() {
-	fmt.Println("My favorite number is", rand.Intn(10))
+	for i := 0; i < 10; i++ {
+		fmt.Println("My favorite number is", rand.Intn(10))
+	}
 }
