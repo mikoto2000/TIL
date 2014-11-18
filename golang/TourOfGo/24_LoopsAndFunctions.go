@@ -6,11 +6,16 @@ import (
 )
 
 func Sqrt(x float64) float64 {
-	z := 1.0
-	for i := 0; i < 10; i++ {
-		z = z - ((z * z) - x) / (2 * z)
+	z := x
+	for {
+		tmp := z - ((z * z) - x) / (2 * z)
+
+		if z - tmp <= 0.0000001 {
+			return tmp
+		}
+
+		z = tmp
 	}
-	return z
 }
 
 func main() {
