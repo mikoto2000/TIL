@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 )
 
 func Sqrt(x float64) float64 {
@@ -13,5 +14,9 @@ func Sqrt(x float64) float64 {
 }
 
 func main() {
-	fmt.Println(Sqrt(2))
+	fmt.Printf(
+		"%g\n%g\n",
+		Sqrt(2),
+		math.Sqrt(2),
+	)
 }
