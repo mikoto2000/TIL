@@ -12,12 +12,12 @@ type Abser interface {
 func main() {
 	var a Abser
 	f := MyFloat(-math.Sqrt2)
-	v := Vertex{3, 4}
+	v := &Vertex{3, 4}
 
 	a = f
-	a = &v
+	a = v
 
-//	a = v //./53_Interface.go:20: cannot use v (type Vertex) as type Abser in assignment: Vertex does not implement Abser (Abs method has pointer receiver)
+	a = v
 
 	fmt.Println(a.Abs())
 }
