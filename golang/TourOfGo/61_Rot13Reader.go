@@ -11,7 +11,31 @@ type rot13Reader struct {
 }
 
 func (reader rot13Reader) Read(p []byte) (n int, err error) {
-	return reader.r.Read(p)
+	n, err = reader.r.Read(p)
+
+	for i := 0; i < n; i++ {
+		c := p[i]
+
+		// A to Z
+		if c >= 65 && c <= 90 {
+			c -= 65
+			c += 13
+			c %= 26
+			c += 65
+			p[i] = c
+		}
+
+		// a to z
+		if c >= 97 && c <= 122 {
+			c -= 97
+			c += 13
+			c %= 26
+			c += 97
+			p[i] = c
+		}
+	}
+
+	return
 }
 
 func main() {
