@@ -13,14 +13,12 @@ func (i Image) ColorModel() color.Model {
 }
 
 func (i Image) Bounds() image.Rectangle {
-	return image.Rectangle{
-		image.Point{0, 0},
-		image.Point{100, 100},
-	}
+	return image.Rect(0, 0, 255, 255)
 }
 
 func (i Image) At(x, y int) color.Color {
-	return color.RGBA{0, 0, 0, 255}
+	v := uint8((x + y) / 2)
+	return color.RGBA{v, v, 255, 255}
 }
 
 func main() {
