@@ -11,6 +11,7 @@ func (h Hello) ServeHTTP(
 	w http.ResponseWriter,
 	r *http.Request) {
 	fmt.Fprint(w, "Hello!")
+	fmt.Println("Received request.")
 }
 
 func main() {
