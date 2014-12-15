@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="//ajax.googleapis.com/ajax/libs/dojo/1.10.3/dijit/themes/claro/claro.css"></link>
+        <!--
+            dojoConfig に設定することで、
+            data-dojo-xxx とかの属性を見て、
+            よしなにパーツを作ってくれるようだ。
+        -->
+        <script>dojoConfig = {async: true, parseOnLoad: true}</script>
+        <script src="//ajax.googleapis.com/ajax/libs/dojo/1.10.3/dojo/dojo.js"></script>
+        <script>require(["dojo/parser", "dijit/form/ValidationTextBox"])</script>
+    </head>
+    <!-- うまいこと表示させるには body.claro 必須のようだ -->
+    <body class="claro">
+        <div id="main">
+            <div id="content">
+                <input
+                 type="text"
+                 name="test"
+                 id="test"
+                 data-dojo-type="dijit/form/ValidationTextBox"
+                 data-dojo-props="regExp:'^[a-z]+$', invalidMessage:'Only a to z.'"
+                 />
+            </div>
+        </div>
+    </body>
+</html>
