@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!--
+    参考: [dojo-tutorial/011-form-ajax-validatorl](https://github.com/cepa/dojo-tutorial/tree/master/011-form-ajax-validator)
+-->
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="//ajax.googleapis.com/ajax/libs/dojo/1.10.3/dijit/themes/claro/claro.css"></link>
+        <script>dojoConfig = {async: true, parseOnLoad: true}</script>
+        <script src="//ajax.googleapis.com/ajax/libs/dojo/1.10.3/dojo/dojo.js"></script>
+        <script>
+            require(["dojo/parser", "dijit/form/ValidationTextBox"])
+        </script>
+        <script>
+            require(["dojo/ready", "dijit"], function(ready) {
+                // dojo の準備が整った後に呼ばれる
+                ready(function(){
+                    var target = dijit.byId("test");
+
+                    // 検証用サービスの URL
+                    target.ajaxUrl = "//localhost:8088/validate";
+
+                    // 一つの widget から同時に複数リクエストが飛ばないようにするためのロック
+                    target.ajaxLock = false;
+
+                    // 検証サービスからの応答(true: 妥当, false: 不当)
+                    target.ajaxResult = false;
+
+                    // 既存のチェックメソッド(正規表現バリデーションメソッド)を退避
+                    target.isValidRegExp = target.isValid;
+
+                    // 正規表現バリデーションチェックをパスしたら
+                    // ajax バリデーションを行うメソッドを実装
+                    target.isValid = function() {
+
+                        if (!target.ajaxLock && target.ajaxUrl) {
+                            var widget = this;
+                            widget.ajaxLock = true;
+
+                            // まずは正規表現バリデーション
+                            var r = widget.isValidRegExp();
+                            if (!r) {
+                                // 正規表現バリデーションで弾く
+                                this.ajaxLock = false;
+
+                                return r;
+                            }
+
+                            // 正規表現バリデーションをパスしたら ajax へ
+                            dojo.xhrGet({
+                                url: widget.ajaxUrl + '?value=' + widget.get('value'),
+                                headers: {
+                                    "X-Requested-With": null
+                                },
+                                withCredentials: false,
+                                handleAs: 'json',
+                                load: function(result) {
+                                    widget.ajaxResult = result;
+
+                                    // 正直このへんよくわからん。
+                                    // サンプル通りにやってみると、
+                                    // 必ずエラー表示される。
+                                    // なので、サービスの結果が正常なら、
+                                    // もう一度 isValidRegExp を呼ことにした。
+                                    // そうすることで、
+                                    // テキストボックスの状態が更新され、
+                                    // エラー表示が消える。
+                                    if (result) {
+                                        // サービス呼び出しが走ったということは、
+                                        // 正規表現チェックは必ず「妥当」と判断される。
+                                        // なので、ここでエラー表示が消える。
+                                        widget.isValidRegExp();
+                                    } else {
+                                        // とりあえず呼び出す。
+                                        // なぜか必ずエラーになるようだ？
+                                        widget.validate();
+                                    }
+
+                                    widget.ajaxLock = false;
+                                }
+                            });
+
+                            return widget.ajaxResult;
+                        }
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body class="claro">
+        <div id="main">
+            <div id="content">
+                <input
+                 type="text"
+                 name="test"
+                 id="test"
+                 data-dojo-type="dijit/form/ValidationTextBox"
+                 data-dojo-props="regExp:'^[a-z]+$', invalidMessage:'Only a to z, and not aaaa.'"
+                 />
+            </div>
+        </div>
+    </body>
+</html>
