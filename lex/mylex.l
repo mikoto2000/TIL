@@ -1,2 +1,3 @@
+DIGIT     [0-9]
 %%
-hello      printf("hello!\n");
+{DIGIT} printf("detect DIGIT.");
