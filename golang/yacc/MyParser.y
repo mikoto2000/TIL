@@ -32,7 +32,9 @@ type Words struct {
 %type<expr> program
 %type<expr> sentence
 %type<expr> words
+%type<expr> newLine
 %token<token> WORD
+%token<token> CR
 %token<token> LF
 
 
@@ -44,15 +46,16 @@ program
 
 /* 文は、WORD の繰り返しからなる */
 sentence
-    : words LF
+    : words newLine
     {
-        pp.Println($1)
+        //pp.Println($1)
+        yylex.(*Lexer).result = $$
     }
 
 words
     : words WORD
     {
-        pp.Println($1)
+        //pp.Println($1)
         words := $1.(Words)
         tok := $2
         words.Words = append(words.Words, &tok)
@@ -65,6 +68,10 @@ words
         $$ = words
     }
 
+newLine
+    : CR {}
+    | LF {}
+    | CR LF {}
 %%
 
 /* Implement screen.yyLexer interface. */
@@ -81,6 +88,8 @@ func (l *Lexer) Lex(lval *yySymType) int {
 
         if l.TokenText() == "\n" {
             token = LF
+        } else if l.TokenText() == "\r" {
+            token = CR
         }
     }
     lval.token = Token{token: token, literal: l.TokenText()}
@@ -99,5 +108,17 @@ func main() {
     l.Init(strings.NewReader("+ AddTest(test : string) : void\n"))
     l.Whitespace = 1<<'\t' | 1<<' '
     yyParse(l)
-    pp.Printf("%v\n", l.result)
+    pp.Printf("pattern1:\n%v\n", l.result)
+
+    l = new(Lexer)
+    l.Init(strings.NewReader("+ AddTest(test : string) : void\r\n"))
+    l.Whitespace = 1<<'\t' | 1<<' '
+    yyParse(l)
+    pp.Printf("pattern2:\n%v\n", l.result)
+
+    l = new(Lexer)
+    l.Init(strings.NewReader("+ AddTest(test : string) : void\r"))
+    l.Whitespace = 1<<'\t' | 1<<' '
+    yyParse(l)
+    pp.Printf("pattern3:\n%v\n", l.result)
 }
