@@ -136,20 +136,8 @@ func (l *Lexer) Error(e string) {
 
 func main() {
     l := new(Lexer)
-    l.Init(strings.NewReader("+ AddTest(test : string) : void\n"))
+    l.Init(strings.NewReader("+ AddTest(test : string) : void{}\n"))
     l.Whitespace = 1<<'\t' | 1<<' '
     yyParse(l)
     pp.Printf("pattern1:\n%v\n", l.result)
-
-    l = new(Lexer)
-    l.Init(strings.NewReader("+ AddTest(test : string) : void\r\n"))
-    l.Whitespace = 1<<'\t' | 1<<' '
-    yyParse(l)
-    pp.Printf("pattern2:\n%v\n", l.result)
-
-    l = new(Lexer)
-    l.Init(strings.NewReader("+ AddTest(test : string) : void\r+ AddTest(test : string) : void\r"))
-    l.Whitespace = 1<<'\t' | 1<<' '
-    yyParse(l)
-    pp.Printf("pattern3:\n%v\n", l.result)
 }
