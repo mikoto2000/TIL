@@ -29,7 +29,10 @@ type Result interface {}
 
 word
     : WORD {
-        pp.Println($1)
+        // コールバックの中では
+        // yylex(実態は yyParse に渡したオブジェクト) にアクセスできるので、
+        // 結果を格納する。
+        yylex.(*Lexer).Result = $1
     }
 
 %%
@@ -38,6 +41,9 @@ word
 // こいつの Lex メソッドが、字句解析を担当する。
 type Lexer struct {
     scanner.Scanner
+
+    // パースの結果を格納するオブジェクトを追加
+    Result Result
 }
 
 
@@ -75,4 +81,8 @@ func main() {
 
     // パース実行
     yyParse(l)
+
+    // パース結果表示
+    // こういう使い方すると、もう l って Lexer の範疇超えてる気がするけれどどうなのだろうか？
+    pp.Println(l.Result)
 }
