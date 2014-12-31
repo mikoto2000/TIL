@@ -13,10 +13,20 @@ import (
 
 type Result interface {}
 
+// トークンの情報を保持するための構造体を追加
+type Token struct {
+    // トークンの種類を表す数値
+    Type int
+
+    // 字句解析で分かち書きされた文字列(この表現でよいのかしら？)
+    Literal string
+}
+
 %}
 
 %union{
-    word string
+    // word の型を Token に変更
+    word Token
 }
 
 // %union に列挙したフィールドと、「%xxx<yyy> の yyy」が対応しているようだ。
@@ -59,8 +69,8 @@ func (l *Lexer) Lex(lval *yySymType) int {
     }
 
     // 解析結果を lval に詰める。
-    // この実装では、 WORD が string 型なので、実際の文字列を格納している。
-    lval.word = l.TokenText()
+    // WORD を Token 型に変更したので、そのように修正。
+    lval.word = Token{Type: token, Literal: l.TokenText()}
 
     // 解釈したトークンの種類を返却する
     return token
