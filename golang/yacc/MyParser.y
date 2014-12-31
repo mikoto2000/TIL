@@ -4,7 +4,6 @@ package main
 import (
     "github.com/k0kubun/pp"
     "text/scanner"
-    "os"
     "strings"
 )
 
@@ -15,13 +14,12 @@ type Token struct {
     literal string
 }
 
-type WordPair struct {
-    left     Expression
-    right    Expression
-}
-
 type Sentence struct {
     words     Expression
+}
+
+type Words struct {
+    Words []*Token
 }
 
 %}
@@ -35,7 +33,7 @@ type Sentence struct {
 %type<expr> sentence
 %type<expr> words
 %token<token> WORD
-%token<token> PERIOD
+%token<token> LF
 
 
 %%
@@ -46,22 +44,25 @@ program
 
 /* 文は、WORD の繰り返しからなる */
 sentence
-    : words PERIOD
+    : words LF
     {
-        $$ = Sentence{$1}
-        yylex.(*Lexer).result = $$
+        pp.Println($1)
     }
 
 words
     : words WORD
     {
-        $$ = WordPair{$1, $2}
-        yylex.(*Lexer).result = $$
+        pp.Println($1)
+        words := $1.(Words)
+        tok := $2
+        words.Words = append(words.Words, &tok)
+        $$ = words
     }
     | WORD
     {
-        $$ = $1
-        yylex.(*Lexer).result = $$
+        words := Words{make([]*Token, 0, 0)}
+        words.Words = append(words.Words, &$1)
+        $$ = words
     }
 
 %%
@@ -78,14 +79,11 @@ func (l *Lexer) Lex(lval *yySymType) int {
     if token != scanner.EOF {
         token = WORD
 
-        if l.TokenText() == "." {
-            token = PERIOD
+        if l.TokenText() == "\n" {
+            token = LF
         }
     }
     lval.token = Token{token: token, literal: l.TokenText()}
-
-    // デバッグプリント
-    pp.Println(lval.token)
 
     return token
 }
@@ -98,7 +96,7 @@ func (l *Lexer) Error(e string) {
 
 func main() {
     l := new(Lexer)
-    l.Init(strings.NewReader(os.Args[1]))
+    l.Init(strings.NewReader("+ AddTest(test : string) : void\n"))
     l.Whitespace = 1<<'\t' | 1<<' '
     yyParse(l)
     pp.Printf("%v\n", l.result)
