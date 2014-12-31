@@ -14,13 +14,15 @@ type Token struct {
     literal string
 }
 
-type Sentence struct {
-    words     Expression
+type Sentences struct {
+    Sentences []*Sentence
 }
 
 type Words struct {
     Words []*Token
 }
+
+type Sentence Words
 
 %}
 
@@ -30,6 +32,7 @@ type Words struct {
 }
 
 %type<expr> program
+%type<expr> sentences
 %type<expr> sentence
 %type<expr> words
 %type<expr> newLine
@@ -40,9 +43,35 @@ type Words struct {
 
 %%
 
-/* プログラムは、ただ一つの文からなる */
+/* プログラムは、段落の塊からなる */
 program
-    : sentence
+    : sentences
+    {
+        yylex.(*Lexer).result = $$
+    }
+
+sentences
+    :sentences sentence
+    {
+        sentences := $1.(Sentences)
+
+        words := $2.(Words)
+        sentence := Sentence{words.Words}
+
+        sentences.Sentences = append(sentences.Sentences, &sentence)
+        $$ = sentences
+        yylex.(*Lexer).result = $$
+    }
+    | sentence
+    {
+        words := $1.(Words)
+        sentence := Sentence{words.Words}
+
+        sentences := Sentences{make([]*Sentence, 0, 0)}
+        sentences.Sentences = append(sentences.Sentences, &sentence)
+        $$ = sentences
+        yylex.(*Lexer).result = $$
+    }
 
 /* 文は、WORD の繰り返しからなる */
 sentence
@@ -60,12 +89,14 @@ words
         tok := $2
         words.Words = append(words.Words, &tok)
         $$ = words
+        yylex.(*Lexer).result = $$
     }
     | WORD
     {
         words := Words{make([]*Token, 0, 0)}
         words.Words = append(words.Words, &$1)
         $$ = words
+        yylex.(*Lexer).result = $$
     }
 
 newLine
@@ -117,7 +148,7 @@ func main() {
     pp.Printf("pattern2:\n%v\n", l.result)
 
     l = new(Lexer)
-    l.Init(strings.NewReader("+ AddTest(test : string) : void\r"))
+    l.Init(strings.NewReader("+ AddTest(test : string) : void\r+ AddTest(test : string) : void\r"))
     l.Whitespace = 1<<'\t' | 1<<' '
     yyParse(l)
     pp.Printf("pattern3:\n%v\n", l.result)
