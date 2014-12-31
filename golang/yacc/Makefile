@@ -1,4 +1,7 @@
-all: yacc build
+all: yacc build run
+
+run: MyParser
+	./MyParser
 
 build: MyParser.go
 	go build -o MyParser MyParser.go
