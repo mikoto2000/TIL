@@ -83,6 +83,7 @@ func (l *Lexer) Error(e string) {
 func main() {
     l := new(Lexer)
     l.Init(strings.NewReader(os.Args[1]))
+    l.Whitespace = 1<<'\t' | 1<<' '
     yyParse(l)
     fmt.Printf("%#v\n", l.result)
 }
