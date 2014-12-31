@@ -15,9 +15,13 @@ type Token struct {
     literal string
 }
 
-type Expr struct {
+type WordPair struct {
     left     Expression
     right    Expression
+}
+
+type Sentence struct {
+    words     Expression
 }
 
 %}
@@ -28,29 +32,37 @@ type Expr struct {
 }
 
 %type<expr> program
-%type<expr> expr
-%token<token> IDENT
+%type<expr> sentence
+%type<expr> words
+%token<token> WORD
+%token<token> PERIOD
 
 
 %%
 
-/* プログラムは、ただ一つの式からなる */
+/* プログラムは、ただ一つの文からなる */
 program
-    : expr
+    : sentence
 
-/* 式は、INDENT の繰り返しからなる */
-expr
-    : expr IDENT
+/* 文は、WORD の繰り返しからなる */
+sentence
+    : words PERIOD
     {
-        $$ = Expr{$1, $2}
+        $$ = Sentence{$1}
         yylex.(*Lexer).result = $$
     }
-    | IDENT
+
+words
+    : words WORD
+    {
+        $$ = WordPair{$1, $2}
+        yylex.(*Lexer).result = $$
+    }
+    | WORD
     {
         $$ = $1
         yylex.(*Lexer).result = $$
     }
-
 
 %%
 
@@ -60,11 +72,15 @@ type Lexer struct {
     result Expression
 }
 
-/* スキャンした結果を何でもかんでも IDENT として解釈する */
+/* スキャンした結果を何でもかんでも WORD として解釈する */
 func (l *Lexer) Lex(lval *yySymType) int {
     token := int(l.Scan())
     if token != scanner.EOF {
-        token = IDENT
+        token = WORD
+
+        if l.TokenText() == "." {
+            token = PERIOD
+        }
     }
     lval.token = Token{token: token, literal: l.TokenText()}
 
@@ -85,5 +101,5 @@ func main() {
     l.Init(strings.NewReader(os.Args[1]))
     l.Whitespace = 1<<'\t' | 1<<' '
     yyParse(l)
-    fmt.Printf("%#v\n", l.result)
+    fmt.Printf("%v\n", l.result)
 }
