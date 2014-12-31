@@ -15,6 +15,11 @@ type Token struct {
     literal string
 }
 
+type Expr struct {
+    left     Expression
+    right    Expression
+}
+
 %}
 
 %union{
@@ -23,14 +28,24 @@ type Token struct {
 }
 
 %type<expr> program
+%type<expr> expr
 %token<token> IDENT
 
 
 %%
 
-/* プログラムは、ただ一つの IDENT からなる */
+/* プログラムは、ただ一つの式からなる */
 program
-    : IDENT
+    : expr
+
+/* 式は、INDENT の繰り返しからなる */
+expr
+    : expr IDENT
+    {
+        $$ = Expr{$1, $2}
+        yylex.(*Lexer).result = $$
+    }
+    | IDENT
     {
         $$ = $1
         yylex.(*Lexer).result = $$
@@ -54,7 +69,7 @@ func (l *Lexer) Lex(lval *yySymType) int {
     lval.token = Token{token: token, literal: l.TokenText()}
 
     // デバッグプリント
-    fmt.Println(token)
+    fmt.Println(lval.token)
 
     return token
 }
