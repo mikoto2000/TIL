@@ -1,0 +1,18 @@
+これはなに？
+------------
+
+GO YACC の勉強です。
+ミニマムな習作から徐々に目標に近づけていきたい。
+
+
+目標
+====
+
+オレオレ文法のファイルをオレオレ内部表現オブジェクトにマッピングできるくらいの知識を習得したい。
+
+
+参考文献
+--------
+
+- [goyaccで構文解析を行う - Qiita](http://qiita.com/k0kubun/items/1b641dfd186fe46feb65)
+- [yacc - The Go Programming Language](https://golang.org/cmd/yacc/)
