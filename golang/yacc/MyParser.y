@@ -2,7 +2,7 @@
 package main
 
 import (
-    "fmt"
+    "github.com/k0kubun/pp"
     "text/scanner"
     "os"
     "strings"
@@ -85,7 +85,7 @@ func (l *Lexer) Lex(lval *yySymType) int {
     lval.token = Token{token: token, literal: l.TokenText()}
 
     // デバッグプリント
-    fmt.Println(lval.token)
+    pp.Println(lval.token)
 
     return token
 }
@@ -101,5 +101,5 @@ func main() {
     l.Init(strings.NewReader(os.Args[1]))
     l.Whitespace = 1<<'\t' | 1<<' '
     yyParse(l)
-    fmt.Printf("%v\n", l.result)
+    pp.Printf("%v\n", l.result)
 }
