@@ -15,7 +15,7 @@ GO YACC の勉強です。
 ----
 
 1. [wordParser](./wordParser) : 単語一つをパースするパーサー
-2. [wordParserWithResult](.wordParserWithResult) : 「1. wordParser」にパース結果を持ちまわす仕組みを追加
+2. [wordParserWithResult](./wordParserWithResult) : 「1. wordParser」にパース結果を持ちまわす仕組みを追加
     - [「1. wordParser」との差分](https://github.com/mikoto2000/MiscellaneousStudy/commit/f93c2e6db1d00615ea800a3daff8250781762a76)
 
 
