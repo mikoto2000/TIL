@@ -12,6 +12,14 @@ import (
 
 type Result interface {}
 
+// Sentence は、一つの文を表す構造体です。
+type Sentence struct {
+    // 文を構成するトークンのリスト
+    Tokens []Token
+    // 末尾の記号('.' or '?' or '!')
+    EndSymbol Token
+}
+
 // トークンの情報を保持するための構造体を追加
 type Token struct {
     // トークンの種類を表す数値
@@ -24,6 +32,7 @@ type Token struct {
 %}
 
 %union{
+    sentence Sentence
     // word の型を Token に設定
     word Token
     // words の型を []Token に設定
@@ -31,11 +40,37 @@ type Token struct {
 }
 
 
-// words として []Token を指定
+// 単語の繰り返し
 %type<words> words
+
+// 単語
 %token<word> WORD
 
+// 文
+%type<sentence> sentence
+
+// 文末記号
+%type<word> sentence_end_symbol
+%token<word> PERIOD
+%token<word> QUESTION
+%token<word> EXCLAMATION
+
 %%
+
+// 文は、単語の並びの最後に文末記号があるもの。
+sentence
+    : words sentence_end_symbol
+    {
+        $$ = Sentence{Tokens:$1, EndSymbol:$2}
+
+        yylex.(*Lexer).Result = $$
+    }
+
+// 文末記号は、 '.' or '!' or '?' とする。
+sentence_end_symbol
+    : PERIOD
+    | QUESTION
+    | EXCLAMATION
 
 // 単語(WORD)の繰り返しルール
 words
@@ -79,6 +114,15 @@ func (l *Lexer) Lex(lval *yySymType) int {
     if token != scanner.EOF {
         // WORD は、yacc 宣言部で書いた token<xxx> のどれか
         token = WORD
+
+        // 文末記号を認識して、対応する数値を設定する
+        if l.TokenText() == "." {
+            token = PERIOD
+        } else if l.TokenText() == "?" {
+            token = QUESTION
+        } else if l.TokenText() == "!" {
+            token = EXCLAMATION
+        }
     }
 
     // 解析結果を lval に詰める。
