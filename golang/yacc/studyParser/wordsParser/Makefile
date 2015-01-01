@@ -1,7 +1,7 @@
 all: yacc build run
 
 run: wordsParser
-	./wordsParser "abc"
+	./wordsParser "abc def."
 
 build: wordsParser.go
 	go build -o wordsParser wordsParser.go

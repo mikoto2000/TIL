@@ -1,6 +1,5 @@
 %{
-// wordParser : ただ一つの単語をパースするパーサ。
-// 受け取った文字列がただ一つの単語でない場合はすべてパースエラーとなる。
+// wordsParser : 単語を列挙した文字列をパースするパーサ。
 // 単語の切れ目は、 golang の scanner.Scanner クラスのデフォルトの挙動に依存する(深く考えてない)。
 package main
 
@@ -25,24 +24,38 @@ type Token struct {
 %}
 
 %union{
-    // word の型を Token に変更
+    // word の型を Token に設定
     word Token
+    // words の型を []Token に設定
+    words []Token
 }
 
-// %union に列挙したフィールドと、「%xxx<yyy> の yyy」が対応しているようだ。
-// つまり、ここでは word ルールの成果物(?)と、
-// WORD トークンの成果物(?)はともに string であるということを宣言している？
-%type<word> word
+
+// words として []Token を指定
+%type<words> words
 %token<word> WORD
 
 %%
 
-word
+// 単語(WORD)の繰り返しルール
+words
     : WORD {
-        // コールバックの中では
-        // yylex(実態は yyParse に渡したオブジェクト) にアクセスできるので、
-        // 結果を格納する。
-        yylex.(*Lexer).Result = $1
+        // WORD 一つでも複数でも、同じように扱いたいので、
+        // WORD 一つだけでもスライスに入れる。
+        tokens := []Token{$1}
+
+        // コールバックの結果は、 $$ に格納しなければけないようだ
+        $$ = tokens
+
+        yylex.(*Lexer).Result = $$
+    }
+    | words WORD {
+        // $1(実態は []Token)
+        tokens := append($1, $2)
+
+        $$ = tokens
+
+        yylex.(*Lexer).Result = $$
     }
 
 %%
