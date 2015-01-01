@@ -19,6 +19,8 @@ GO YACC の勉強です。
     - [「1. wordParser」との差分](https://github.com/mikoto2000/MiscellaneousStudy/commit/f93c2e6db1d00615ea800a3daff8250781762a76)
 3. [wordParserAddTokenInfo](./wordParserAddTokenInfo) : 「2. wordParserWithResult」にトークン情報みを追加
     - [「2. wordParserWithResult」との差分](https://github.com/mikoto2000/MiscellaneousStudy/commit/d6fec4c31e667be759ce0b1706ca7626f3f5308e)
+4. [wordsParser](./wordsParser) : 「3. wordParserAddTokenInfo」にトークン情報みを追加
+    - [「3. wordParserAddTokenInfo」との差分](https://github.com/mikoto2000/MiscellaneousStudy/commit/421d3d0ba89b2fff8cd11a4b4c910f47eddcd6df#diff-159516624c6f9ef996fcb3afae74d7ec)
 
 
 参考文献
