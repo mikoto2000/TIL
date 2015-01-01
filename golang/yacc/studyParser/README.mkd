@@ -21,7 +21,7 @@ GO YACC の勉強です。
     - [「2. wordParserWithResult」との差分](https://github.com/mikoto2000/MiscellaneousStudy/commit/d6fec4c31e667be759ce0b1706ca7626f3f5308e)
 4. [wordsParser](./wordsParser) : 「3. wordParserAddTokenInfo」を、複数単語をパースするように修正
     - [「3. wordParserAddTokenInfo」との差分](https://github.com/mikoto2000/MiscellaneousStudy/commit/421d3d0ba89b2fff8cd11a4b4c910f47eddcd6df#diff-159516624c6f9ef996fcb3afae74d7ec)
-5. [sentencdParser](./sentencdParser) : 「4. wordsParser」を、1 文をパースするように修正
+5. [sentenceParser](./sentenceParser) : 「4. wordsParser」を、1 文をパースするように修正
     - [「4. wordsParser」との差分](https://github.com/mikoto2000/MiscellaneousStudy/commit/b9e0b933a9db6907995847d86051e8896484c6ef)
 
 
