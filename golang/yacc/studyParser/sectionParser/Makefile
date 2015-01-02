@@ -1,7 +1,7 @@
 all: yacc build run
 
 run: sectionParser
-	./sectionParser "./text.txt"
+	./sectionParser test01.txt
 
 build: sectionParser.go
 	go build -o sectionParser sectionParser.go
