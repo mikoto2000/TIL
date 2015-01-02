@@ -12,6 +12,12 @@ import (
 
 type Result interface {}
 
+// Paragraph は、一つの段落を表す構造体です。
+type Paragraph struct {
+    // 段落を構成する文のリスト
+    Sentences []Sentence
+}
+
 // Sentence は、一つの文を表す構造体です。
 type Sentence struct {
     // 文を構成するトークンのリスト
@@ -32,10 +38,11 @@ type Token struct {
 %}
 
 %union{
+    // 段落の型を追加
+    paragraph Paragraph
     sentence Sentence
-    // word の型を Token に設定
+    sentences []Sentence
     word Token
-    // words の型を []Token に設定
     words []Token
 }
 
@@ -48,6 +55,7 @@ type Token struct {
 
 // 文
 %type<sentence> sentence
+%type<sentences> sentences
 
 // 文末記号
 %type<word> sentence_end_symbol
@@ -55,7 +63,40 @@ type Token struct {
 %token<word> QUESTION
 %token<word> EXCLAMATION
 
+// 段落
+%type<paragraph> paragraph
+
 %%
+
+// 段落は、文の集合。
+paragraph
+    : sentences
+    {
+        paragraph := Paragraph{$1}
+
+        $$ = paragraph
+
+        yylex.(*Lexer).Result = $$
+    }
+
+// 文の集合
+sentences
+    : sentence
+    {
+        sentences := []Sentence{$1}
+
+        $$ = sentences
+
+        yylex.(*Lexer).Result = $$
+    }
+    | sentences sentence
+    {
+        sentences := append($1, $2)
+
+        $$ = sentences
+
+        yylex.(*Lexer).Result = $$
+    }
 
 // 文は、単語の並びの最後に文末記号があるもの。
 sentence

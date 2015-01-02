@@ -4,6 +4,7 @@ run: paragraphParser
 	./paragraphParser "abc def."
 	./paragraphParser "abc def hij?"
 	./paragraphParser "abc def hij, wow!"
+	./paragraphParser "abc def. abc def hij? hij, wow!"
 
 build: paragraphParser.go
 	go build -o paragraphParser paragraphParser.go
