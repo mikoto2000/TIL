@@ -7,7 +7,6 @@ import (
     "github.com/k0kubun/pp"
     "os"
     "text/scanner"
-    "strings"
 )
 
 type Result interface {}
@@ -46,6 +45,14 @@ type Token struct {
     words []Token
 }
 
+// 末尾の空白
+%type<word> last_whitespace
+
+// 改行文字の定義
+%type<word> newline
+%token<word> CRLF
+%token<word> CR
+%token<word> LF
 
 // 単語の繰り返し
 %type<words> words
@@ -70,7 +77,9 @@ type Token struct {
 
 // 段落は、文の集合。
 paragraph
-    : sentences
+    // 末尾の空白(改行含む)を無視するため、
+    // Root 直下の構成要素の後ろに last_whitespace を追加していく
+    : sentences last_whitespace
     {
         paragraph := Paragraph{$1}
 
@@ -134,6 +143,21 @@ words
         yylex.(*Lexer).Result = $$
     }
 
+// 改行
+// TODO: 「CR LF」と「LF」でコンフリクトが起こっている？原因と対策調査。
+newline
+    : CR LF
+    {
+        $$ = Token{Type: CRLF, Literal: $1.Literal + $2.Literal}
+    }
+    | CR
+    | LF
+
+// 末尾の空白
+last_whitespace
+    : newline
+    | last_whitespace newline
+
 %%
 
 // yyLexer インタフェースを実装したオブジェクトを作成する。
@@ -153,6 +177,7 @@ func (l *Lexer) Lex(lval *yySymType) int {
 
     // EOF 以外はすべて WORD
     if token != scanner.EOF {
+
         // WORD は、yacc 宣言部で書いた token<xxx> のどれか
         token = WORD
 
@@ -163,6 +188,10 @@ func (l *Lexer) Lex(lval *yySymType) int {
             token = QUESTION
         } else if l.TokenText() == "!" {
             token = EXCLAMATION
+        } else if l.TokenText() == "\n" {
+            token = LF
+        } else if l.TokenText() == "\r" {
+            token = CR
         }
     }
 
@@ -184,8 +213,12 @@ func main() {
     // 自作 Lexer 作成
     l := new(Lexer)
 
-    // 第一引数をパースするように設定
-    l.Init(strings.NewReader(os.Args[1]))
+    // 第一引数で渡されたファイルを読み込んでパースするように設定
+    file, _ := os.Open(os.Args[1])
+    l.Init(file)
+
+    // タブ、半角スペースのみスキップするように設定
+    l.Whitespace = 1<<'\t' | 1<<' '
 
     // パース実行
     yyParse(l)
