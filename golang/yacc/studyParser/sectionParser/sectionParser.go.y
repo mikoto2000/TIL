@@ -37,8 +37,8 @@ type Token struct {
 %}
 
 %union{
-    // 段落の型を追加
     paragraph Paragraph
+    paragraphs []Paragraph
     sentence Sentence
     sentences []Sentence
     word Token
@@ -72,14 +72,47 @@ type Token struct {
 
 // 段落
 %type<paragraph> paragraph
+%type<paragraphs> paragraphs
+
+// 段落の区切り
+%type<word> paragraph_separator
+
 
 %%
 
-// 段落は、文の集合。
-paragraph
+program
     // 末尾の空白(改行含む)を無視するため、
     // Root 直下の構成要素の後ろに last_whitespace を追加していく
-    : sentences last_whitespace
+    : paragraphs last_whitespace
+
+paragraphs
+    : paragraph
+    {
+        paragraphs := []Paragraph{$1}
+
+        $$ = paragraphs
+
+        yylex.(*Lexer).Result = $$
+    }
+    // 一つ一つのパラグラフは改行で区切る
+    // 改行は、いくつあっても構わない
+    | paragraphs paragraph_separator paragraph
+    {
+        paragraphs := append($1, $3)
+
+        $$ = paragraphs
+
+        yylex.(*Lexer).Result = $$
+    }
+
+// 段落区切り
+paragraph_separator
+    :newline
+    |paragraph_separator newline
+
+// 段落は、文の集合。
+paragraph
+    : sentences
     {
         paragraph := Paragraph{$1}
 
