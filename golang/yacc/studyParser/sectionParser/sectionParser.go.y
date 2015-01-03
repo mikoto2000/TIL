@@ -11,6 +11,14 @@ import (
 
 type Result interface {}
 
+// Section は、見出しと、それに属する段落の集合を表す構造体です。
+type Section struct {
+    // セクションの見出し
+    Head []Token
+    // セクションを構成する段落のリスト
+    Paragraphs []Paragraph
+}
+
 // Paragraph は、一つの段落を表す構造体です。
 type Paragraph struct {
     // 段落を構成する文のリスト
@@ -37,6 +45,8 @@ type Token struct {
 %}
 
 %union{
+    section Section
+    sections []Section
     paragraph Paragraph
     paragraphs []Paragraph
     sentence Sentence
@@ -77,13 +87,36 @@ type Token struct {
 // 段落の区切り
 %type<word> paragraph_separator
 
+// セクション
+%type<section> section
+%type<words> section_header
+%token<word> MINUS
 
 %%
 
 program
     // 末尾の空白(改行含む)を無視するため、
     // Root 直下の構成要素の後ろに last_whitespace を追加していく
-    : paragraphs last_whitespace
+    : section
+    | section last_whitespace
+
+section
+    : section_header newline paragraphs newline
+    {
+        section := Section{Head: $1, Paragraphs: $3}
+
+        $$ = section
+
+        yylex.(*Lexer).Result = $$
+    }
+
+section_header
+    : words newline MINUS MINUS
+    {
+        $$ = $1
+
+        yylex.(*Lexer).Result = $$
+    }
 
 paragraphs
     : paragraph
@@ -210,7 +243,6 @@ func (l *Lexer) Lex(lval *yySymType) int {
 
     // EOF 以外はすべて WORD
     if token != scanner.EOF {
-
         // WORD は、yacc 宣言部で書いた token<xxx> のどれか
         token = WORD
 
@@ -225,6 +257,8 @@ func (l *Lexer) Lex(lval *yySymType) int {
             token = LF
         } else if l.TokenText() == "\r" {
             token = CR
+        } else if l.TokenText() == "-" {
+            token = MINUS
         }
     }
 
