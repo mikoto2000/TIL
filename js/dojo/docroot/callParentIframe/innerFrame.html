@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript">
+        console.log("testing.");
+        function init() {
+            var targetDojo = window.top;
+            targetDojo.require(["dojo/dom-style"], function(domStyle) {
+                domStyle.set(window.top.document.body, "backgroundColor", "red");
+            });
+            var div = window.top.document.createElement("div");
+            div.appendChild(window.top.document.createTextNode("testing."));
+            window.top.document.body.appendChild(div);
+        }
+    </script>
+    <title></title>
+</head>
+<body style="background-color: black" onload="init()">
+    
+</body>
+</html>
