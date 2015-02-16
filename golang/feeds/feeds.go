@@ -17,6 +17,16 @@ func main() {
 		Created: t,
 	}
 
+	feed.Items = []*feeds.Item{
+		&feeds.Item{
+			Title: "Test feed item.",
+			Link: &feeds.Link{Href:"http://oyasirazu.dip.jp/item"},
+			Description:"Test.",
+			Author: &feeds.Author{"mikoto2000", "mikoto2000@gmail.com"},
+			Created: t,
+		},
+	}
+
 	rss, _ := feed.ToRss()
 
 	fmt.Println(rss)
