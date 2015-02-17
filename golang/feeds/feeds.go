@@ -11,6 +11,7 @@ import (
 const BASE_URL = "http://oyasirazu.dip.jp/"
 const AUTHOR = "mikoto2000"
 const MAIL = "mikoto2000@gmail.com"
+const FEED_ITEM_MAX = 20
 
 // 第一引数で渡されたディレクトリ下を探索
 // 第二引数で渡された拡張子のファイルのみ表示する
@@ -56,11 +57,18 @@ func main() {
 			return nil
 		})
 
+	if err != nil {
+		fmt.Println(1, err)
+		os.Exit(1)
+	}
+
+	min := len(feed.Items)
+	if FEED_ITEM_MAX < min {
+		min = FEED_ITEM_MAX
+	}
+	feed.Items = feed.Items[:min]
+
 	rss, _ := feed.ToRss()
 
 	fmt.Println(rss)
-
-	if err != nil {
-		fmt.Println(1, err)
-	}
 }
