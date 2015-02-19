@@ -1,0 +1,15 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+repositories {
+    jcenter()
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'XML element sort tool.'
+        attributes 'Implementation-Version': 1.0
+        attributes "Main-Class" : "jp.dip.oyasirazu.study.xml.Main"
+    }
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+}
