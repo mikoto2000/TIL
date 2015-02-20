@@ -22,42 +22,40 @@ import org.xml.sax.SAXException;
 
 public class Main {
 
-	public static void main(String[] args) throws SAXException, IOException, ParserConfigurationException, TransformerException {
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder = factory.newDocumentBuilder();
-		Document document1 = builder.parse(args[0]);
-		
-		StringWriter sw = new StringWriter();
-		TransformerFactory tfactory = TransformerFactory.newInstance(); 
-		Transformer transformer = tfactory.newTransformer(); 
+    public static void main(String[] args) throws SAXException,
+                IOException, ParserConfigurationException, TransformerException {
 
-		sortChildNode(document1);
-		transformer.transform(new DOMSource(document1), new StreamResult(sw)); 
-		String xml1 = sw.toString();
-		System.out.println(xml1);
-	}
+        Document document = createDocument(args[0]);
+        sortChildNode(document);
+        String documentString = documentToString(document);
 
-	private static void sortChildNode(Node node) {
-		NodeList nodes = node.getChildNodes();
-		int size = nodes.getLength();
-		
-		ArrayList<Node> nodeList = new ArrayList<>();
-		for (int i = 0; i < size; i++) {
-			sortChildNode(nodes.item(i));
-			
-			nodeList.add(nodes.item(i));
-		}
-		
-		Collections.sort(nodeList, new Comparator<Node>() {
-			@Override
-			public int compare(Node n1, Node n2) {
-				return n1.getTextContent().compareTo(n2.getTextContent());
-			}
-		});
-		
-		for (Node n : nodeList) {
-			node.removeChild(n);
-			node.appendChild(n);
-		}
-	}
+        System.out.println(documentString);
+    }
+
+    private static Document createDocument(String filePath) throws SAXException,
+                IOException, ParserConfigurationException {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        return builder.parse(filePath);
+    }
+
+    private static String documentToString(Document document) throws TransformerException {
+        StringWriter sw = new StringWriter();
+        TransformerFactory tfactory = TransformerFactory.newInstance();
+        Transformer transformer = tfactory.newTransformer();
+
+        transformer.transform(new DOMSource(document), new StreamResult(sw));
+        return sw.toString();
+    }
+
+    private static void sortChildNode(Document document) {
+        DOMElementSorter ds = new DOMElementSorter(new Comparator<Node>() {
+            @Override
+            public int compare(Node n1, Node n2) {
+                return n1.getTextContent().compareTo(n2.getTextContent());
+            }
+        });
+
+        ds.sort(document);
+    }
 }
