@@ -14,6 +14,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
@@ -42,14 +43,36 @@ public class Main {
         Transformer transformer = tfactory.newTransformer();
 
         transformer.transform(new DOMSource(document), new StreamResult(sw));
-        return sw.toString();
+        return sw.toString().replaceAll("\\>\\<", ">\n<").replaceAll("\\n\\s+", "\n");
     }
 
     private static void sortChildNode(Document document) {
         DOMElementSorter ds = new DOMElementSorter(new Comparator<Node>() {
             @Override
             public int compare(Node n1, Node n2) {
-                return n1.getTextContent().compareTo(n2.getTextContent());
+                // タグ名でソート
+                int tagNameCompare = n1.getNodeName().compareTo(n2.getNodeName());
+                if (tagNameCompare != 0) {
+                    return tagNameCompare;
+                }
+
+                // id属性があればそれで比較する
+                NamedNodeMap attrs1 = n1.getAttributes();
+                Node attr1 = (attrs1 != null) ? attrs1.getNamedItem("id") : null;
+
+                NamedNodeMap attrs2 = n2.getAttributes();
+                Node attr2 = (attrs2 != null) ? attrs2.getNamedItem("id") : null;
+
+                if (attr1 != null && attr2 == null) {
+                    return -1;
+                } else if (attr1 == null && attr2 != null) {
+                    return 1;
+                } else if (attr1 != null && attr2 != null) {
+                    return attr1.getNodeValue().compareTo(attr2.getNodeValue());
+                } else {
+                    // 比較できるものがないので手を付けない
+                    return 0;
+                }
             }
         });
 
