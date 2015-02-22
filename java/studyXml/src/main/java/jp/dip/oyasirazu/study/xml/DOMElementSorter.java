@@ -14,33 +14,52 @@ import org.w3c.dom.NodeList;
 public class DOMElementSorter {
 
     private Comparator<Node> comparator;
+    private SortCondition sortCondition;
+
     /**
      * Constructor
      */
     public DOMElementSorter(Comparator<Node> comparator) {
+        this(comparator, new SortCondition() {
+            @Override
+            public boolean isSortTarget(Node node) {
+                return true;
+            }
+        });
+    }
+
+    /**
+     * Constructor
+     */
+    public DOMElementSorter(Comparator<Node> comparator, SortCondition sortCondition) {
         this.comparator = comparator;
+        this.sortCondition = sortCondition;
     }
 
     public void sort(Document document) {
-        sort(document, true, comparator);
+        sort(document, true);
     }
 
-    public void sort(Node node, boolean isRecursion) {
-        sort(node, isRecursion, comparator);
-    }
-
-    private static void sort(Node node, boolean isRecursion, Comparator<Node> comparator) {
+    private void sort(Node node, boolean isRecursion) {
         // 子ノード情報取得
         NodeList nodes = node.getChildNodes();
         int size = nodes.getLength();
 
+        // 再帰フラグが立って入れば、再帰する
+        if (isRecursion) {
+            for (int i = 0; i < size; i++) {
+                sort(nodes.item(i), isRecursion);
+            }
+        }
+
+        // ソートターゲットでなければ何もしない
+        if (!sortCondition.isSortTarget(node)) {
+            return;
+        }
+
         // NodeList から ArrayList に入れ替える
         ArrayList<Node> nodeList = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
-            if (isRecursion) {
-                sort(nodes.item(i), isRecursion, comparator);
-            }
-
             nodeList.add(nodes.item(i));
         }
 
@@ -50,5 +69,9 @@ public class DOMElementSorter {
             node.removeChild(n);
             node.appendChild(n);
         }
+    }
+
+    public interface SortCondition {
+        boolean isSortTarget(Node node);
     }
 }

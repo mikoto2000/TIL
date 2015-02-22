@@ -47,7 +47,7 @@ public class Main {
     }
 
     private static void sortChildNode(Document document) {
-        DOMElementSorter ds = new DOMElementSorter(new Comparator<Node>() {
+        Comparator<Node> myComparator = new Comparator<Node>() {
             @Override
             public int compare(Node n1, Node n2) {
                 // タグ名でソート
@@ -74,7 +74,20 @@ public class Main {
                     return 0;
                 }
             }
-        });
+        };
+
+        DOMElementSorter.SortCondition sortCondition = new DOMElementSorter.SortCondition() {
+            @Override
+            public boolean isSortTarget(Node node) {
+                if (node.getNodeName().equals("company")) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        };
+
+        DOMElementSorter ds = new DOMElementSorter(myComparator, sortCondition);
 
         ds.sort(document);
     }
