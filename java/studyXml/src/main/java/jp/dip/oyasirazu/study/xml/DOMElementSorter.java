@@ -13,19 +13,36 @@ import org.w3c.dom.NodeList;
  */
 public class DOMElementSorter {
 
+    private static Comparator<Node> COMPARATOR_DEFAULT =  new Comparator<Node>() {
+        @Override
+        public int compare(Node n1, Node n2) {
+            // タグ名でソート
+            return n1.getNodeName().compareTo(n2.getNodeName());
+        }
+    };
+
+    private static SortCondition SORT_CONDITION_DEFAULT =  new SortCondition() {
+        @Override
+        public boolean isSortTarget(Node node) {
+            return true;
+        }
+    };
+
     private Comparator<Node> comparator;
     private SortCondition sortCondition;
 
     /**
      * Constructor
      */
+    public DOMElementSorter() {
+        this(COMPARATOR_DEFAULT, SORT_CONDITION_DEFAULT);
+    }
+
+    /**
+     * Constructor
+     */
     public DOMElementSorter(Comparator<Node> comparator) {
-        this(comparator, new SortCondition() {
-            @Override
-            public boolean isSortTarget(Node node) {
-                return true;
-            }
-        });
+        this(comparator, SORT_CONDITION_DEFAULT);
     }
 
     /**
