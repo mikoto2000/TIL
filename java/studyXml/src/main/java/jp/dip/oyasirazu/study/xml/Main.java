@@ -47,7 +47,36 @@ public class Main {
     }
 
     private static void sortChildNode(Document document) {
-        DOMElementSorter ds = new DOMElementSorter();
+        Comparator<Node> myComparator = new Comparator<Node>() {
+            @Override
+            public int compare(Node n1, Node n2) {
+                // タグ名でソート
+                int tagNameCompare = n1.getNodeName().compareTo(n2.getNodeName());
+                if (tagNameCompare != 0) {
+                    return tagNameCompare;
+                }
+
+                // id属性があればそれで比較する
+                NamedNodeMap attrs1 = n1.getAttributes();
+                Node attr1 = (attrs1 != null) ? attrs1.getNamedItem("id") : null;
+
+                NamedNodeMap attrs2 = n2.getAttributes();
+                Node attr2 = (attrs2 != null) ? attrs2.getNamedItem("id") : null;
+
+                if (attr1 != null && attr2 == null) {
+                    return -1;
+                } else if (attr1 == null && attr2 != null) {
+                    return 1;
+                } else if (attr1 != null && attr2 != null) {
+                    return attr1.getNodeValue().compareTo(attr2.getNodeValue());
+                } else {
+                    // 比較できるものがないので手を付けない
+                    return 0;
+                }
+            }
+        };
+
+        DOMElementSorter ds = new DOMElementSorter(myComparator);
 
         ds.sort(document);
     }
