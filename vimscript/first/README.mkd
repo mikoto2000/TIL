@@ -1,0 +1,15 @@
+first
+=====
+
+最初の vimscript.
+
+example:
+--------
+
+~~~ { .sh }
+:lcd THIS_DIRECTORY
+:setl runtimepath+=.
+:source autoload/first.vim
+:echo first#abs(".") " => "." の絶対パス
+~~~
+
