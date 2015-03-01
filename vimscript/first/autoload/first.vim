@@ -42,3 +42,28 @@ function! first#find(dir, fileName)
     endif
 endfunc
 
+" vim-javaclasspath のためのクラスパスファイルを探して、
+" バッファーローカル変数に設定する
+" TODO: l:classpath が取得できなかった時の処理
+function! first#set_classpath(dir)
+    let l:classpath = first#find(a:dir, ".classpath")
+    let l:config = {'filename':classpath}
+
+    " 定義済みのバッファローカル変数を削除
+    if (exists('b:javaclasspath_config'))
+        unlet b:javaclasspath_config
+    endif
+
+    " 新規バッファローカル変数を設定
+    let b:javaclasspath_config = javaclasspath#get_config()
+    let b:javaclasspath_config['eclipse'] = l:config
+endfunc
+
+" カレントディレクトリが eclipse プロジェクト内ならば、
+" そのクラスパスを取得する。
+" テストが入るのが若干邪魔だけど目をつぶろう。
+" TODO: windows 対応
+function! first#get_project_classpath()
+    call first#set_classpath('.')
+    return javaclasspath#source_path() . ':' . javaclasspath#classpath()
+endfunc
