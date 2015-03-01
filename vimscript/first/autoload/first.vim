@@ -18,17 +18,26 @@ endfunc
 
 " dir とその親ディレクトリを巡っていって、 fileName を探す。
 " ルートディレクトリまで巡っても見つからなかったら諦める。
+" 見つかったら、そのファイルのパスを返却する。
 " TODO: windows 対応
 function! first#find(dir, fileName)
+    return first#findDir(a:dir, a:fileName) . "/" . a:fileName
+endfunc
+
+" dir とその親ディレクトリを巡っていって、 fileName を探す。
+" ルートディレクトリまで巡っても見つからなかったら諦める。
+" 見つかったら、そのファイルが存在するディレクトリのパスを返却する。
+" TODO: windows 対応
+function! first#findDir(dir, fileName)
     " ディレクトリ末尾にセパレータがあった場合、削除
-    let l:d = substitute(first#abs(a:dir), "/$", "", "g")
+    let l:absDir = substitute(first#abs(a:dir), "/$", "", "g")
 
     " ファイルの絶対パスを取得
-    let l:filePath = first#abs(l:d . "/" . a:fileName)
+    let l:filePath = first#abs(l:absDir . "/" . a:fileName)
 
     if filereadable(filePath) == 1
         " ファイルが見つかったらファイルパスを返却する
-        return l:filePath
+        return l:absDir
     elseif first#is_root_directory(a:dir) == 1
         " ファイルが見つからない、かつ、
         " ここがルートディレクトリならば 0 を返却する
@@ -37,10 +46,11 @@ function! first#find(dir, fileName)
         " ファイルが見つからない、かつ、
         " ここがルートディレクトリ出ないならば、
         " 再帰的に親ディレクトリを探す。
-        let l:parentDir = fnamemodify(l:d, ":h")
-        return first#find(l:parentDir, a:fileName)
+        let l:parentDir = fnamemodify(l:absDir, ":h")
+        return first#findDir(l:parentDir, a:fileName)
     endif
 endfunc
+
 
 " vim-javaclasspath のためのクラスパスファイルを探して、
 " バッファーローカル変数に設定する
@@ -61,9 +71,22 @@ endfunc
 
 " カレントディレクトリが eclipse プロジェクト内ならば、
 " そのクラスパスを取得する。
-" テストが入るのが若干邪魔だけど目をつぶろう。
+" テストが入るのが邪魔だけど目をつぶろう。
 " TODO: windows 対応
 function! first#get_project_classpath()
     call first#set_classpath('.')
-    return javaclasspath#source_path() . ':' . javaclasspath#classpath()
+    let l:classpaths = javaclasspath#source_path() . ':' . javaclasspath#classpath()
+    let l:classpath_array = split(l:classpaths, ':')
+    let l:return_classpath_array = []
+    for classpath in l:classpath_array
+        " 取得したクラスパスが絶対パスならそのまま、
+        " 相対パスならばプロジェクトルートからの相対パスと認識
+        if classpath[0] == '/'
+            call add(l:return_classpath_array, classpath)
+        else
+            call add(l:return_classpath_array, first#findDir('.', '.classpath') . '/' . classpath)
+        endif
+    endfor
+    " クラスパス文字列として返却する。
+    return join(l:return_classpath_array, ':')
 endfunc
