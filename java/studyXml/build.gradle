@@ -1,8 +1,16 @@
-apply plugin: 'java'
-apply plugin: 'eclipse'
+apply {
+    plugin 'java'
+    plugin 'eclipse'
+    plugin 'checkstyle'
+    plugin 'findbugs'
+}
 
 repositories {
     jcenter()
+}
+
+checkstyleMain {
+    ignoreFailures = true
 }
 
 jar {
