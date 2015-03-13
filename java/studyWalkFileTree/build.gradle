@@ -1,0 +1,21 @@
+apply {
+    plugin 'java'
+    plugin 'eclipse'
+}
+
+version = 1.0
+
+[compileJava, compileTestJava]*.options*.encoding = "UTF-8"
+
+repositories {
+    jcenter()
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Study walkFileTree.'
+        attributes 'Implementation-Version': 1.0
+        attributes "Main-Class" : "jp.dip.oyasirazu.studywalkfiletree.Main"
+    }
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+}
