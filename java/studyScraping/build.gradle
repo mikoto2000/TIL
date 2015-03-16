@@ -1,0 +1,21 @@
+apply {
+    plugin 'java'
+    plugin 'eclipse'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'org.jsoup:jsoup:1.7.2'
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'study scraping.'
+        attributes 'Implementation-Version': 1.0
+        attributes "Main-Class" : "jp.dip.oyasirazu.studyscraping.Main"
+    }
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+}
