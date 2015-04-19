@@ -1,0 +1,3 @@
+TTY=`tty`
+
+python -c "import struct,fcntl,termios; print(struct.unpack('HHHH',fcntl.ioctl(open('$TTY'),termios.TIOCGWINSZ,'\0' * 8))[3])"
