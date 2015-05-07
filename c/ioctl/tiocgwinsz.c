@@ -7,7 +7,6 @@
  */
 #include <stdio.h>
 #include <sys/ioctl.h>
-#include <termios.h>
 
 int
 main(int argc, char* argv[]) {
