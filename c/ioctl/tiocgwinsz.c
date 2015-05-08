@@ -3,7 +3,7 @@
  *
  * プログラムが実行されたウィンドウのサイズを取得する。
  *
- * 「行数 列数 横幅(pixel) 縦幅(pixel)」の順で標準入力に出力する。
+ * 「行数 列数 横幅(pixel) 縦幅(pixel)」の順で標準出力に出力する。
  */
 #include <stdio.h>
 #include <sys/ioctl.h>
