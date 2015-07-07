@@ -1,0 +1,34 @@
+apply {
+    plugin 'java'
+    plugin 'eclipse'
+    plugin 'checkstyle'
+    plugin 'findbugs'
+    plugin 'jacoco'
+}
+
+//sourceCompatibility = 1.8
+//targetCompatibility = 1.8
+//version = 1.0
+
+[compileJava, compileTestJava]*.options*.encoding = "UTF-8"
+
+repositories {
+    jcenter()
+}
+
+[checkstyleMain, checkstyleTest]*.ignoreFailures = true
+
+dependencies {
+    compile 'args4j:args4j-site:2.0.16'
+    testCompile "junit:junit:4.11"
+    testCompile "org.hamcrest:hamcrest-all:1.3"
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'XML element sort tool.'
+        attributes 'Implementation-Version': 1.0
+        attributes "Main-Class" : "jp.dip.oyasirazu.domelementsorter.Main"
+    }
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+}
