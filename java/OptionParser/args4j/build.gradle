@@ -28,7 +28,7 @@ jar {
     manifest {
         attributes 'Implementation-Title': 'XML element sort tool.'
         attributes 'Implementation-Version': 1.0
-        attributes "Main-Class" : "jp.dip.oyasirazu.domelementsorter.Main"
+        attributes "Main-Class" : "jp.dip.oyasirazu.study.optionparser.args4j.Main"
     }
     from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
 }
