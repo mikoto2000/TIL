@@ -16,10 +16,10 @@ repositories {
     jcenter()
 }
 
-[checkstyleMain, checkstyleTest]*.ignoreFailures = true
+[checkstyleMain, checkstyleTest, findbugsMain, findbugsTest]*.ignoreFailures = true
 
 dependencies {
-    compile 'args4j:args4j-site:2.0.16'
+    compile 'args4j:args4j:2.0.16'
     testCompile "junit:junit:4.11"
     testCompile "org.hamcrest:hamcrest-all:1.3"
 }
