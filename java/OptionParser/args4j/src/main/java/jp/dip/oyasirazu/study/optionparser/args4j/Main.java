@@ -1,5 +1,8 @@
 package jp.dip.oyasirazu.study.optionparser.args4j;
 
+import java.util.List;
+
+import org.kohsuke.args4j.Argument;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
@@ -24,6 +27,10 @@ public class Main {
             System.out.println(options);
         } catch (CmdLineException E) {
             // Useage を表示
+            System.out.println("Useage:\n"
+                    + "  Main [options] [ARGUMENTS...]\n"
+                    + "\n"
+                    + "Options:");
             optionParser.printUsage(System.out);
         }
 
@@ -49,13 +56,17 @@ public class Main {
         @Option(name="-b", aliases="--boolean", metaVar="VALUE", usage="真偽(boolean)渡せますよー")
         private boolean optionBoolean;
 
+        @Argument
+        private List<String> arguments;
+
         public String toString() {
             return "optionString: " + this.optionString + "\n"
                     + "optionString: " + this.optionInteger + "\n"
                     + "optionLong: " + this.optionLong + "\n"
                     + "optionFloat: " + this.optionFloat + "\n"
                     + "optionDouble: " + this.optionDouble + "\n"
-                    + "optionBoolean: " + this.optionBoolean + "\n";
+                    + "optionBoolean: " + this.optionBoolean + "\n"
+                    + "arguments: " + this.arguments + "\n";
         }
     }
 }
