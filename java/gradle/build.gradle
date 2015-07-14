@@ -18,7 +18,24 @@ repositories {
 
 [checkstyleMain, checkstyleTest, findbugsMain, findbugsTest]*.ignoreFailures = true
 
+configurations {
+    provided
+}
+
+sourceSets {
+    main {
+        compileClasspath += configurations.provided
+    }
+}
+
+eclipse.classpath {
+    plusConfigurations += [ configurations.provided ]
+    noExportConfigurations += [ configurations.provided ]
+}
+
+
 dependencies {
+    provided 'org.projectlombok:lombok:1.16.4'
     testCompile "junit:junit:4.11"
     testCompile "org.hamcrest:hamcrest-all:1.3"
 }
