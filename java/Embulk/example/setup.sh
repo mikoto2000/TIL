@@ -7,5 +7,5 @@ else
     embulk guess   ./try1/example.yml -o config.yml
     embulk preview config.yml
     embulk run     config.yml
-    export PATH="`pwd`/../bin:$PATH"
 fi
+export PATH="`pwd`/../bin:$PATH"
