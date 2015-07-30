@@ -40,10 +40,12 @@ public class FirstfilterFilterPlugin
         java.util.List<Column> newSchemaColumns = inputSchema.getColumns();
         Schema.Builder builder = Schema.builder();
 
-        // カラムを追加
+        // 連番カラムを追加
+        builder.add("lineNumber", Types.LONG);
         for (Column column : newSchemaColumns) {
             builder.add(column.getName(), column.getType());
         }
+        // 追加文字列カラムを追加
         builder.add("additional", Types.STRING);
 
         Schema outputSchema = builder.build();
@@ -68,29 +70,61 @@ public class FirstfilterFilterPlugin
         System.out.print("task: ");
         System.out.println(task);
 
-        return new MyPageOutput(output);
+        return new MyPageOutput(inputSchema, outputSchema, output);
     }
 }
 
 class MyPageOutput implements PageOutput {
-    private PageOutput originalPageOutput;
+    private Schema inputSchema;
+    private PageBuilder pageBuilder;
+    private long lineNumber = 1;
 
-    public MyPageOutput(PageOutput originalPageOutput) {
-        this.originalPageOutput = originalPageOutput;
+    public MyPageOutput(Schema inputSchema, Schema outputSchema, PageOutput originalPageOutput) {
+        this.inputSchema = inputSchema;
+        this.pageBuilder = new PageBuilder(Exec.getBufferAllocator(),
+                        outputSchema,
+                        originalPageOutput);
     }
 
     @Override
     public void add(Page page) {
-        originalPageOutput.add(page);
+        System.out.println("start MyPageOutput#add!");
+        try (PageReader pageReader = new PageReader(inputSchema)) {
+            pageReader.setPage(page);
+
+            System.out.println("record count: " + PageReader.getRecordCount(page));
+
+            int columnCount = inputSchema.getColumnCount();
+
+            while (pageReader.nextRecord()) {
+                // 行番号カラム
+                pageBuilder.setLong(0, lineNumber);
+
+                // 入力カラムたち
+                pageBuilder.setLong(1, pageReader.getLong(0));
+                pageBuilder.setLong(2, pageReader.getLong(1));
+                pageBuilder.setTimestamp(3, pageReader.getTimestamp(2));
+                pageBuilder.setTimestamp(4, pageReader.getTimestamp(3));
+                pageBuilder.setString(5, pageReader.getString(4));
+
+                // 追加文字列カラム
+                pageBuilder.setString(6, "Additional String" + lineNumber++ + "!");
+
+                // 編集したレコードを追加
+                pageBuilder.addRecord();
+            }
+        }
     }
 
     @Override
     public void close() {
-        originalPageOutput.close();
+        System.out.println("start PageOutput#close.");
+        pageBuilder.close();
     }
 
     @Override
     public void finish() {
-        originalPageOutput.finish();
+        System.out.println("start PageOutput#finish.");
+        pageBuilder.finish();
     }
 }
