@@ -40,6 +40,50 @@ dependencies {
     testCompile "org.hamcrest:hamcrest-all:1.3"
 }
 
+task jacocoxml(dependsOn: "test") << {
+    tasks.withType(JacocoReport) {
+        reports {
+            xml.enabled = true
+            html.enabled = false
+            xml.destination = "${buildDir}/reports/jacoco/jacoco.xml"
+        }
+    }
+    tasks.jacocoTestReport.execute()
+}
+
+task jacocohtml(dependsOn: "test") << {
+    tasks.withType(JacocoReport) {
+        reports {
+            xml.enabled = false
+            html.enabled = true
+            html.destination = "${buildDir}/reports/jacoco"
+        }
+    }
+    tasks.jacocoTestReport.execute()
+}
+
+task fbxml << {
+    tasks.withType(FindBugs) {
+        reports {
+            xml.enabled = true
+            html.enabled = false
+        }
+    }
+    tasks.findbugsMain.execute()
+    tasks.findbugsTest.execute()
+}
+
+task fbhtml << {
+    tasks.withType(FindBugs) {
+        reports {
+            xml.enabled = false
+            html.enabled = true
+        }
+    }
+    tasks.findbugsMain.execute()
+    tasks.findbugsTest.execute()
+}
+
 jar {
     manifest {
         attributes 'Implementation-Title': 'XML element sort tool.'
