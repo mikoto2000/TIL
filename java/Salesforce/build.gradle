@@ -1,0 +1,23 @@
+apply {
+    plugin 'java'
+    plugin 'eclipse'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+version = 1.0
+
+[compileJava, compileTestJava]*.options*.encoding = "UTF-8"
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'com.force.api:force-wsc:34.0.0'
+    compile 'com.force.api:force-partner-api:34.0.0'
+}
+
+jar {
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+}
