@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <file>./app.log</file>
+    <encoder>
+        <charset>UTF-8</charset>
+        <pattern>%d{yyyy-MM-dd'T'HH:mm:ss'Z'} - %m%n</pattern>
+    </encoder>
+</appender>
+<logger name="jp.dip.oyasirazu.study.log.logback">
+    <level value="DEBUG" />
+    <appender-ref ref="FILE" />
+</logger>
+</configuration>
