@@ -1,0 +1,10 @@
+examples:
+
+```bat
+$ gradle copyDependencies
+$ gradle build
+$ java -cp "build/libs/studyjruby.jar;dependencies/jruby-complete-9.0.3.0.jar;dependencies/slf4j-api-1.7.12.jar;dependencies/slf4j-simple-1.7.12.jar" jp.dip.oyasirazu.study.jruby.StudyJRuby01
+Hello, World!
+$ java -cp "build/libs/studyjruby.jar;dependencies/jruby-complete-9.0.3.0.jar;dependencies/slf4j-api-1.7.12.jar;dependencies/slf4j-simple-1.7.12.jar" jp.dip.oyasirazu.study.jruby.StudyJRuby02
+Hello, world!
+```

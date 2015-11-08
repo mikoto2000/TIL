@@ -9,14 +9,25 @@ repositories {
 
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.7'
+    compile 'org.slf4j:slf4j-simple:1.7.12'
     compile 'org.jruby:jruby-complete:9.0.3.0'
 }
 
-jar {
-    manifest {
-        attributes 'Implementation-Title': 'jruby study.'
-        attributes 'Implementation-Version': 1.0
-        attributes "Main-Class" : "jp.dip.oyasirazu.study.jruby.StudyJRuby01"
-    }
-    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+def dependenciesCopyTargetDirName = 'dependencies'
+
+task deleteDependencies(type: Delete) {
+  delete dependenciesCopyTargetDirName
 }
+
+task copyDependencies(type: Copy, dependsOn: deleteDependencies) {
+  from configurations.testRuntime
+  into dependenciesCopyTargetDirName
+}
+//jar {
+//    manifest {
+//        attributes 'Implementation-Title': 'jruby study.'
+//        attributes 'Implementation-Version': 1.0
+//        attributes "Main-Class" : "jp.dip.oyasirazu.study.jruby.StudyJRuby01"
+//    }
+//    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+//}
