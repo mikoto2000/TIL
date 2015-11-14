@@ -1,6 +1,8 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
+[compileJava, compileTestJava]*.options*.encoding = "UTF-8"
+
 repositories {
     jcenter()
 }
