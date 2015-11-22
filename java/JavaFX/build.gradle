@@ -6,3 +6,7 @@ apply plugin: 'eclipse'
 repositories {
     jcenter()
 }
+
+dependencies {
+    compile files('C:/Java/jdk1.8.0_51/jre/lib/ext/jfxrt.jar')
+}

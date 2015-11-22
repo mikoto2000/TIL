@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 public class HelloWorld extends Application {
     public static void main(String[] args) {
         Application.launch(HelloWorld.class, args);
+
+        System.out.println("aaa");
     }
 
     @Override
