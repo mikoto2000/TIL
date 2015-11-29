@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import java.lang.*?>
+<?import java.net.URL ?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+<BorderPane xmlns="http://javafx.com/javafx"
+    xmlns:fx="http://javafx.com/fxml"
+    fx:controller="jp.dip.oyasirazu.study.javafx.CustomListViewCellController">
+    <top>
+        <Label fx:id="label1" text="Select String" />
+    </top>
+    <center>
+        <ListView fx:id="list1">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                </FXCollections>
+            </items>
+        </ListView>
+    </center>
+    <bottom>
+        <Button text="Click" fx:id="btn1" />
+    </bottom>
+</BorderPane>
