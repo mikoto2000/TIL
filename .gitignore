@@ -1,3 +1,6 @@
 java/.metadata
+java/**/.gradle
+java/**/.classpath
+java/**/build
 java/**/bin
 java/**/.settings
