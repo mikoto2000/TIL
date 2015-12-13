@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import java.lang.*?>
+<?import java.net.URL ?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+<BorderPane fx:id="root" xmlns="http://javafx.com/javafx"
+    xmlns:fx="http://javafx.com/fxml"
+    fx:controller="jp.dip.oyasirazu.study.javafx.AddPanelController">
+    <center>
+        <ScrollPane>
+            <VBox fx:id="target" />
+        </ScrollPane>
+    </center>
+
+    <bottom>
+        <GridPane alignment="CENTER" hgap="8" vgap="8">
+            <children>
+                <Button fx:id="add" text="Add" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <Button fx:id="delete" text="Delete" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            </children>
+        </GridPane>
+    </bottom>
+</BorderPane>
