@@ -9,13 +9,13 @@
 <BorderPane xmlns="http://javafx.com/javafx"
     xmlns:fx="http://javafx.com/fxml">
     <center>
-        <TabPane>
+        <TabPane tabMaxHeight="40">
             <tabs>
                 <Tab text="tab1" closable="false">
                     <graphic>
                         <ImageView>
                             <image>
-                                <Image fx:id="tabIcon" url="@/TabPane/TabIcon.png" />
+                                <Image fx:id="tabIcon" requestedWidth="40" requestedHeight="40" url="@/TabPane/TabIcon.png" />
                             </image>
                         </ImageView>
                     </graphic>
