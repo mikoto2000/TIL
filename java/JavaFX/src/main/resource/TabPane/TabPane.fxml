@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane xmlns="http://javafx.com/javafx"
+    xmlns:fx="http://javafx.com/fxml">
+    <center>
+        <TabPane>
+            <tabs>
+                <Tab text="tab1">
+                    <fx:include source="/TabPane/Tab1.fxml" />
+                </Tab>
+                <Tab text="tab2">
+                    <fx:include source="/TabPane/Tab2.fxml" />
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+</BorderPane>

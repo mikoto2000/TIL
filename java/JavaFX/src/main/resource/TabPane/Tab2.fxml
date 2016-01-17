@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<Group xmlns="http://javafx.com/javafx"
+    xmlns:fx="http://javafx.com/fxml">
+        <Label text="Tab2" />
+</Group>
