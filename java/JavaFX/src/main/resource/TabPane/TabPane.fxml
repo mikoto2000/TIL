@@ -3,17 +3,37 @@
 <?language javascript?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <BorderPane xmlns="http://javafx.com/javafx"
     xmlns:fx="http://javafx.com/fxml">
     <center>
         <TabPane>
             <tabs>
-                <Tab text="tab1">
-                    <fx:include source="/TabPane/Tab1.fxml" />
+                <Tab text="tab1" closable="false">
+                    <graphic>
+                        <ImageView>
+                            <image>
+                                <Image fx:id="tabIcon" url="@/TabPane/TabIcon.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <content>
+                        <fx:include source="/TabPane/Tab1.fxml" />
+                    </content>
                 </Tab>
-                <Tab text="tab2">
-                    <fx:include source="/TabPane/Tab2.fxml" />
+                <Tab text="tab2" closable="false">
+                    <graphic>
+                        <ImageView>
+                            <image>
+                                <fx:reference source="tabIcon" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                    <content>
+                        <fx:include source="/TabPane/Tab2.fxml" />
+                    </content>
                 </Tab>
             </tabs>
         </TabPane>
