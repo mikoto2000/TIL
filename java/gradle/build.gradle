@@ -38,6 +38,7 @@ dependencies {
     provided 'org.projectlombok:lombok:1.16.4'
     testCompile "junit:junit:4.11"
     testCompile "org.hamcrest:hamcrest-all:1.3"
+    compile 'com.google.apis:google-api-services-gmail:v1-rev37-1.21.0'
 }
 
 task jacocoxml(dependsOn: "test") << {
@@ -91,4 +92,15 @@ jar {
         attributes "Main-Class" : "jp.dip.oyasirazu.domelementsorter.Main"
     }
     from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+}
+
+def dependenciesCopyTargetDirName = 'dependencies'
+
+task deleteDependencies(type: Delete) {
+  delete dependenciesCopyTargetDirName
+}
+
+task copyDependencies(type: Copy, dependsOn: deleteDependencies) {
+  from configurations.testRuntime
+  into dependenciesCopyTargetDirName
 }
