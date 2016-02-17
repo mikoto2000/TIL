@@ -1,0 +1,24 @@
+apply {
+    plugin 'java'
+    plugin 'eclipse'
+}
+
+[compileJava, compileTestJava]*.options*.encoding = "UTF-8"
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'javax.mail:mail:1.5.0-b01'
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Gmail recieve study.'
+        attributes 'Implementation-Version': 1.0
+        attributes "Main-Class" : "jp.dip.oyasirazu.study.gmail.GetMail"
+    }
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+}
+
