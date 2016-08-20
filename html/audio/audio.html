@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <title>audio test</title>
+        <script type="text/javascript">
+            // グローバルオブジェクトの宣言
+            var yukari;
+            var aoi;
+            var akane;
+
+            // 初期化処理
+            // 各 audio 要素のオブジェクトを取得して
+            // グローバル変数に格納する。
+            var init = function() {
+                yukari = document.getElementById("yukari");
+                aoi = document.getElementById("aoi");
+                akane = document.getElementById("akane");
+            }
+
+            // 各 audio 要素のシークを 0 にする
+            var allReset = function() {
+                yukari.currentTime = 0;
+                aoi.currentTime = 0;
+                akane.currentTime = 0;
+            }
+
+            // 各 audio 要素を再生させる
+            var allPlay = function() {
+                yukari.play();
+                aoi.play();
+                akane.play();
+            }
+
+            // 各 audio 要素を一時停止させる
+            var allPause = function() {
+                yukari.pause();
+                aoi.pause();
+                akane.pause();
+            }
+        </script>
+        <style type="text/css">
+            audio, button {
+                margin: 0.5em;
+                display: block;
+            }
+        </style>
+    </head>
+    <body onload="init()">
+        <p>audio test.</p>
+        <div>
+        <audio id="yukari" controls>
+            audio 要素で、mp3 か wav をサポートしているブラウザを使用してください。
+            (VOICEROID 聞き比べ : 結月ゆかり EX)
+            <source src="./takeyabu_YukariEx.mp3" />
+            <source src="./takeyabu_YukariEx.wav" />
+        </audio>
+        <audio id="aoi" controls>
+            audio 要素で、mp3 か wav をサポートしているブラウザを使用してください。
+            (VOICEROID 聞き比べ : 琴葉葵)
+            <source src="./takeyabu_Aoi.mp3" />
+            <source src="./takeyabu_Aoi.wav" />
+        </audio>
+        <audio id="akane" controls>
+            audio 要素で、mp3 か wav をサポートしているブラウザを使用してください。
+            (VOICEROID 聞き比べ : 琴葉茜)
+            <source src="./takeyabu_Akane.mp3" />
+            <source src="./takeyabu_Akane.wav" />
+        </audio>
+        </div>
+        <div>
+        <button id="reset" onclick="allReset()">一気に先頭までシークするよ</button>
+        <button id="start" onclick="allPlay()">一気にしゃべりはじめるよ</button>
+        <button id="pause" onclick="allPause()">一気に 一時停止するよ</button>
+        </div>
+    </body>
+</html>
