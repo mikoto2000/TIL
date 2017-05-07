@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox fx:id="root" xmlns="http://javafx.com/javafx"
+    xmlns:fx="http://javafx.com/fxml"
+    fx:controller="jp.dip.oyasirazu.study.javafx.MyTreeViewCellController">
+    <ImageView fx:id="icon1" />
+    <Text fx:id="id" />
+    <ImageView fx:id="icon2" />
+    <Text fx:id="displayName" />
+    <ImageView fx:id="icon3" />
+</HBox>
+
