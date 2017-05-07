@@ -30,6 +30,9 @@ java -cp "build/libs/JavaFX.jar;src/main/resource" jp.dip.oyasirazu.study.javafx
 
 # s07_TabPane
 java -cp "build/libs/JavaFX.jar;src/main/resource" jp.dip.oyasirazu.study.javafx.TabPane
+
+# s08_TreeView
+java -cp "build/libs/JavaFX.jar" jp.dip.oyasirazu.study.javafx.TreeViewSample
 ```
 
 
