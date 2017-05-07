@@ -7,6 +7,13 @@ JavaFX の勉強です。
 Usage:
 ------
 
+環境変数 `ORG_GRADLE_PROJECT_JAVA_HOME` に、 Java のインストールパスを設定してください。
+
+```sh
+export JAVA_HOME=/c/Java/jdk1.8.0_131
+export ORG_GRADLE_PROJECT_JAVA_HOME=$JAVA_HOME
+```
+
 各プログラムの実行方法は下記の通りです。
 
 ```sh

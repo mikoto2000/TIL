@@ -8,5 +8,5 @@ repositories {
 }
 
 dependencies {
-    compile files('C:/Java/jdk1.8.0_51/jre/lib/ext/jfxrt.jar')
+    compile files(JAVA_HOME + '/jre/lib/ext/jfxrt.jar')
 }
