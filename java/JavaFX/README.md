@@ -55,6 +55,9 @@ java -cp build/libs/JavaFX.jar jp.dip.oyasirazu.study.javafx.TableViewSample
 
 # s14_MenuUseFxml
 java -cp "build/libs/JavaFX.jar" jp.dip.oyasirazu.study.javafx.MenuUseFxml
+
+# s15_FileChooser
+java -cp "build/libs/JavaFX.jar" jp.dip.oyasirazu.study.javafx.FileChooserSample
 ```
 
 
