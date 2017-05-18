@@ -49,6 +49,9 @@ java -cp "build/libs/JavaFX.jar;src/main/resource" jp.dip.oyasirazu.study.javafx
 
 # s11_TreeViewCustomCell
  java -cp "build/libs/JavaFX.jar;src/main/resource" jp.dip.oyasirazu.study.javafx.TreeViewCustomCel
+
+# s12_TableView
+java -cp build/libs/JavaFX.jar jp.dip.oyasirazu.study.javafx.TableViewSample
 ```
 
 
