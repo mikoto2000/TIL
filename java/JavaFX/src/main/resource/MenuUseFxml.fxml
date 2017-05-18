@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import java.lang.*?>
+<?import java.net.URL ?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+<BorderPane fx:id="root" xmlns="http://javafx.com/javafx"
+    xmlns:fx="http://javafx.com/fxml"
+    fx:controller="jp.dip.oyasirazu.study.javafx.MenuBarSampleController">
+    <top>
+        <MenuBar id="menuBar">
+            <menus>
+                <Menu text="Menu1">
+                    <items>
+                        <MenuItem text="Menu1-1" onAction="#onMenu1_1" />
+                        <MenuItem text="Menu1-2" onAction="#onMenu1_2" />
+                        <MenuItem text="Menu1-3" onAction="#onMenu1_3" />
+                        <MenuItem text="Menu1-4" onAction="#onMenu1_4" />
+                        <MenuItem text="Menu1-5" onAction="#onMenu1_5" />
+                    </items>
+                </Menu>
+                <Menu text="Menu2">
+                    <items>
+                        <MenuItem text="Menu2-1" onAction="#onMenu2_1" />
+                        <SeparatorMenuItem />
+                        <MenuItem text="Menu2-2" onAction="#onMenu2_2" />
+                        <SeparatorMenuItem />
+                        <MenuItem text="Menu2-3" onAction="#onMenu2_3" />
+                        <SeparatorMenuItem />
+                        <MenuItem text="Menu2-4" onAction="#onMenu2_4" />
+                        <SeparatorMenuItem />
+                        <MenuItem text="Menu2-5" onAction="#onMenu2_5" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+</BorderPane>
+

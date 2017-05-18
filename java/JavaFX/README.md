@@ -52,6 +52,9 @@ java -cp "build/libs/JavaFX.jar;src/main/resource" jp.dip.oyasirazu.study.javafx
 
 # s12_TableView
 java -cp build/libs/JavaFX.jar jp.dip.oyasirazu.study.javafx.TableViewSample
+
+# s14_MenuUseFxml
+java -cp "build/libs/JavaFX.jar;src/main/resource" jp.dip.oyasirazu.study.javafx.MenuUseFxml
 ```
 
 
