@@ -24,37 +24,37 @@ java -cp "build/libs/JavaFX.jar" jp.dip.oyasirazu.study.javafx.HelloWorld
 java -cp "build/libs/JavaFX.jar" jp.dip.oyasirazu.study.javafx.ButtonAndLabel
 
 # s03_ListView
-java -cp "build/libs/JavaFX.jar;src/main/resource" jp.dip.oyasirazu.study.javafx.ListView
+java -cp "build/libs/JavaFX.jar" jp.dip.oyasirazu.study.javafx.ListView
 
 # s04_ListViewAddItem
-java -cp "build/libs/JavaFX.jar;src/main/resource" jp.dip.oyasirazu.study.javafx.ListViewAddItem
+java -cp "build/libs/JavaFX.jar" jp.dip.oyasirazu.study.javafx.ListViewAddItem
 
 # s05_CustomListViewCell
-java -cp "build/libs/JavaFX.jar;src/main/resource" jp.dip.oyasirazu.study.javafx.CustomListViewCell
+java -cp "build/libs/JavaFX.jar" jp.dip.oyasirazu.study.javafx.CustomListViewCell
 
 # s06_AddPanel
-java -cp "build/libs/JavaFX.jar;src/main/resource" jp.dip.oyasirazu.study.javafx.AddPanel
+java -cp "build/libs/JavaFX.jar" jp.dip.oyasirazu.study.javafx.AddPanel
 
 # s07_TabPane
-java -cp "build/libs/JavaFX.jar;src/main/resource" jp.dip.oyasirazu.study.javafx.TabPane
+java -cp "build/libs/JavaFX.jar" jp.dip.oyasirazu.study.javafx.TabPane
 
 # s08_TreeView
 java -cp "build/libs/JavaFX.jar" jp.dip.oyasirazu.study.javafx.TreeViewSample
 
 # s09_TreeViewUseFxml
-java -cp "build/libs/JavaFX.jar;src/main/resource" jp.dip.oyasirazu.study.javafx.TreeViewUseFxml
+java -cp "build/libs/JavaFX.jar" jp.dip.oyasirazu.study.javafx.TreeViewUseFxml
 
 # s10_TreeViewCustomData
-java -cp "build/libs/JavaFX.jar;src/main/resource" jp.dip.oyasirazu.study.javafx.TreeViewCustomData
+java -cp "build/libs/JavaFX.jar" jp.dip.oyasirazu.study.javafx.TreeViewCustomData
 
 # s11_TreeViewCustomCell
- java -cp "build/libs/JavaFX.jar;src/main/resource" jp.dip.oyasirazu.study.javafx.TreeViewCustomCel
+java -cp "build/libs/JavaFX.jar" jp.dip.oyasirazu.study.javafx.TreeViewCustomCell
 
 # s12_TableView
 java -cp build/libs/JavaFX.jar jp.dip.oyasirazu.study.javafx.TableViewSample
 
 # s14_MenuUseFxml
-java -cp "build/libs/JavaFX.jar;src/main/resource" jp.dip.oyasirazu.study.javafx.MenuUseFxml
+java -cp "build/libs/JavaFX.jar" jp.dip.oyasirazu.study.javafx.MenuUseFxml
 ```
 
 
