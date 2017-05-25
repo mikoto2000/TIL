@@ -1,0 +1,14 @@
+apply {
+    plugin 'application'
+    plugin 'java'
+    plugin 'eclipse'
+}
+
+[compileJava, compileTestJava]*.options*.encoding = "UTF-8"
+
+repositories {
+    jcenter()
+}
+
+mainClassName = 'jp.dip.oyasirazu.study.pluginmechanism.Main'
+
