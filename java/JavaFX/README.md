@@ -58,6 +58,9 @@ java -cp "build/libs/JavaFX.jar" jp.dip.oyasirazu.study.javafx.MenuUseFxml
 
 # s15_FileChooser
 java -cp "build/libs/JavaFX.jar" jp.dip.oyasirazu.study.javafx.FileChooserSample
+
+# s16_EditableTreeView
+java -cp "build/libs/JavaFX.jar" jp.dip.oyasirazu.study.javafx.EditableTreeView
 ```
 
 
