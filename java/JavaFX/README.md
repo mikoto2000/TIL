@@ -61,6 +61,9 @@ java -cp "build/libs/JavaFX.jar" jp.dip.oyasirazu.study.javafx.FileChooserSample
 
 # s16_EditableTreeView
 java -cp "build/libs/JavaFX.jar" jp.dip.oyasirazu.study.javafx.EditableTreeView
+
+# s17_ContextMenu
+java -cp "build/libs/JavaFX.jar" jp.dip.oyasirazu.study.javafx.ContextMenu
 ```
 
 

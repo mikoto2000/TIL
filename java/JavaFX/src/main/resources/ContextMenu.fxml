@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns="http://javafx.com/javafx"
+    xmlns:fx="http://javafx.com/fxml"
+    fx:controller="jp.dip.oyasirazu.study.javafx.ContextMenuSampleController">
+    <center>
+        <HBox fx:id="hbox" onMouseClicked="#showContextMenu">
+            <Label text="Any Click, Open Context Menu(その都度作成して表示)." />
+        </HBox>
+    </center>
+    <bottom>
+        <Label fx:id="label" text="Right Click, Open Context Menu.(固定の内容を表示)" />
+    </bottom>
+</BorderPane>
+
