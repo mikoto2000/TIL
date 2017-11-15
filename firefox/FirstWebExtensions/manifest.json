@@ -1,0 +1,17 @@
+{
+
+  "manifest_version": 2,
+  "name": "FirstWenExtension",
+  "version": "1.0",
+
+  "description": "Adds a solid red border to all webpages.",
+
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["FirstWebExtensions.js"]
+    }
+  ]
+
+}
+
