@@ -1,0 +1,17 @@
+{
+
+  "manifest_version": 2,
+  "name": "CopyTitleToClipBoard",
+  "version": "1.0",
+
+  "description": "Copy title to clipboard, when type 'c'.",
+
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["Copy.js"]
+    }
+  ]
+
+}
+
