@@ -1,0 +1,18 @@
+{
+
+  "manifest_version": 2,
+  "name": "BrowserAction",
+  "version": "1.0",
+
+  "description": "BrowserActionTest.",
+
+  "background": {
+    "scripts": ["BrowserAction.js"]
+  },
+
+  "browser_action": {
+      "default_icon": "action_button.svg"
+  }
+
+}
+
