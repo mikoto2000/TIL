@@ -1,0 +1,20 @@
+{
+
+  "manifest_version": 2,
+  "name": "BasicNotification",
+  "version": "1.0",
+
+  "description": "BasicNotificationTest.",
+
+  "background": {
+    "scripts": ["Notification.js"]
+  },
+
+  "browser_action": {
+      "default_icon": "action_button.svg"
+  },
+
+  "permissions": [ "notifications" ]
+
+}
+
