@@ -27,7 +27,7 @@ Firefox の WebExtensions についての勉強記録。
 アドオンのデバッグコンソールについて
 ------------------------------------
 
-WebExtensions 内の `console.log()` は、開発者ツールのコンソールには表示されない。
+background script 内の `console.log()` は、開発者ツールのコンソールには表示されない。
 次の手順で開く、アドオンのデバッグコンソールに表示される。
 
 1. Firefox のアドレスバーに `about:debugging` と入力し、Firefox 開発者ツールデバッガーを表示
@@ -38,3 +38,4 @@ WebExtensions 内の `console.log()` は、開発者ツールのコンソール�
 WebExtensions 内で実行した `console.log()` は、この手順で開いたコンソールに出力される。
 
 
+content script は、ページの開発者ツールのコンソールに表示される。
