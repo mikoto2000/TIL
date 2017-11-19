@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<svg version="1.1" baseProfile="full" xmlns="http://www.w3.org/2000/svg" width="48" height="48">
+<g transform="translate(24, 24)">
+    <circle
+        cx="0"
+        cy="0"
+        r="20"
+        fill="white"
+        stroke="black"
+        stroke-width="8" />
+    <!-- '!' mark -->
+    <g>
+        <rect
+            x="-4"
+            y="-14"
+            width="8"
+            height="16"
+            fill="black" />
+        <rect
+            x="-4"
+            y="6"
+            width="8"
+            height="8"
+            fill="black" />
+    </g>
+</g>
+</svg>
