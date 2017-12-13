@@ -1,0 +1,11 @@
+{
+  "name": "hello_world",
+  "version": "1.0.0",
+  "description": "My first electron application.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mikoto2000",
+  "license": "MIT"
+}
