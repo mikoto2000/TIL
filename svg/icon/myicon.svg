@@ -170,7 +170,7 @@
             fill="black" />
         <g transform="translate(0, -6) rotate(-15)">
             <polygon
-                points="0,0 30,-5. 30,5"
+                points="0,0 30,-5 30,5"
                 style="fill:black;" />
         </g>
     </g>
