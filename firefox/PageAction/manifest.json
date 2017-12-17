@@ -1,0 +1,23 @@
+{
+
+  "manifest_version": 2,
+  "name": "PageAction",
+  "version": "1.0",
+
+  "description": "PageActionTest.",
+
+  "background": {
+    "scripts": ["PageAction.js"]
+  },
+
+  "permissions": [
+    "tabs"
+  ],
+
+  "page_action": {
+    "default_icon": "action_button.svg",
+    "default_title": "PageAction"
+  }
+
+}
+
