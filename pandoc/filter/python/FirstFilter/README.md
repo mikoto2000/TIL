@@ -12,6 +12,7 @@ test
 ----
 
 ```sh
+pandoc -f markdown -t json test.md -o test.json
 cat test.json | PYTHONPATH=./vendor python myfilter.py
 cat test.json | PYTHONPATH=./vendor python myfilter.py | pandoc -f json -t html5 -
 ```
