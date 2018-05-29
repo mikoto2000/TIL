@@ -107,3 +107,25 @@ java -jar .\build\libs\gs-spring-boot-0.1.0.jar
     - `Greetings from Spring Boot!` と表示されるはず
 
 
+ユニットテストの作成
+--------------------
+
+### `build.gradle` の編集
+
+dependencies に `org.springframework.boot:spring-boot-starter-test` を追加。
+
+```gradle
+testCompile("org.springframework.boot:spring-boot-starter-test")
+```
+
+### テストクラス実装
+
+[`src/test/java/hello/HelloControllerTest.java`](./src/test/java/hello/HelloControllerTest.java) を作成。
+
+
+### テスト実行
+
+```sh
+./gradlew build
+```
+
