@@ -129,3 +129,19 @@ testCompile("org.springframework.boot:spring-boot-starter-test")
 ./gradlew build
 ```
 
+
+統合テストの作成
+----------------
+
+### テストクラス実装
+
+[`src/test/java/hello/HelloControllerIT.java`](./src/test/java/hello/HelloControllerIT.java) を作成。
+
+
+### テスト実行
+
+```sh
+./gradlew build
+```
+
+
