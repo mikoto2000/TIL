@@ -1,6 +1,8 @@
 AccessPostgreSQL
 ================
 
+See: [Java 11 + Spring Boot 2 + Spring Data JPA で PostgreSQL にアクセスする - mikoto2000 の日記](https://mikoto2000.blogspot.com/2018/10/java-11-spring-boot-2-spring-data-jpa.html)
+
 環境
 ----
 
