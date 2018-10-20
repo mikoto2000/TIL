@@ -1,0 +1,49 @@
+apply {
+    plugin 'java'
+    plugin 'eclipse'
+    plugin 'application'
+}
+
+[compileJava, compileTestJava]*.options*.encoding = "UTF-8"
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'javax.mail:mail:1.5.0-b01'
+}
+
+mainClassName = 'jp.dip.oyasirazu.study.gmail.GetMail'
+
+ext.moduleName = 'jp.dip.oyasirazu.study.gmail'
+compileJava {
+    inputs.property("moduleName", moduleName)
+    doFirst {
+        options.compilerArgs = [
+            '--add-modules', 'mail',
+            '--module-path', classpath.asPath,
+        ]
+        classpath += files()
+    }
+}
+
+run {
+    inputs.property("moduleName", moduleName)
+    doFirst {
+        jvmArgs = [
+            '-p', 'build/resources/main',
+        ]
+        classpath += files()
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Gmail recieve study.'
+        attributes 'Implementation-Version': 1.0
+        attributes "Main-Class" : "jp.dip.oyasirazu.study.gmail.GetMail"
+    }
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+}
+
