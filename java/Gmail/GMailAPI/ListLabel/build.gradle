@@ -12,7 +12,6 @@ repositories {
 
 dependencies {
     compile 'com.google.api-client:google-api-client-java6:1.26.0'
-    compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
     compile 'com.google.apis:google-api-services-gmail:v1-rev83-1.23.0'
 }
 
