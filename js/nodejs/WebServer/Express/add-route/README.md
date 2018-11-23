@@ -15,7 +15,7 @@ npm start
 route 追加
 ----------
 
-TODO:
+See: [diff](https://github.com/mikoto2000/MiscellaneousStudy/compare/ce4d1988cd9bbf501a25aa674219a3a76376c579..499707e4ab1ae586f443772379698599de847427)
 
 
 動作確認
