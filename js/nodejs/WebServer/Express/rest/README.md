@@ -12,10 +12,10 @@ SET DEBUG=rest:*
 npm start
 ```
 
-REST 用の route 追加
+users の REST 化(？)
 --------------------
 
-TODO:
+See: [diff](https://github.com/mikoto2000/MiscellaneousStudy/compare/0fd9081336858b3bb8889b9909d7ba1921815d67..e2ff48ae15ea56053e0ccab4eed5ece1e18a4c00)
 
 
 動作確認
