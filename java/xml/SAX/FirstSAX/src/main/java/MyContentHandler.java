@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -12,9 +14,17 @@ import model.User;
  */
 public class MyContentHandler implements ContentHandler {
     private Context context;
+    private List<User> result;
+    private ParseFinishHandler parseFinishHandler;
+
+    public MyContentHandler(ParseFinishHandler parseFinishHandler) {
+        this.context = new Context();
+        this.result = new ArrayList<User>();
+        this.parseFinishHandler = parseFinishHandler;
+    }
 
     public MyContentHandler() {
-        this.context = new Context();
+        this((ParseFinishHandler)null);
     }
 
     public void startDocument() {
@@ -22,6 +32,11 @@ public class MyContentHandler implements ContentHandler {
     }
     public void endDocument() {
         System.out.println("endDocument");
+
+        // ハンドラが設定されていた場合、それを呼び出す
+        if (this.parseFinishHandler != null) {
+            parseFinishHandler.finished(result);
+        }
     }
 
     public void startElement(String uri, String localName, String qName, Attributes attrs) {
@@ -67,7 +82,7 @@ public class MyContentHandler implements ContentHandler {
         if (qName.equals("user")) {
             // 直前までにパースした情報をもとに、User クラス作成
             User user = new User(this.context.userId, this.context.userName);
-            System.out.println("Created user: " + user);
+            this.result.add(user);
 
             // user エレメントの外に出たことを記録
             // (context 内の情報を全初期化)
@@ -119,5 +134,9 @@ public class MyContentHandler implements ContentHandler {
         // 直前にパースした user エレメントの id と name
         private String userId = null;
         private String userName = null;
+    }
+
+    interface ParseFinishHandler {
+        public void finished(List<User> result);
     }
 }
