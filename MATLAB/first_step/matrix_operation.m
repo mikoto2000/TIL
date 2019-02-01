@@ -44,3 +44,11 @@ matrix_5 = [7 8; 9 10];
 multied_matrix_3 = matrix_3 * matrix_5;
 
 
+% 行列の同じ位置の要素ごとに計算する
+% たし算引き算はもともとそういう挙動。
+% 掛け算でそういうことをしたい場合は `.*` 演算子を使う。
+matrix_6 = [1 2; 3 4];
+matrix_7 = [5 6; 7 8];
+multied_matrix_4 = matrix_6 .* matrix_7; % [5 12; 21 32]
+
+
