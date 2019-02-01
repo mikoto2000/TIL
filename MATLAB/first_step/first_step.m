@@ -72,3 +72,20 @@ three_dimensional_matrix_1(:,:,3) = page_3;
 % See: https://jp.mathworks.com/help/matlab/ref/cat.html
 three_dimensional_matrix_2 = cat(3, page_1, page_2, page_3);
 
+% 構造体
+% キーが String の連想配列的な感じ。
+% 「型を定義して、その通りのプロパティを持つことを強制する」みたいな仕組みはなさそう。
+struct_1 = struct('key_1', 'value_1', 'key_2', 3);
+struct_2.key_1 = 'value_3';
+struct_2.key_2 = 'value_4';
+
+% セル配列
+cell_1 = {1 'name_1' struct('value1', 1, 'value2', 2, 'value3', 3)};
+cell_2 = {2 'name_2' struct('value1', 1, 'value2', 2, 'value3', 3)};
+cell_3 = {3 'name_3' struct('value1', 1, 'value2', 2, 'value3', 3)};
+cell_array = {cell_1 cell_2 cell_3};
+
+% セル配列へのアクセスは、`()` が `{}` になっただけで配列と同じ。
+cell_1_number = cell_array{1}{1}; % 1
+cell_2_number = cell_array{2}{1}; % 2
+cell_3_number = cell_array{3}{1}; % 3
