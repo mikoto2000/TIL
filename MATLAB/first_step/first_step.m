@@ -52,5 +52,23 @@ matrix_1_1_and_1_3 = matrix(1, 1:2:3); % [1 3]
 % 全要素を指定したい場合は `:` を指定でいける
 matrix_2_row_all = matrix(2, :); % [4 5 6]
 
+% 多次元配列
 
+% 全要素が 1 の、3x3x3 の多次元配列
+% Step1: 2 次元配列を作る
+page_1 = [1 1 1; 1 1 1; 1 1 1];
+page_2 = [1 1 1; 1 1 1; 1 1 1];
+page_3 = [1 1 1; 1 1 1; 1 1 1];
+
+% Step2-1: MATLAB が、配列サイズを自動拡張してくれるのを利用して、
+%          3 次元目のインデックスを指定しつつ「Step1」で作った 2 次元配列を代入する。
+three_dimensional_matrix_1(:,:,1) = page_1;
+three_dimensional_matrix_1(:,:,2) = page_2;
+three_dimensional_matrix_1(:,:,3) = page_3;
+
+% Step2-2: cat 関数を使って作ることもできる
+% ※ 第一引数に渡している数字は「次元数」。
+%    (今回は 3 次元方向に結合するので 3 を指定)
+% See: https://jp.mathworks.com/help/matlab/ref/cat.html
+three_dimensional_matrix_2 = cat(3, page_1, page_2, page_3);
 
