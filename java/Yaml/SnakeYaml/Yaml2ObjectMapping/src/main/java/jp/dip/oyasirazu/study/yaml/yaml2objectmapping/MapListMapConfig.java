@@ -9,13 +9,13 @@ import java.util.Map;
  * Config
  */
 public class MapListMapConfig {
-    private Map<String, List<Map<String, Snippet>>> snippets;
+    private Map<String, List<Snippet>> snippets;
 
-    public void setSnippets(Map<String, List<Map<String, Snippet>>> snippets) {
+    public void setSnippets(Map<String, List<Snippet>> snippets) {
         this.snippets = snippets;
     }
 
-    public Map<String, List<Map<String, Snippet>>> getSnippets() {
+    public Map<String, List<Snippet>> getSnippets() {
         return snippets;
     }
 
