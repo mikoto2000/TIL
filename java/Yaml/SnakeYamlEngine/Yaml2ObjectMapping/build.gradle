@@ -26,6 +26,9 @@ dependencies {
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
+
+    // https://mvnrepository.com/artifact/org.snakeyaml/snakeyaml-engine
+    compile group: 'org.snakeyaml', name: 'snakeyaml-engine', version: '1.0'
 }
 
 // Define the main class for the application
