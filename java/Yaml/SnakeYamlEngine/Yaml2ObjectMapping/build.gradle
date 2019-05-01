@@ -33,3 +33,6 @@ dependencies {
 
 // Define the main class for the application
 mainClassName = 'jp.dip.oyasirazu.study.yaml.App'
+
+[compileJava, compileTestJava]*.options*.encoding = "UTF-8"
+
