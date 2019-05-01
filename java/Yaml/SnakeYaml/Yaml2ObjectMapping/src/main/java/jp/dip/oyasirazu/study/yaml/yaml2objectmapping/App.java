@@ -3,12 +3,46 @@
  */
 package jp.dip.oyasirazu.study.yaml.yaml2objectmapping;
 
-public class App {
-    public String getGreeting() {
-        return "Hello world.";
-    }
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Map;
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+import org.yaml.snakeyaml.Yaml;
+
+public class App {
+    public static void main(String[] args) throws IOException {
+        {
+            var yaml = new Yaml();
+
+            var config = yaml.loadAs(
+                    new InputStreamReader(
+                        ClassLoader.getSystemResourceAsStream("StringListConfig.yaml"),
+                        "UTF-8"), StringListConfig.class);
+
+            System.out.println(config);
+        }
+
+        {
+            var yaml = new Yaml();
+
+            var config = yaml.loadAs(
+                    new InputStreamReader(
+                        ClassLoader.getSystemResourceAsStream("MapListConfig.yaml"),
+                        "UTF-8"), MapListConfig.class);
+
+            System.out.println(config);
+        }
+
+        {
+            var yaml = new Yaml();
+
+            var config = yaml.loadAs(
+                    new InputStreamReader(
+                        ClassLoader.getSystemResourceAsStream("MapListMapConfig.yaml"),
+                        "UTF-8"), MapListMapConfig.class);
+
+            System.out.println(config);
+        }
     }
 }
