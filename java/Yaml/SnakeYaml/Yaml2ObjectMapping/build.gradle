@@ -26,7 +26,12 @@ dependencies {
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
+
+    // https://mvnrepository.com/artifact/org.yaml/snakeyaml
+    compile group: 'org.yaml', name: 'snakeyaml', version: '1.24'
 }
 
 // Define the main class for the application
 mainClassName = 'jp.dip.oyasirazu.study.yaml.yaml2objectmapping.App'
+
+[compileJava, compileTestJava]*.options*.encoding = "UTF-8"
