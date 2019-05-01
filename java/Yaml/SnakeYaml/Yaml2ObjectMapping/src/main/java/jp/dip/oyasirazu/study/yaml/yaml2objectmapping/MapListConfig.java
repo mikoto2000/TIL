@@ -3,19 +3,18 @@ package jp.dip.oyasirazu.study.yaml.yaml2objectmapping;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Config
  */
 public class MapListConfig {
-    private List<Map<String, Snippet>> snippets;
+    private List<Snippet> snippets;
 
-    public void setSnippets(List<Map<String, Snippet>> snippets) {
+    public void setSnippets(List<Snippet> snippets) {
         this.snippets = snippets;
     }
 
-    public List<Map<String, Snippet>> getSnippets() {
+    public List<Snippet> getSnippets() {
         return snippets;
     }
 
