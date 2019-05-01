@@ -3,12 +3,40 @@
  */
 package jp.dip.oyasirazu.study.yaml.jackson.yaml2objectmapping;
 
-public class App {
-    public String getGreeting() {
-        return "Hello world.";
-    }
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+
+public class App {
+    public static void main(String[] args) throws IOException {
+        {
+            var mapper = new ObjectMapper(new YAMLFactory());
+            var config = mapper.readValue(new InputStreamReader(
+                        ClassLoader.getSystemResourceAsStream("StringListConfig.yaml"),
+                        "UTF-8"), StringListConfig.class);
+
+            System.out.println(config);
+        }
+
+        {
+            var mapper = new ObjectMapper(new YAMLFactory());
+            var config = mapper.readValue(new InputStreamReader(
+                        ClassLoader.getSystemResourceAsStream("MapListConfig.yaml"),
+                        "UTF-8"), MapListConfig.class);
+
+            System.out.println(config);
+        }
+
+        {
+            var mapper = new ObjectMapper(new YAMLFactory());
+            var config = mapper.readValue(new InputStreamReader(
+                        ClassLoader.getSystemResourceAsStream("MapListMapConfig.yaml"),
+                        "UTF-8"), MapListMapConfig.class);
+
+            System.out.println(config);
+        }
     }
 }
+

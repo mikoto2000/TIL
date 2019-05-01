@@ -1,0 +1,19 @@
+snippets:
+    - label: func
+      description: function
+      newText: |-
+          function ${1:name}(${2:args}) {
+              ${3:content}
+          }
+    - label: if
+      description: if statement
+      newText: |-
+          if (${1:condition}) {
+              ${2:expr}
+          }
+    - label: for
+      description: for statement
+      newText: |-
+          for (${1:initial} : ${2:condition} : ${3:increment}) {
+              ${4:expr}
+          }

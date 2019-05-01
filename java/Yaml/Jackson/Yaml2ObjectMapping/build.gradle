@@ -26,7 +26,16 @@ dependencies {
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.8'
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml
+    compile group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.9.8'
 }
 
 // Define the main class for the application
 mainClassName = 'jp.dip.oyasirazu.study.yaml.jackson.yaml2objectmapping.App'
+
+[compileJava, compileTestJava]*.options*.encoding = "UTF-8"
+
