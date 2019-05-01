@@ -1,0 +1,15 @@
+- file_type: markdown
+    - label: test1
+      description: test1 description
+      newText: test1 text
+    - label: test2
+      description: test2 description
+      newText: test2 text
+- file_type: yaml
+    - label: test3
+      description: test3 description
+      newText: test3 text
+    - label: test4
+      description: test4 description
+      newText: test4 text
+
