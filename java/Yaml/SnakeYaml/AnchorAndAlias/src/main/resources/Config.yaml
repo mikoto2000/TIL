@@ -1,0 +1,8 @@
+config:
+    markdown: &markdown
+        - label: label1
+          description: description1
+        - label: label2
+          description: description2
+    md: *markdown # Alias として機能する
+
