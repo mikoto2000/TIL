@@ -1,7 +1,5 @@
 package jp.dip.oyasirazu.study.yaml.yaml2objectmapping;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +25,14 @@ public class MapListMapConfig {
         private String label;
         private String description;
         private String newText;
+
+        public Snippet() {}
+
+        public Snippet(String label, String description, String newText) {
+            this.label = label;
+            this.description = description;
+            this.newText = newText;
+        }
 
         public void setLabel(String label) {
             this.label = label;

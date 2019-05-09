@@ -18,6 +18,8 @@ public class App {
                         "UTF-8"), StringListConfig.class);
 
             System.out.println(config);
+
+            System.out.println(config.getSnippets().get(0).getClass());
         }
 
         {
@@ -27,6 +29,8 @@ public class App {
                         "UTF-8"), MapListConfig.class);
 
             System.out.println(config);
+
+            System.out.println(config.getSnippets().get(0).getClass());
         }
 
         {
@@ -36,6 +40,9 @@ public class App {
                         "UTF-8"), MapListMapConfig.class);
 
             System.out.println(config);
+
+            // Jackson Dataformat YAML は、 Snippet までマッピングしてくれる
+            System.out.println(config.getSnippets().get("java").get(0).getClass());
         }
     }
 }
