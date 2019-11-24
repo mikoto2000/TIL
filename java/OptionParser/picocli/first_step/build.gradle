@@ -26,7 +26,20 @@ dependencies {
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
+
+    compile 'info.picocli:picocli:4.1.0'
 }
 
 // Define the main class for the application
 mainClassName = 'first_step.App'
+
+[compileJava, compileTestJava]*.options*.encoding = "UTF-8"
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'picocli sample.'
+        attributes 'Implementation-Version': 1.0
+        attributes "Main-Class" : "first_step.App"
+    }
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+}
