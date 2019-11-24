@@ -3,12 +3,53 @@
  */
 package first_step;
 
-public class App {
-    public String getGreeting() {
-        return "Hello world.";
-    }
+import java.util.List;
+import java.util.concurrent.Callable;
 
+import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.Parameters;
+
+public class App {
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        int returnCode = new CommandLine(new MyCommand()).execute(args);
+        System.exit(returnCode);
+    }
+}
+
+@Command( name = "App", mixinStandardHelpOptions = true, version = "App 1.0.0" )
+class MyCommand implements Callable<Integer> {
+    @Option(names = { "-s", "--string" }, paramLabel = "VALUE", description = "文字列渡せますよー")
+    private String optionString;
+
+    @Option(names = { "-i", "--integer" }, paramLabel = "VALUE", description = "整数(integer)渡せますよー")
+    private int optionInteger;
+
+    @Option(names = { "-l", "--long" }, paramLabel = "VALUE", description = "整数(long)渡せますよー")
+    private long optionLong;
+
+    @Option(names = { "-f", "--float" }, paramLabel = "VALUE", description = "小数(float)渡せますよー")
+    private float optionFloat;
+
+    @Option(names = { "-d", "--double" }, paramLabel = "VALUE", description = "小数(double)渡せますよー")
+    private double optionDouble;
+
+    @Option(names = { "-b", "--boolean" }, paramLabel = "VALUE", description = "真偽(boolean)渡せますよー")
+    private boolean optionBoolean;
+
+    @Parameters(description = "コマンドラインパラメーター")
+    private List<String> params;
+
+    @Override
+    public Integer call() {
+        System.out.println(String.format("optionString: %s", optionString));
+        System.out.println(String.format("optionInteger: %s", optionInteger));
+        System.out.println(String.format("optionLong: %s", optionLong));
+        System.out.println(String.format("optionFloat: %s", optionFloat));
+        System.out.println(String.format("optionDouble: %s", optionDouble));
+        System.out.println(String.format("optionBooldan: %s", optionBoolean));
+        System.out.println(String.format("params: %s", params));
+        return 0;
     }
 }
