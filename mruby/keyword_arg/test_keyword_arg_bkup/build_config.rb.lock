@@ -1,0 +1,23 @@
+---
+mruby_version:
+  version: 2.1.0
+  release_no: 20100
+builds:
+  host:
+    https://github.com/iij/mruby-mtest.git:
+      url: https://github.com/iij/mruby-mtest.git
+      branch: master
+      commit: 34a477d249b0d21671058be33aa75d04c3e981ba
+      version: 0.0.0
+  x86_64-pc-linux-gnu:
+    https://github.com/iij/mruby-mtest.git:
+      url: https://github.com/iij/mruby-mtest.git
+      branch: master
+      commit: 34a477d249b0d21671058be33aa75d04c3e981ba
+      version: 0.0.0
+  x86_64-w64-mingw32:
+    https://github.com/iij/mruby-mtest.git:
+      url: https://github.com/iij/mruby-mtest.git
+      branch: master
+      commit: 34a477d249b0d21671058be33aa75d04c3e981ba
+      version: 0.0.0
