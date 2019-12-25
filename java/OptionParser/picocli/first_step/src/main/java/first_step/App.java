@@ -38,7 +38,10 @@ class MyCommand implements Callable<Integer> {
     @Option(names = { "-b", "--boolean" }, paramLabel = "VALUE", description = "真偽(boolean)渡せますよー")
     private boolean optionBoolean;
 
-    @Parameters(description = "コマンドラインパラメーター")
+    @Option(names = { "-a", "--array" }, paramLabel = "VALUE", description = "複数オプション渡すことで配列にできますよー")
+    private List<String> optionArray;
+
+   @Parameters(description = "コマンドラインパラメーター")
     private List<String> params;
 
     @Override
@@ -49,6 +52,7 @@ class MyCommand implements Callable<Integer> {
         System.out.println(String.format("optionFloat: %s", optionFloat));
         System.out.println(String.format("optionDouble: %s", optionDouble));
         System.out.println(String.format("optionBooldan: %s", optionBoolean));
+        System.out.println(String.format("optionArray: %s", optionArray));
         System.out.println(String.format("params: %s", params));
         return 0;
     }
