@@ -56,6 +56,9 @@ public class Main {
         @Option(name="-b", aliases="--boolean", metaVar="VALUE", usage="真偽(boolean)渡せますよー")
         private boolean optionBoolean;
 
+        @Option(name="-a", aliases="--array", metaVar="VALUE", usage="複数オプション渡すことで配列にできますよー")
+        private List<String> optionArray;
+
         @Argument
         private List<String> arguments;
 
@@ -66,6 +69,7 @@ public class Main {
                     + "optionFloat: " + this.optionFloat + "\n"
                     + "optionDouble: " + this.optionDouble + "\n"
                     + "optionBoolean: " + this.optionBoolean + "\n"
+                    + "optionArray: " + this.optionArray + "\n"
                     + "arguments: " + this.arguments + "\n";
         }
     }
