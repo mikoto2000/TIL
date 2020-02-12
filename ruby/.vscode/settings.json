@@ -1,0 +1,16 @@
+{
+  "editor.highlightActiveIndentGuide": true,
+  "editor.matchBrackets": "always",
+  "editor.trimAutoWhitespace": true,
+  "editor.renderControlCharacters": true,
+  "editor.renderFinalNewline": true,
+  "editor.renderIndentGuides": true,
+  "editor.renderLineHighlight": "all",
+  "editor.renderWhitespace": "all",
+  "ruby.codeCompletion": false,
+  "ruby.format": false,
+  "ruby.intellisense": false,
+  "ruby.lint": {
+      "ruby": true
+  }
+}
