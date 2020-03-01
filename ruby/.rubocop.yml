@@ -1,0 +1,9 @@
+Style/AsciiComments:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 160
+
+Metrics/MethodLength:
+  Max: 20
+
