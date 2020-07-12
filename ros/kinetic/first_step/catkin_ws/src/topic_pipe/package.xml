@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>topic_pipe</name>
+  <version>0.0.0</version>
+  <description>The topic_pipe package</description>
+
+  <maintainer email="mikoto2000@gmail.com">mikoto2000</maintainer>
+
+  <license>BSD</license>
+
+  <!-- <url type="website">http://github.com/mikoto2000/topic_pipe</url> -->
+
+  <author email="mikoto2000@gmail.com">mikoto2000</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_export_depend>rospy</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+
+</package>
+
