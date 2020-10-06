@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>twojs first step</title>
+    <link rel="stylesheet" type="text/css" href="./main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/two.js/0.7.0/two.min.js" integrity="sha512-R/rIc7wP79QeUCTWfzz31otkUj5TS/gMeREfTiVQAus+DPXhpBsPYtz0MTnCIgC21S3gFKw9kopx0vNo/WTZTw==" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="target">
+        <img src="https://secure.gravatar.com/avatar/1e4b5115b1fb796c2a8c25ed71db564a" alt="プロフィール">
+        <div id="mycanvas"></canvas>
+    </div>
+    <script>
+        const el = document.getElementById("mycanvas");
+
+        two = new Two({
+            type: Two.Types.webgl,
+            fullscreen: false,
+            width: 256,
+            height: 256
+        });
+        two.appendTo(el);
+
+        // [x, y] の配列が渡される想定
+        const points = [
+            [64, 64],
+            [64, 192],
+            [192, 192],
+            [192, 64]
+        ];
+
+        // points を flatten して makePath に渡す
+        const path = two.makePath(...points.flat(), false);
+
+        // Path の属性設定
+        path.noFill();;
+        path.stroke = "#88888888";
+        path.linewidth = 10;
+
+        // 描画
+        two.update();
+    </script>
+</body>
+</html>
+
