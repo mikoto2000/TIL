@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Canvas overlay test</title>
+    <link rel="stylesheet" type="text/css" href="./overlay.css">
+</head>
+<body>
+    <div id="target">
+        <img src="https://secure.gravatar.com/avatar/1e4b5115b1fb796c2a8c25ed71db564a" alt="プロフィール">
+        <!-- canvas の width, height 属性には、 canvas の viewport を設定 -->
+        <canvas width="256" height="256" id="mycanvas"></canvas>
+    </div>
+    <script>
+        const canvas = document.getElementById("mycanvas");
+        const ctx = canvas.getContext("2d");
+
+        // 線の RGBA
+        ctx.strokeStyle = "#88888888";
+
+        // 線の太さ設定
+        ctx.lineWidth = 10;
+
+        // 描画する線の情報を組み立て
+        ctx.beginPath();
+        ctx.moveTo(64, 64);
+        ctx.lineTo(64, 192);
+        ctx.lineTo(192, 192);
+        ctx.lineTo(192, 64);
+        ctx.closePath();
+
+        ctx.moveTo(80, 80);
+        ctx.lineTo(80, 176);
+        ctx.lineTo(176, 176);
+        ctx.lineTo(176, 80);
+        ctx.closePath();
+
+        // 線の描画
+        ctx.stroke();
+    </script>
+</body>
+</html>
+

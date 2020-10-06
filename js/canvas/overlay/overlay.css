@@ -1,0 +1,10 @@
+div#target > img, canvas {
+    /* 「親要素からみて絶対一で 0,0 に描画」とすることで、 img と canvas を重ねる */
+    position: absolute;
+    top: 0;
+    left; 0;
+
+    /* css の width, height には、描画サイズを設定 */
+    width: 256px;
+    height: 256px;
+}
