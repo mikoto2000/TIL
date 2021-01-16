@@ -53,4 +53,7 @@ boolean: true
 ## 参考資料
 
 - [tj/commander.js: node.js command-line interfaces made easy](https://github.com/tj/commander.js/#custom-option-processing)
+- [Number() コンストラクター - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Number/Number)
+- [Number.isInteger() - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger)
+- [Number.isFinite() - JavaScript | MDN](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Number/isFinite)
 
