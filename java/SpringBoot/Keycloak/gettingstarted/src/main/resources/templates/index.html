@@ -5,10 +5,10 @@
     <title>index</title>
 </head>
 <body>
-    <p th:text="Hello, ${username}"></p>
+    <p th:text="'Hello, ' + ${username}"></p>
 
     <ul>
-        <li><a href="./users/${username}" th:text="./users/${username}"></a></li>
+        <li><a th:href="'./users/' + ${username}" th:text="'./users/' + ${username}"></a></li>
     </ul>
 </body>
 </html>
