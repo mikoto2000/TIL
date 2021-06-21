@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>index</title>
+</head>
+<body>
+    <p th:text="'Hello, ' + ${username}"></p>
+
+    <ul>
+        <li><a th:href="'./users/' + ${username}" th:text="'./users/' + ${username}"></a></li>
+    </ul>
+</body>
+</html>
