@@ -22,7 +22,7 @@ public class AppController {
     @GetMapping(path = "/users/{name}")
     public String customers(@PathVariable("name") String name, Principal principal, Model model) {
 
-        model.addAttribute("username", principal.getName());
+        model.addAttribute("username", name);
         return "userpage";
     }
 }
