@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>File Upload with Drag and Drop</title>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.6.0/jszip.min.js"
+            integrity="sha512-uVSVjE7zYsGz4ag0HEzfugJ78oHCI1KhdkivjQro8ABL/PRiEO4ROwvrolYAcZnky0Fl/baWKYilQfWvESliRA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <style>
+        .file-over{
+            background-color: gray;
+        }
+        </style>
+    </head>
+    <body>
+        <div>
+            <!-- ファイル選択 -->
+            <h2>ファイル選択</h2>
+            <div id="drop-area">
+                ここにファイルをドロップ<br/>
+                または
+            </div>
+            <input
+                type="file"
+                id="uploader"
+                multiple
+                accept="*/*"
+                onchange="handleFiles(this)"
+                />
+        </div>
+        <div>
+            <h2>ダウンロードリンク</h2>
+            <a id="download-link">ファイル選択後、ここにリンクが表示されます。</a>
+        </div>
+        <div>
+            <h2>選択ファイル一覧</h2>
+            <div id="file-list">
+            </div>
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                init();
+            });
+
+            function init() {
+                const dropArea = document.getElementById('drop-area');
+                    dropArea.addEventListener("dragenter", e => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                });
+
+                dropArea.addEventListener("dragover", e => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    console.log(e);
+
+                    // ファイルオーバーのスタイル追加
+                    e.target.classList.add('file-over');
+                });
+
+                dropArea.addEventListener("dragleave", e => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    console.log(e);
+
+                    // ファイルオーバーのスタイル追加
+                    e.target.classList.remove('file-over');
+                });
+
+
+                // ファイルドロップ時の処理
+                dropArea.addEventListener("drop", e => {
+                    e.stopPropagation();
+                    e.preventDefault();
+
+                    // ファイルオーバーのスタイル削除
+                    e.target.classList.remove('file-over');
+
+                    // ドラッグされた要素がローカルファイルでなければ何もしない
+                    console.log(e.dataTransfer.types);
+                    if (!e.dataTransfer.types.includes('Files')) {
+                        return;
+                    }
+
+                    // ファイル一覧取得
+                    const upload_files = e.dataTransfer.files;
+                    console.log(upload_files);
+
+                    // input タグのファイル更新
+                    const uploader = document.getElementById('file-list');
+                    uploader.files = upload_files;
+
+                    // input タグのファイルが更新されたので、更新後処理を呼び出す
+                    handleFiles(uploader);
+                });
+            }
+
+            function handleFiles(uploader) {
+                // input  タグから選択したファイル一覧を取得
+                const files = uploader.files;
+                console.log(uploader.files);
+
+                // 選択したファイル一覧更新
+                updateFileList(files);
+
+                // 選択ファイルを Zip アーカイブへ追加
+                const zip = new JSZip();
+                [...files].forEach((file) => {
+                    console.log(file);
+                    zip.file(file.name, file);
+                    console.log(zip);
+                });
+
+                // Zip ファイルに圧縮
+                const zipOption = {
+                    type: 'blob',
+                    compression: 'DEFLATE',
+                    compressionOptions: { level: 9 }
+
+                };
+                const generateAsyncPromis = zip.generateAsync(zipOption);
+
+                // 圧縮が完了したら
+                // Blob を使用したダウンロード URL を生成して表示
+                generateAsyncPromis.then(zipBlob => {
+                    const url = URL.createObjectURL(zipBlob);
+                    createDownloadLink(document.body, url, 'test.zip');
+                });
+            };
+
+            // 選択ファイル一覧を更新
+            function updateFileList(files) {
+                const fileList = document.getElementById('file-list');
+
+                // ファイル一覧の ul 要素削除
+                if (fileList.childElementCount != 0) {
+                    while(fileList.firstChild) {
+                        fileList.removeChild(fileList.firstChild);
+                    }
+                }
+
+                // ファイル名のリストを組み立てて DOM に追加
+                const ul = document.createElement('ul');
+                [...files].forEach((file) => {
+                    console.log(file);
+                    const li = document.createElement('li');
+                    li.textContent = file.name;
+                    ul.appendChild(li);
+                });
+                fileList.appendChild(ul);
+            }
+
+            // ダウンロードリンクを作成
+            function createDownloadLink(appendTarget, url, textContent) {
+                const anchor = document.getElementById('download-link');
+                anchor.href = url;
+                anchor.textContent = textContent;
+                anchor.download = textContent;
+            }
+        </script>
+    </body>
+</html>
+
+<!--
+# 参考資料
+
+- [JSZip](https://stuk.github.io/jszip/)
+- [jszip - Libraries - cdnjs - The #1 free and open source CDN built to make life easier for developers](https://cdnjs.com/libraries/jszip)
+- [<input type="file"> - HTML: HyperText Markup Language | MDN](https://developer.mozilla.org/ja/docs/Web/HTML/Element/input/file)
+- [How to use JSZip](https://stuk.github.io/jszip/documentation/examples.html)
+- [JavaScript でファイルを読み込む方法 - JavaScript の基本 - JavaScript 入門](https://javascript.keicode.com/newjs/how-to-read-file-with-file-api.php)
+- [Blob - Web API | MDN](https://developer.mozilla.org/ja/docs/Web/API/Blob)
+- [file(name, data [,options])](https://stuk.github.io/jszip/documentation/api_jszip/file_data.html)
+- [generateAsync(options[, onUpdate])](https://stuk.github.io/jszip/documentation/api_jszip/generate_async.html)
+-->
+
+
