@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Multi download</title>
+    </head>
+    <body>
+        <div>
+            <button id="target" onclick="download(this)">Download 3 text files.</button>
+        </div>
+        <div style="display: none;">
+            <a id="hidden-link" />
+        </div>
+        <script>
+            function download(button) {
+                const blobUrls = [
+                    "./testfile/1.txt",
+                    "./testfile/2.txt",
+                    "./testfile/3.txt"];
+
+                // 作成した Blob URL を順番に
+                // ダミーの a タグに設定してクリックイベント発火
+                const anchor = document.getElementById('hidden-link');
+                blobUrls.forEach((e, i) => {
+                    anchor.href = e;
+                    anchor.download = `${i}.txt`;
+                    anchor.click();
+                });
+            }
+        </script>
+    </body>
+</html>
+
+
+
