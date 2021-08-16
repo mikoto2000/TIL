@@ -28,5 +28,5 @@ docker run -it --rm -p 80:80 -v "$(pwd):/usr/local/apache2/htdocs" mikoto2000/mu
 
 これで、 3 つのファイルが並列にダウンロードされることが確認できる。
 
-![](./demo.gif)
+![](./20210817_multi-file-download.gif)
 
