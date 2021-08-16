@@ -30,3 +30,9 @@ docker run -it --rm -p 80:80 -v "$(pwd):/usr/local/apache2/htdocs" mikoto2000/mu
 
 ![](./20210817_multi-file-download.gif)
 
+
+## 参考資料
+
+- [Httpd - Official Image | Docker Hub](https://hub.docker.com/_/httpd)
+- [mod_ratelimit - Apache HTTP Server Version 2.4](https://httpd.apache.org/docs/2.4/mod/mod_ratelimit.html)
+
