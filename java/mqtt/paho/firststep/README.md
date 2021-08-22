@@ -1,0 +1,1 @@
+https://start.spring.io/#!type=maven-project&language=java&platformVersion=2.5.4&packaging=jar&jvmVersion=11&groupId=dev.mikoto2000.study.mqtt.paho&artifactId=firststep&name=firststep&description=Demo%20project%20for%20Paho.&packageName=dev.mikoto2000.study.mqtt.paho.firststep
