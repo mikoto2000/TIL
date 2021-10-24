@@ -1,0 +1,4 @@
+tcp:
+  server:
+    port: 5555
+
