@@ -31,6 +31,11 @@ mvn -N io.takari:maven:wrapper
 
 この後、依存関係の追加や `exec-maven-plugin` の導入を行った。
 
+## Exif 確認ツール
+
+- [EXIF確認君 - 画像情報解析ツール](http://exif-check.org/)
+- [Exif読取り君 -ソフトウェアの部屋-](https://enrai.matrix.jp/exif.html)
+
 
 ## 参考資料
 
