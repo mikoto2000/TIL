@@ -1,20 +1,18 @@
 package dev.mikoto2000.study.springboot.integration.tcp.firststep;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties("tcp.server")
+@Getter
+@Setter
 public class TcpServerProps {
 
     private int port;
 
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
 }
 
