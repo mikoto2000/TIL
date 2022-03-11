@@ -1,0 +1,15 @@
+{
+  "name": "blocking-queue",
+  "version": "1.0.0",
+  "description": "Blocking Queue Study",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+  },
+  "author": "mikoto2000",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^27.5.1"
+  }
+}
