@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        const invoke = window.__TAURI__.invoke;
+        const listen = window.__TAURI__.event.listen;
+        const emit = window.__TAURI__.event.emit;
+
+        async function init() {
+            // バックエンドの初期化処理呼び出し
+            await invoke('post_setup_process_for_backend', {});
+
+            // バックエンドが emit するイベントの listen
+            const unlistenBackendHello = await listen('backendHello', event => {
+                console.log(event);
+                const p = document.createElement('p');
+                p.textContent = event.payload.message;
+                document.body.append(p);
+            });
+
+            // フロントエンドが emit するイベントの listen
+            const unlistenFrontendHello = await listen('frontendHello', event => {
+                console.log(event);
+                const p = document.createElement('p');
+                p.textContent = JSON.parse(event.payload).message;
+                document.body.append(p);
+            });
+
+            // 5 秒後に listen を止める
+            setTimeout(() => {
+                console.log("timeout.");
+                unlistenBackendHello();
+                unlistenFrontendHello();
+                const p = document.createElement('p');
+                p.textContent = 'stop event listen.';
+                document.body.append(p);
+            }, 5000);
+
+            // 1 秒に 1 回、フロントエンドのイベントを emit する
+            const emitTimerId = setInterval(() => {
+                emit('frontendHello', { message: 'Hello, World from frontend!!!' });
+            }, 1000);
+
+            // 10 秒後に emit を終了する
+            setTimeout(() => {
+                clearInterval(emitTimerId);
+                const p = document.createElement('p');
+                p.textContent = 'stop emit frontendHello.';
+                document.body.append(p);
+            }, 10000);
+
+        }
+
+        init();
+
+    });
+  </script>
+  <body>
+    <h1>tauri-app-event</h1>
+  </body>
+</html>
