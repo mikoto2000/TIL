@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        const invoke = window.__TAURI__.invoke;
+        async function callEcho(str) {
+            // メインプロセスからメッセージを取得
+            let message = await invoke('echo', {message: str});
+
+            // メインプロセスから取得したメッセージをコンソールへ表示
+            console.log(message);
+
+            // メインプロセスから取得したメッセージを p タグにして body へ追加
+            const p = document.createElement('p');
+            p.textContent = message;
+            document.querySelector('body').append(p);
+        }
+        callEcho('Hello, Tauri!!!');
+    });
+  </script>
+  <body>
+    <h1>tauri-app-render2main</h1>
+  </body>
+</html>
