@@ -32,14 +32,37 @@
                 document.body.append(p);
             });
 
+            // フロントエンドが emit するイベントの listen
+            const unlistenFrontendHello = await listen('frontendHello', event => {
+                console.log(event);
+                const p = document.createElement('p');
+                p.textContent = JSON.parse(event.payload).message;
+                document.body.append(p);
+            });
+
             // 5 秒後に listen を止める
             setTimeout(() => {
                 console.log("timeout.");
                 unlistenBackendHello();
+                unlistenFrontendHello();
                 const p = document.createElement('p');
                 p.textContent = 'stop event listen.';
                 document.body.append(p);
             }, 5000);
+
+            // 1 秒に 1 回、フロントエンドのイベントを emit する
+            const emitTimerId = setInterval(() => {
+                emit('frontendHello', { message: 'Hello, World from frontend!!!' });
+            }, 1000);
+
+            // 10 秒後に emit を終了する
+            setTimeout(() => {
+                clearInterval(emitTimerId);
+                const p = document.createElement('p');
+                p.textContent = 'stop emit frontendHello.';
+                document.body.append(p);
+            }, 10000);
+
         }
 
         init();
