@@ -10,8 +10,19 @@ pub struct BackendHelloEventPayload {
   pub message: String,
 }
 
+#[derive(Clone, serde::Serialize, serde::Deserialize)]
+pub struct FrontendHelloEventPayload {
+  pub message: String,
+}
+
 #[tauri::command]
 pub fn post_setup_process_for_backend(app: tauri::AppHandle) {
+
+  // フロントエンドが emit したイベントを listen
+  app.listen_global("frontendHello", |event| {
+    let p: FrontendHelloEventPayload = serde_json::from_str(event.payload().unwrap()).unwrap();
+    println!("{}", p.message);
+  });
 
     let (tx, rx) = mpsc::channel();
 
