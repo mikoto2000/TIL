@@ -10,11 +10,42 @@
     }
 
     body {
-      display: flex;
       align-items: center;
       justify-content: center;
     }
   </style>
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        const invoke = window.__TAURI__.invoke;
+        const listen = window.__TAURI__.event.listen;
+        const emit = window.__TAURI__.event.emit;
+
+        async function init() {
+            // バックエンドの初期化処理呼び出し
+            await invoke('post_setup_process_for_backend', {});
+
+            // バックエンドが emit するイベントの listen
+            const unlistenBackendHello = await listen('backendHello', event => {
+                console.log(event);
+                const p = document.createElement('p');
+                p.textContent = event.payload.message;
+                document.body.append(p);
+            });
+
+            // 5 秒後に listen を止める
+            setTimeout(() => {
+                console.log("timeout.");
+                unlistenBackendHello();
+                const p = document.createElement('p');
+                p.textContent = 'stop event listen.';
+                document.body.append(p);
+            }, 5000);
+        }
+
+        init();
+
+    });
+  </script>
   <body>
     <h1>tauri-app-event</h1>
   </body>
