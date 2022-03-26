@@ -1,12 +1,18 @@
 const path = require('path');
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
+const distPath = path.resolve(__dirname, 'dist');
+
 module.exports = {
-    mode: process.env.NODE_ENV,
+    mode: 'development',
     entry: './index.js',
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: distPath,
         filename: '[name].bundle.js'
+    },
+    devServer: {
+        static: distPath,
+        open: true
     },
     module: {
         rules: [
