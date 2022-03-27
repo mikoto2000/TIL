@@ -9,8 +9,36 @@ import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
     document.body.appendChild(div);
 })();
 
-monaco.editor.create(document.getElementById('root'), {
-    value: `const foo = () => 0;`,
-    language: 'javascript',
-    theme: 'vs-dark'
+async function init() {
+
+  const SCHEMA_URL = './schema/Bookmarks.json';
+
+  async function getJsonFromUri(jsonUri) {
+    const response = await fetch(jsonUri);
+    const json = await response.json();
+    return json;
+  }
+
+  const schemaUri = monaco.Uri.parse(SCHEMA_URL);
+  const schema = await getJsonFromUri(SCHEMA_URL);
+
+  monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+    validate: true,
+    schemas: [
+      {
+        uri: schemaUri,
+        fileMatch: ['*'],
+        schema: schema
+      }
+    ]
+  });
+
+  monaco.editor.create(document.getElementById('root'), {
+    value: "",
+    language: 'json',
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  init();
 });
