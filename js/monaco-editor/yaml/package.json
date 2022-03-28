@@ -1,0 +1,28 @@
+{
+  "name": "monaco-editor-firststep",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack serve",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "build:dev": "webpack --mode=development",
+    "build:pro": "webpack --mode=production"
+  },
+  "author": "mikoto2000",
+  "license": "MIT",
+  "dependencies": {
+    "monaco-editor": "^0.33.0",
+    "monaco-yaml": "^4.0.0-alpha.1"
+  },
+  "devDependencies": {
+    "css-loader": "^6.7.1",
+    "file-loader": "^6.2.0",
+    "monaco-editor-webpack-plugin": "^7.0.1",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.70.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  }
+}
