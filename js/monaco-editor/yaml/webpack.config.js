@@ -28,7 +28,17 @@ module.exports = {
     },
     plugins: [
         new MonacoWebpackPlugin({
-            languages: ['typescript', 'javascript', 'css']
+            languages: ['yaml'],
+            customLanguages: [
+              {
+                label: 'yaml',
+                entry: 'monaco-yaml',
+                worker: {
+                  id: 'monaco-yaml/yamlWorker',
+                  entry: 'monaco-yaml/yaml.worker',
+                },
+              },
+            ]
         })
     ]
 };
