@@ -1,0 +1,17 @@
+[package]
+name = "sqlite3"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+diesel = { version = "1.4.8", features = ["sqlite"] }
+
+[[bin]]
+name = "sample"
+doc = false
+
+[lib]
+doc = false
+
