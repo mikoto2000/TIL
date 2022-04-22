@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+  <body>
+    <h1>tauri-app-sqlite3</h1>
+    <div>
+        <form id="insert_channel_form">
+            <label>uri: </label><input type="text" name="uri"></input>
+            <label>name: </label><input type="text" name="name"></input>
+            <button id="insert_channel_button" onclick="insert_channel(event)" type="button" >チャンネル追加</button>
+            <div id="insert_result_area"></div>
+        </form>
+    </div>
+    <div>
+        <button id="get_channels" onclick="get_channels()">チャンネル一覧取得</button>
+        <div id="channel_area">
+        </div>
+    </div>
+    <script type="text/javascript">
+      const invoke = window.__TAURI__.invoke;
+
+      document.addEventListener('DOMContentLoaded', function() {
+      });
+
+      async function get_channels(str) {
+          let channels = await invoke('get_channels', {});
+
+          let channelArea = document.getElementById("channel_area");
+          let newChannelArea = channelArea.cloneNode(false);
+
+          const channelsElement = document.createElement("ul");
+          channels.forEach((e) => {
+            const channelElement = document.createElement("li");
+            channelElement.textContent = JSON.stringify(e);
+            channelsElement.appendChild(channelElement);
+          });
+          newChannelArea.appendChild(channelsElement);
+
+          channelArea.parentElement.replaceChild(newChannelArea, channelArea);
+      }
+
+      function update_insert_result_area(message) {
+            const target = document.getElementById("insert_result_area");
+            target.textContent = message;
+      }
+
+      async function insert_channel(event) {
+          const form = event.target.form;
+          const uri = form.querySelector('input[name="uri"]').value;
+          const name = form.querySelector('input[name="name"]').value;
+          await invoke('insert_channel', {uri: uri, name: name})
+                      .then(_ => { update_insert_result_area("追加に成功しました。"); })
+                      .catch(err => { update_insert_result_area(`追加に失敗しました。 ${err}`); });
+      }
+    </script>
+  </body>
+</html>
