@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+  <body>
+    <h1>tauri-app-sound-play</h1>
+    <div>
+        <div>
+            <label>Mp3 file: </label><input id="audio-picker" type="text"></input>
+            <button onclick="loadMp3()">ファイル読み込み</button>
+        </div>
+        <div id="audio-area">
+            <audio></audio>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+      const invoke = window.__TAURI__.invoke;
+
+      async function loadMp3() {
+        // 「ファイルロード中...」を表示
+        const audioArea = document.getElementById("audio-area");
+        const loadingAudioArea = audioArea.cloneNode(false);
+        loadingAudioArea.textContent = "ファイルロード中...";
+        audioArea.parentElement.replaceChild(loadingAudioArea, audioArea);
+
+        // ファイルパス取得
+        const audioPicker = document.getElementById('audio-picker');
+        const audioFilePath = audioPicker.value;
+
+        // ファイルパスを指定してファイル読み込み
+        const audioArray = await invoke('get_audio_byte_array', { path: audioFilePath });
+
+        // Uint8Array へ変換
+        const audioUint8Array = Uint8Array.from(audioArray);
+
+        // Blob にする
+        const audioBlob = new Blob([audioUint8Array.buffer], { type: 'audio/mp3' });
+        const audioBlobUrl = URL.createObjectURL(audioBlob);
+
+        // Blob を audio タグへ設定して表示
+        const newAudioArea = loadingAudioArea.cloneNode(false);
+        const targetAudio = document.createElement("audio");
+        targetAudio.controls = true;
+        targetAudio.src = audioBlobUrl;
+        newAudioArea.appendChild(targetAudio);
+        loadingAudioArea.parentElement.replaceChild(newAudioArea, loadingAudioArea);
+      };
+
+    </script>
+  </body>
+</html>
