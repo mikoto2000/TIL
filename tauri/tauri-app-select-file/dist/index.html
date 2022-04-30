@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+  <script type="text/javascript">
+    const dialog = window.__TAURI__.dialog;
+
+    function updateItems(items) {
+      const old_result_area = document.getElementById("result-area");
+      const new_result_area = old_result_area.cloneNode(false);
+
+      items.forEach( (item) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        new_result_area.appendChild(li);
+      });
+
+      old_result_area.parentElement.replaceChild(new_result_area, old_result_area);
+    }
+
+    async function selectDirectory() {
+      const directory = await dialog.open({
+        title: "Select directory",
+        directory: true
+      });
+
+      console.log(directory);
+
+      updateItems([directory]);
+    }
+
+    async function selectMp3Files() {
+      const mp3files = await dialog.open({
+        title: "Select MP3 files",
+        multiple: true,
+        filters: [{
+            name: "mp3",
+            extensions: ["mp3"]
+        }]
+      });
+
+      console.log(mp3files);
+
+      updateItems(mp3files);
+    }
+  </script>
+  <body>
+    <h1>tauri-app-select-file</h1>
+    <button onClick="selectDirectory()" >Select directory</button>
+    <button onClick="selectMp3Files()" >Select MP3 files</button>
+    <div>
+      <ol id="result-area" />
+    </div>
+  </body>
+</html>
