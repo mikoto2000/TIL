@@ -1,0 +1,12 @@
+{
+    "projectName": "Firststep",
+    "languages": [{
+        "id": "firststep",
+        "grammar": "src/language-server/firststep.langium",
+        "fileExtensions": [".firststep"],
+        "textMate": {
+            "out": "syntaxes/firststep.tmLanguage.json"
+        }
+    }],
+    "out": "src/language-server/generated"
+}
