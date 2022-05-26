@@ -20,13 +20,9 @@ const firststep_module_1 = require("../language-server/firststep-module");
 const cli_util_1 = require("./cli-util");
 const testAction = (fileName, opts) => __awaiter(void 0, void 0, void 0, function* () {
     const services = (0, firststep_module_1.createFirststepServices)().Firststep;
-    try {
-        yield (0, cli_util_1.extractAstNode)(fileName, services);
-        console.log(colors_1.default.green(`文法チェック OK`));
-    }
-    catch (e) {
-        console.log(colors_1.default.red(`文法チェック NG`));
-    }
+    yield (0, cli_util_1.extractAstNode)(fileName, services);
+    console.log(colors_1.default.green(`文法チェック OK`));
+    // ※ extractAstNode から呼ばれる `extractDocument` 内で、 `process.exit(1)` されるので、 try-catch しない
 });
 exports.testAction = testAction;
 function default_1() {

@@ -3,14 +3,12 @@ import {
     LangiumServices, LangiumSharedServices, Module, PartialLangiumServices
 } from 'langium';
 import { FirststepGeneratedModule, FirststepGeneratedSharedModule } from './generated/module';
-import { FirststepValidationRegistry, FirststepValidator } from './firststep-validator';
 
 /**
  * Declaration of custom services - add your own service classes here.
  */
 export type FirststepAddedServices = {
     validation: {
-        FirststepValidator: FirststepValidator
     }
 }
 
@@ -27,8 +25,6 @@ export type FirststepServices = LangiumServices & FirststepAddedServices
  */
 export const FirststepModule: Module<FirststepServices, PartialLangiumServices & FirststepAddedServices> = {
     validation: {
-        ValidationRegistry: (services) => new FirststepValidationRegistry(services),
-        FirststepValidator: () => new FirststepValidator()
     }
 };
 
