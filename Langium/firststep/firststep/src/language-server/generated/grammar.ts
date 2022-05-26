@@ -19,35 +19,17 @@ export const FirststepGrammar = (): Grammar => loadedFirststepGrammar ||(loadedF
       "hiddenTokens": [],
       "entry": true,
       "alternatives": {
-        "$type": "Alternatives",
-        "elements": [
-          {
-            "$type": "Assignment",
-            "feature": "persons",
-            "operator": "+=",
-            "terminal": {
-              "$type": "RuleCall",
-              "arguments": [],
-              "rule": {
-                "$refText": "Person"
-              }
-            },
-            "elements": []
-          },
-          {
-            "$type": "Assignment",
-            "feature": "greetings",
-            "operator": "+=",
-            "terminal": {
-              "$type": "RuleCall",
-              "arguments": [],
-              "rule": {
-                "$refText": "Greeting"
-              }
-            },
-            "elements": []
+        "$type": "Assignment",
+        "feature": "persons",
+        "operator": "+=",
+        "terminal": {
+          "$type": "RuleCall",
+          "arguments": [],
+          "rule": {
+            "$refText": "Person"
           }
-        ],
+        },
+        "elements": [],
         "cardinality": "*"
       }
     },
@@ -72,73 +54,81 @@ export const FirststepGrammar = (): Grammar => loadedFirststepGrammar ||(loadedF
               "$type": "RuleCall",
               "arguments": [],
               "rule": {
-                "$refText": "ID"
+                "$refText": "NAME"
               }
             }
-          }
-        ]
-      }
-    },
-    {
-      "$type": "ParserRule",
-      "parameters": [],
-      "name": "Greeting",
-      "hiddenTokens": [],
-      "alternatives": {
-        "$type": "Group",
-        "elements": [
+          },
           {
             "$type": "Keyword",
-            "value": "Hello",
-            "elements": []
+            "value": "{"
+          },
+          {
+            "$type": "Keyword",
+            "value": "age"
+          },
+          {
+            "$type": "Keyword",
+            "value": ":"
           },
           {
             "$type": "Assignment",
-            "feature": "person",
+            "feature": "age",
             "operator": "=",
             "terminal": {
-              "$type": "CrossReference",
-              "type": {
-                "$refText": "Person"
-              },
-              "terminal": {
-                "$type": "RuleCall",
-                "arguments": [],
-                "rule": {
-                  "$refText": "ID"
-                }
+              "$type": "RuleCall",
+              "arguments": [],
+              "rule": {
+                "$refText": "INTEGER"
               }
             }
           },
           {
             "$type": "Keyword",
-            "value": "!"
+            "value": ";"
+          },
+          {
+            "$type": "Keyword",
+            "value": "rank"
+          },
+          {
+            "$type": "Keyword",
+            "value": ":"
+          },
+          {
+            "$type": "Assignment",
+            "feature": "rank",
+            "operator": "=",
+            "terminal": {
+              "$type": "RuleCall",
+              "arguments": [],
+              "rule": {
+                "$refText": "INTEGER"
+              }
+            }
+          },
+          {
+            "$type": "Keyword",
+            "value": ";"
+          },
+          {
+            "$type": "Keyword",
+            "value": "}"
           }
         ]
       }
     },
     {
       "$type": "TerminalRule",
-      "hidden": true,
-      "name": "WS",
+      "name": "NAME",
       "terminal": {
         "$type": "RegexToken",
-        "regex": "\\\\s+",
+        "regex": "[a-z]+",
         "elements": []
       }
     },
     {
       "$type": "TerminalRule",
-      "name": "ID",
-      "terminal": {
-        "$type": "RegexToken",
-        "regex": "[_a-zA-Z][\\\\w_]*",
-        "elements": []
-      }
-    },
-    {
-      "$type": "TerminalRule",
-      "name": "INT",
+      "name": "INTEGER",
       "type": {
         "$type": "ReturnType",
         "name": "number"
@@ -151,10 +141,11 @@ export const FirststepGrammar = (): Grammar => loadedFirststepGrammar ||(loadedF
     },
     {
       "$type": "TerminalRule",
-      "name": "STRING",
+      "hidden": true,
+      "name": "WS",
       "terminal": {
         "$type": "RegexToken",
-        "regex": "\\"[^\\"]*\\"|'[^']*'",
+        "regex": "\\\\s+",
         "elements": []
       }
     },

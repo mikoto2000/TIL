@@ -5,21 +5,9 @@
 
 /* eslint-disable @typescript-eslint/array-type */
 /* eslint-disable @typescript-eslint/no-empty-interface */
-import { AstNode, AstReflection, Reference, isAstNode } from 'langium';
-
-export interface Greeting extends AstNode {
-    readonly $container: Model;
-    person: Reference<Person>
-}
-
-export const Greeting = 'Greeting';
-
-export function isGreeting(item: unknown): item is Greeting {
-    return reflection.isInstance(item, Greeting);
-}
+import { AstNode, AstReflection, isAstNode } from 'langium';
 
 export interface Model extends AstNode {
-    greetings: Array<Greeting>
     persons: Array<Person>
 }
 
@@ -31,7 +19,9 @@ export function isModel(item: unknown): item is Model {
 
 export interface Person extends AstNode {
     readonly $container: Model;
+    age: number
     name: string
+    rank: number
 }
 
 export const Person = 'Person';
@@ -40,14 +30,14 @@ export function isPerson(item: unknown): item is Person {
     return reflection.isInstance(item, Person);
 }
 
-export type FirststepAstType = 'Greeting' | 'Model' | 'Person';
+export type FirststepAstType = 'Model' | 'Person';
 
-export type FirststepAstReference = 'Greeting:person';
+export type FirststepAstReference = never;
 
 export class FirststepAstReflection implements AstReflection {
 
     getAllTypes(): string[] {
-        return ['Greeting', 'Model', 'Person'];
+        return ['Model', 'Person'];
     }
 
     isInstance(node: unknown, type: string): boolean {
@@ -67,9 +57,6 @@ export class FirststepAstReflection implements AstReflection {
 
     getReferenceType(referenceId: FirststepAstReference): string {
         switch (referenceId) {
-            case 'Greeting:person': {
-                return Person;
-            }
             default: {
                 throw new Error(`${referenceId} is not a valid reference id.`);
             }

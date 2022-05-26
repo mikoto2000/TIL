@@ -10,17 +10,7 @@
     },
     {
       "name": "keyword.control.firststep",
-      "match": "\\b(Hello|person)\\b"
-    },
-    {
-      "name": "string.quoted.double.firststep",
-      "begin": "\"",
-      "end": "\""
-    },
-    {
-      "name": "string.quoted.single.firststep",
-      "begin": "'",
-      "end": "'"
+      "match": "\\b(age|person|rank)\\b"
     }
   ],
   "repository": {
