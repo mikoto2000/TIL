@@ -1,0 +1,47 @@
+{
+  "name": "firststep",
+  "scopeName": "source.firststep",
+  "fileTypes": [
+    ".firststep"
+  ],
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "name": "keyword.control.firststep",
+      "match": "\\b(age|person|rank)\\b"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.block.firststep",
+          "begin": "/\\*",
+          "beginCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.firststep"
+            }
+          },
+          "end": "\\*/",
+          "endCaptures": {
+            "0": {
+              "name": "punctuation.definition.comment.firststep"
+            }
+          }
+        },
+        {
+          "begin": "//",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.whitespace.comment.leading.firststep"
+            }
+          },
+          "end": "(?=$)",
+          "name": "comment.line.firststep"
+        }
+      ]
+    }
+  }
+}
