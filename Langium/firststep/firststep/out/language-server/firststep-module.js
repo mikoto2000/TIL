@@ -3,17 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createFirststepServices = exports.FirststepModule = void 0;
 const langium_1 = require("langium");
 const module_1 = require("./generated/module");
-const firststep_validator_1 = require("./firststep-validator");
 /**
  * Dependency injection module that overrides Langium default services and contributes the
  * declared custom services. The Langium defaults can be partially specified to override only
  * selected services, while the custom services must be fully specified.
  */
 exports.FirststepModule = {
-    validation: {
-        ValidationRegistry: (services) => new firststep_validator_1.FirststepValidationRegistry(services),
-        FirststepValidator: () => new firststep_validator_1.FirststepValidator()
-    }
+    validation: {}
 };
 /**
  * Create the full set of services required by Langium.
