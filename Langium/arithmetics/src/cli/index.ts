@@ -5,6 +5,7 @@ import { ArithmeticsLanguageMetaData } from '../language-server/generated/module
 import { createArithmeticsServices } from '../language-server/arithmetics-module';
 import { extractAstNode } from './cli-util';
 //import { generateJavaScript } from './generator';
+import { evaluateExpression } from './evaluater';
 
 //export const generateAction = async (fileName: string, opts: GenerateOptions): Promise<void> => {
 //    const services = createArithmeticsServices().Arithmetics;
@@ -18,6 +19,13 @@ export const validateAction = async (fileName: string, opts: GenerateOptions): P
     const model = await extractAstNode<Model>(fileName, services);
     console.log(model);
     console.log(colors.green(`arithmetics code validate successfully`));
+};
+
+export const evalAction = async (fileName: string, opts: GenerateOptions): Promise<void> => {
+    const services = createArithmeticsServices().Arithmetics;
+    const model = await extractAstNode<Model>(fileName, services);
+    const results = evaluateExpression(model);
+    console.log(colors.green(`${results}`));
 };
 
 export type GenerateOptions = {
@@ -44,6 +52,12 @@ export default function(): void {
         .argument('<file>', `source file (possible file extensions: ${fileExtensions})`)
         .description('validate arithmetics file')
         .action(validateAction);
+
+    program
+        .command('eval')
+        .argument('<file>', `source file (possible file extensions: ${fileExtensions})`)
+        .description('eval arithmetics file')
+        .action(evalAction);
 
     program.parse(process.argv);
 }

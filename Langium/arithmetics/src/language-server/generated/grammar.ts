@@ -22,10 +22,15 @@ export const ArithmeticsGrammar = (): Grammar => loadedArithmeticsGrammar ||(loa
         "$type": "Group",
         "elements": [
           {
-            "$type": "RuleCall",
-            "arguments": [],
-            "rule": {
-              "$refText": "Expression"
+            "$type": "Assignment",
+            "feature": "expressions",
+            "operator": "+=",
+            "terminal": {
+              "$type": "RuleCall",
+              "arguments": [],
+              "rule": {
+                "$refText": "Expression"
+              }
             },
             "elements": []
           },

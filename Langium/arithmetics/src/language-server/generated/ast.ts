@@ -15,16 +15,8 @@ export function isExpression(item: unknown): item is Expression {
     return reflection.isInstance(item, Expression);
 }
 
-export type Model = Expression;
-
-export const Model = 'Model';
-
-export function isModel(item: unknown): item is Model {
-    return reflection.isInstance(item, Model);
-}
-
 export interface BinaryExpression extends AstNode {
-    readonly $container: BinaryExpression;
+    readonly $container: BinaryExpression | Model;
     left: Expression
     operator: '*' | '/' | '+' | '-'
     right: Expression
@@ -36,8 +28,18 @@ export function isBinaryExpression(item: unknown): item is BinaryExpression {
     return reflection.isInstance(item, BinaryExpression);
 }
 
+export interface Model extends AstNode {
+    expressions: Array<Expression>
+}
+
+export const Model = 'Model';
+
+export function isModel(item: unknown): item is Model {
+    return reflection.isInstance(item, Model);
+}
+
 export interface NumberLiteral extends AstNode {
-    readonly $container: BinaryExpression;
+    readonly $container: BinaryExpression | Model;
     sign: '+' | '-'
     value: number
 }
@@ -70,9 +72,6 @@ export class ArithmeticsAstReflection implements AstReflection {
             case BinaryExpression:
             case NumberLiteral: {
                 return this.isSubtype(Expression, supertype);
-            }
-            case Expression: {
-                return this.isSubtype(Model, supertype);
             }
             default: {
                 return false;
