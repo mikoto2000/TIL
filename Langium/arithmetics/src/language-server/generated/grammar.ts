@@ -19,33 +19,19 @@ export const ArithmeticsGrammar = (): Grammar => loadedArithmeticsGrammar ||(loa
       "hiddenTokens": [],
       "entry": true,
       "alternatives": {
-        "$type": "Alternatives",
+        "$type": "Group",
         "elements": [
           {
-            "$type": "Assignment",
-            "feature": "persons",
-            "operator": "+=",
-            "terminal": {
-              "$type": "RuleCall",
-              "arguments": [],
-              "rule": {
-                "$refText": "Person"
-              }
+            "$type": "RuleCall",
+            "arguments": [],
+            "rule": {
+              "$refText": "Expression"
             },
             "elements": []
           },
           {
-            "$type": "Assignment",
-            "feature": "greetings",
-            "operator": "+=",
-            "terminal": {
-              "$type": "RuleCall",
-              "arguments": [],
-              "rule": {
-                "$refText": "Greeting"
-              }
-            },
-            "elements": []
+            "$type": "Keyword",
+            "value": ";"
           }
         ],
         "cardinality": "*"
@@ -54,27 +40,82 @@ export const ArithmeticsGrammar = (): Grammar => loadedArithmeticsGrammar ||(loa
     {
       "$type": "ParserRule",
       "parameters": [],
-      "name": "Person",
+      "name": "Expression",
       "hiddenTokens": [],
+      "alternatives": {
+        "$type": "RuleCall",
+        "arguments": [],
+        "rule": {
+          "$refText": "Addition"
+        },
+        "elements": []
+      }
+    },
+    {
+      "$type": "ParserRule",
+      "parameters": [],
+      "name": "Addition",
+      "hiddenTokens": [],
+      "infers": true,
+      "type": {
+        "$type": "ReturnType",
+        "name": "Expression"
+      },
       "alternatives": {
         "$type": "Group",
         "elements": [
           {
-            "$type": "Keyword",
-            "value": "person",
+            "$type": "RuleCall",
+            "arguments": [],
+            "rule": {
+              "$refText": "Multiplication"
+            },
             "elements": []
           },
           {
-            "$type": "Assignment",
-            "feature": "name",
-            "operator": "=",
-            "terminal": {
-              "$type": "RuleCall",
-              "arguments": [],
-              "rule": {
-                "$refText": "ID"
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Action",
+                "infer": true,
+                "type": "BinaryExpression",
+                "feature": "left",
+                "operator": "=",
+                "elements": []
+              },
+              {
+                "$type": "Assignment",
+                "feature": "operator",
+                "operator": "=",
+                "terminal": {
+                  "$type": "Alternatives",
+                  "elements": [
+                    {
+                      "$type": "Keyword",
+                      "value": "+",
+                      "elements": []
+                    },
+                    {
+                      "$type": "Keyword",
+                      "value": "-"
+                    }
+                  ]
+                }
+              },
+              {
+                "$type": "Assignment",
+                "feature": "right",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "arguments": [],
+                  "rule": {
+                    "$refText": "Multiplication"
+                  }
+                }
               }
-            }
+            ],
+            "cardinality": "*"
           }
         ]
       }
@@ -82,39 +123,163 @@ export const ArithmeticsGrammar = (): Grammar => loadedArithmeticsGrammar ||(loa
     {
       "$type": "ParserRule",
       "parameters": [],
-      "name": "Greeting",
+      "name": "Multiplication",
       "hiddenTokens": [],
+      "infers": true,
+      "type": {
+        "$type": "ReturnType",
+        "name": "Expression"
+      },
       "alternatives": {
         "$type": "Group",
         "elements": [
           {
-            "$type": "Keyword",
-            "value": "Hello",
+            "$type": "RuleCall",
+            "arguments": [],
+            "rule": {
+              "$refText": "PrimaryExpression"
+            },
             "elements": []
           },
           {
-            "$type": "Assignment",
-            "feature": "person",
-            "operator": "=",
-            "terminal": {
-              "$type": "CrossReference",
-              "type": {
-                "$refText": "Person"
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Action",
+                "infer": true,
+                "type": "BinaryExpression",
+                "feature": "left",
+                "operator": "=",
+                "elements": []
               },
-              "terminal": {
+              {
+                "$type": "Assignment",
+                "feature": "operator",
+                "operator": "=",
+                "terminal": {
+                  "$type": "Alternatives",
+                  "elements": [
+                    {
+                      "$type": "Keyword",
+                      "value": "*",
+                      "elements": []
+                    },
+                    {
+                      "$type": "Keyword",
+                      "value": "/"
+                    }
+                  ]
+                }
+              },
+              {
+                "$type": "Assignment",
+                "feature": "right",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "arguments": [],
+                  "rule": {
+                    "$refText": "PrimaryExpression"
+                  }
+                }
+              }
+            ],
+            "cardinality": "*"
+          }
+        ]
+      }
+    },
+    {
+      "$type": "ParserRule",
+      "parameters": [],
+      "name": "PrimaryExpression",
+      "hiddenTokens": [],
+      "infers": true,
+      "type": {
+        "$type": "ReturnType",
+        "name": "Expression"
+      },
+      "alternatives": {
+        "$type": "Alternatives",
+        "elements": [
+          {
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Keyword",
+                "value": "(",
+                "elements": []
+              },
+              {
                 "$type": "RuleCall",
                 "arguments": [],
                 "rule": {
-                  "$refText": "ID"
+                  "$refText": "Expression"
                 }
+              },
+              {
+                "$type": "Keyword",
+                "value": ")"
               }
-            }
+            ]
           },
           {
-            "$type": "Keyword",
-            "value": "!"
+            "$type": "Group",
+            "elements": [
+              {
+                "$type": "Action",
+                "infer": true,
+                "type": "NumberLiteral",
+                "elements": []
+              },
+              {
+                "$type": "Assignment",
+                "feature": "sign",
+                "operator": "=",
+                "terminal": {
+                  "$type": "Alternatives",
+                  "elements": [
+                    {
+                      "$type": "Keyword",
+                      "value": "+",
+                      "elements": []
+                    },
+                    {
+                      "$type": "Keyword",
+                      "value": "-"
+                    }
+                  ]
+                },
+                "cardinality": "?"
+              },
+              {
+                "$type": "Assignment",
+                "feature": "value",
+                "operator": "=",
+                "terminal": {
+                  "$type": "RuleCall",
+                  "arguments": [],
+                  "rule": {
+                    "$refText": "NUMBER"
+                  }
+                }
+              }
+            ]
           }
         ]
+      }
+    },
+    {
+      "$type": "TerminalRule",
+      "name": "NUMBER",
+      "type": {
+        "$type": "ReturnType",
+        "name": "number"
+      },
+      "terminal": {
+        "$type": "RegexToken",
+        "regex": "[0-9]+(\\\\.[0-9])?",
+        "elements": []
       }
     },
     {
@@ -124,37 +289,6 @@ export const ArithmeticsGrammar = (): Grammar => loadedArithmeticsGrammar ||(loa
       "terminal": {
         "$type": "RegexToken",
         "regex": "\\\\s+",
-        "elements": []
-      }
-    },
-    {
-      "$type": "TerminalRule",
-      "name": "ID",
-      "terminal": {
-        "$type": "RegexToken",
-        "regex": "[_a-zA-Z][\\\\w_]*",
-        "elements": []
-      }
-    },
-    {
-      "$type": "TerminalRule",
-      "name": "INT",
-      "type": {
-        "$type": "ReturnType",
-        "name": "number"
-      },
-      "terminal": {
-        "$type": "RegexToken",
-        "regex": "[0-9]+",
-        "elements": []
-      }
-    },
-    {
-      "$type": "TerminalRule",
-      "name": "STRING",
-      "terminal": {
-        "$type": "RegexToken",
-        "regex": "\\"[^\\"]*\\"|'[^']*'",
         "elements": []
       }
     },

@@ -5,23 +5,17 @@
 
 /* eslint-disable @typescript-eslint/array-type */
 /* eslint-disable @typescript-eslint/no-empty-interface */
-import { AstNode, AstReflection, Reference, isAstNode } from 'langium';
+import { AstNode, AstReflection, isAstNode } from 'langium';
 
-export interface Greeting extends AstNode {
-    readonly $container: Model;
-    person: Reference<Person>
+export type Expression = BinaryExpression | NumberLiteral;
+
+export const Expression = 'Expression';
+
+export function isExpression(item: unknown): item is Expression {
+    return reflection.isInstance(item, Expression);
 }
 
-export const Greeting = 'Greeting';
-
-export function isGreeting(item: unknown): item is Greeting {
-    return reflection.isInstance(item, Greeting);
-}
-
-export interface Model extends AstNode {
-    greetings: Array<Greeting>
-    persons: Array<Person>
-}
+export type Model = Expression;
 
 export const Model = 'Model';
 
@@ -29,25 +23,39 @@ export function isModel(item: unknown): item is Model {
     return reflection.isInstance(item, Model);
 }
 
-export interface Person extends AstNode {
-    readonly $container: Model;
-    name: string
+export interface BinaryExpression extends AstNode {
+    readonly $container: BinaryExpression;
+    left: Expression
+    operator: '*' | '/' | '+' | '-'
+    right: Expression
 }
 
-export const Person = 'Person';
+export const BinaryExpression = 'BinaryExpression';
 
-export function isPerson(item: unknown): item is Person {
-    return reflection.isInstance(item, Person);
+export function isBinaryExpression(item: unknown): item is BinaryExpression {
+    return reflection.isInstance(item, BinaryExpression);
 }
 
-export type ArithmeticsAstType = 'Greeting' | 'Model' | 'Person';
+export interface NumberLiteral extends AstNode {
+    readonly $container: BinaryExpression;
+    sign: '+' | '-'
+    value: number
+}
 
-export type ArithmeticsAstReference = 'Greeting:person';
+export const NumberLiteral = 'NumberLiteral';
+
+export function isNumberLiteral(item: unknown): item is NumberLiteral {
+    return reflection.isInstance(item, NumberLiteral);
+}
+
+export type ArithmeticsAstType = 'BinaryExpression' | 'Expression' | 'Model' | 'NumberLiteral';
+
+export type ArithmeticsAstReference = never;
 
 export class ArithmeticsAstReflection implements AstReflection {
 
     getAllTypes(): string[] {
-        return ['Greeting', 'Model', 'Person'];
+        return ['BinaryExpression', 'Expression', 'Model', 'NumberLiteral'];
     }
 
     isInstance(node: unknown, type: string): boolean {
@@ -59,6 +67,13 @@ export class ArithmeticsAstReflection implements AstReflection {
             return true;
         }
         switch (subtype) {
+            case BinaryExpression:
+            case NumberLiteral: {
+                return this.isSubtype(Expression, supertype);
+            }
+            case Expression: {
+                return this.isSubtype(Model, supertype);
+            }
             default: {
                 return false;
             }
@@ -67,9 +82,6 @@ export class ArithmeticsAstReflection implements AstReflection {
 
     getReferenceType(referenceId: ArithmeticsAstReference): string {
         switch (referenceId) {
-            case 'Greeting:person': {
-                return Person;
-            }
             default: {
                 throw new Error(`${referenceId} is not a valid reference id.`);
             }

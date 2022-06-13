@@ -10,17 +10,7 @@
     },
     {
       "name": "keyword.control.arithmetics",
-      "match": "\\b(Hello|person)\\b"
-    },
-    {
-      "name": "string.quoted.double.arithmetics",
-      "begin": "\"",
-      "end": "\""
-    },
-    {
-      "name": "string.quoted.single.arithmetics",
-      "begin": "'",
-      "end": "'"
+      "match": ""
     }
   ],
   "repository": {
