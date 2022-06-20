@@ -1,0 +1,12 @@
+{
+    "projectName": "Arithmetics",
+    "languages": [{
+        "id": "arithmetics",
+        "grammar": "src/language-server/arithmetics.langium",
+        "fileExtensions": [".arithmetics"],
+        "textMate": {
+            "out": "syntaxes/arithmetics.tmLanguage.json"
+        }
+    }],
+    "out": "src/language-server/generated"
+}
