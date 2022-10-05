@@ -1,4 +1,4 @@
-package dev.mikoto2000.study.springboot.mybatis.firststep.entity;
+package dev.mikoto2000.study.springboot.mybatis.firststep.domain.entity;
 
 import lombok.Data;
 

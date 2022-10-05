@@ -1,12 +1,12 @@
-package dev.mikoto2000.study.springboot.mybatis.firststep.repository;
+package dev.mikoto2000.study.springboot.mybatis.firststep.domain.repository;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
-import dev.mikoto2000.study.springboot.mybatis.firststep.dto.UserSearchRequest;
-import dev.mikoto2000.study.springboot.mybatis.firststep.entity.User;
+import dev.mikoto2000.study.springboot.mybatis.firststep.domain.entity.User;
+import dev.mikoto2000.study.springboot.mybatis.firststep.domain.entity.UserSearchRequest;
 
 @Mapper
 public interface UserMapper {

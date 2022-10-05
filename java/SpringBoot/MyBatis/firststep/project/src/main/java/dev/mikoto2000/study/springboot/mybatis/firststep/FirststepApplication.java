@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import dev.mikoto2000.study.springboot.mybatis.firststep.entity.User;
-import dev.mikoto2000.study.springboot.mybatis.firststep.service.UserService;
+import dev.mikoto2000.study.springboot.mybatis.firststep.domain.entity.User;
+import dev.mikoto2000.study.springboot.mybatis.firststep.domain.service.UserService;
 
 @SpringBootApplication
 public class FirststepApplication {
