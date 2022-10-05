@@ -1,0 +1,5 @@
+tcp:
+  server:
+    host: host.docker.internal
+    port: 5555
+
