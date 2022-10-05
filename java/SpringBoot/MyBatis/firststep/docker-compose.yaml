@@ -1,0 +1,27 @@
+version: '3'
+services:
+    java:
+      image: openjdk:17
+      volumes:
+        - "./:/project"
+        - "m2-volume:/root/.m2"
+      working_dir: "/project/project"
+      command: ["sleep", "infinity"]
+      environment:
+        POSTGRES_USER: admin
+        POSTGRES_PASSWORD: password
+    postgres:
+      image: postgres:14
+      volumes:
+        # 初期化スクリプト置き場
+        - ./config/postgres/init.d:/docker-entrypoint-initdb.d
+      ports:
+        - "3306:3306"
+      environment:
+        POSTGRES_USER: admin
+        POSTGRES_PASSWORD: password
+        POSTGRES_DB: public
+volumes:
+  m2-volume:
+
+
