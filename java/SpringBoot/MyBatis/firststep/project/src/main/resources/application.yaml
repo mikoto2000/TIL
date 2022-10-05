@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    url: "jdbc:mysql://${POSTGRES_HOST:localhost}:5432/${POSTGRES_DB}"
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driverClassName: org.postgresql.Driver
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+        jdbc:
+          core: TRACE
+
+
