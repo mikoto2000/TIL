@@ -3,6 +3,9 @@ package dev.mikoto2000.study.springboot.mybatis.firststep.domain.repository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.util.List;
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -35,6 +38,26 @@ public class UserMapperTest {
         User invalidUser = this.userMapper.search(userSearchRequest_Invalid);
 
         assertNull(invalidUser);
+    }
+
+    @Test
+    public void testSearchAllMap() {
+        Map<Long, User> users = this.userMapper.searchAllMap();
+
+        User user10 = users.get(10L);
+        assertEquals(10, user10.getId());
+        assertEquals("user10", user10.getName());
+    }
+
+    @Test
+    public void testSearchAll() {
+        List<User> users = this.userMapper.searchAll();
+
+        assertEquals(1, users.size());
+
+        User user10 = users.get(10);
+        assertEquals(10, user10.getId());
+        assertEquals("user10", user10.getName());
     }
 }
 

@@ -1,6 +1,7 @@
 package dev.mikoto2000.study.springboot.mybatis.firststep.domain.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,10 @@ public class UserService {
 
     public List<User> searchAll() {
         return userMapper.searchAll();
+    }
+
+    public Map<Long, User> searchAllMap() {
+        return userMapper.searchAllMap();
     }
 
     public User search(Long id) {

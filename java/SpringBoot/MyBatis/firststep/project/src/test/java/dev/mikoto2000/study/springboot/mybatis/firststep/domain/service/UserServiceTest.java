@@ -7,11 +7,11 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -41,6 +41,20 @@ public class UserServiceTest {
 
         // サイズゼロのリストを返却
         doReturn(new ArrayList<User>()).when(userMapper).searchAll();
+
+        List<User> users = userService.searchAll();
+
+        // メソッド実行回数チェック
+        verify(userMapper, times(1)).searchAll();
+    }
+
+    @Test
+    public void testUserServiceSearchAllMap() {
+        // searchAll が実行されたら RuntimeException が発生する
+        // when(userMapper.searchAll()).thenThrow(new RuntimeException("Mockito で差し込んだ例外！！！"));
+
+        // サイズゼロのリストを返却
+        doReturn(new HashMap<Long, User>()).when(userMapper).searchAllMap();
 
         List<User> users = userService.searchAll();
 
