@@ -6,6 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-postgres = { version = "0.19.4", features = ["with-uuid-1"] }
+chrono = "0.4.23"
+postgres = { version = "0.19.4", features = ["with-uuid-1", "with-chrono-0_4"] }
 uuid = "1.2.2"
 
