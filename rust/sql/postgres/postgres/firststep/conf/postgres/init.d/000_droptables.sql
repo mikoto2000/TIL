@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS "device";
+DROP TABLE IF EXISTS "user";
+
