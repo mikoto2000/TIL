@@ -1,7 +1,7 @@
 use serde_derive::{Serialize, Deserialize};
 
-// static APP_NAME: &str = "confy-firststep";
-// static CONFIG_NAME: &str = "test-config";
+// const APP_NAME: &str = "confy-firststep";
+// const CONFIG_NAME: &str = "test-config";
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Connection {
