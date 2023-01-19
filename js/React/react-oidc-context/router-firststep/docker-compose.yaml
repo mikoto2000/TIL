@@ -88,6 +88,9 @@ services:
       -s webOrigins='[\"*\"]'
       -s directAccessGrantsEnabled=true
       -s secret=\"$${CLIENT_SECRET}\"
+      && kcadm.sh update clients/\"$${CLIENT_ID}\"
+      -r \"$${REALM}\"
+      -s 'attributes={\"post.logout.redirect.uris\" : \"*\"}'
       && kcadm.sh create users
       -r \"$${REALM}\"
       -s username=test
