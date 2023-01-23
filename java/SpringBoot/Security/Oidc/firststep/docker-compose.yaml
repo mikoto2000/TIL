@@ -10,6 +10,17 @@ volumes:
 
 services:
   frontend:
+    image: node:18
+    init: true
+    restart: always
+    command: ["sleep", "infinity"]
+    ports:
+      - 0.0.0.0:3000:3000
+    volumes:
+      - "./frontend:/work"
+      - "node_modules:/work/node_modules"
+    working_dir: /work
+  backend:
     image: eclipse-temurin:17
     init: true
     restart: always
@@ -17,7 +28,7 @@ services:
     ports:
       - 0.0.0.0:8081:8081
     volumes:
-      - "./:/work"
+      - "./firststep:/work"
       - "m2:/root/.m2"
     working_dir: /work
   postgres:
@@ -59,7 +70,7 @@ services:
   kc-init:
     image: mikoto2000/kcadm:19
     init: true
-    restart: on-failure
+    restart: "no"
     depends_on:
       keycloak:
         condition: service_healthy
