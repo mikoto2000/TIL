@@ -1,0 +1,16 @@
+server:
+  port: 8081
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # 認可サーバーのエンドポイントを設定
+          issuer-uri: http://host.docker.internal:8080/realms/myoidc
+
+logging:
+  level:
+    org:
+      springframework: TRACE
+
