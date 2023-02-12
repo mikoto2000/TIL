@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  app:
+    image: node:18
+    init: true
+    restart: always
+    environment:
+      # MQTT ブローカー待ち受けポート
+      VITE_MQTT_URL: ws://host.docker.internal:9090/mqtt
+    command: ["sleep", "infinity"]
+    ports:
+      # フロントエンドの devserver 待ち受けポート
+      - 0.0.0.0:5173:5173
+    volumes:
+      # プロジェクトルート
+      - "./:/work"
+      # node 関連
+      - "node_modules:/work/frontend/node_modules"
+    working_dir: /work
+  rabbitmq:
+    image: rabbitmq:3.11
+    init: true
+    restart: always
+    ports:
+      # MQTT over WebSocket の待ち受けポート
+      - 0.0.0.0:9090:9090
+    volumes:
+      - "./.devcontainer/config/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf"
+      - "./.devcontainer/config/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins"
+
+volumes:
+  node_modules:
+    driver: local
+

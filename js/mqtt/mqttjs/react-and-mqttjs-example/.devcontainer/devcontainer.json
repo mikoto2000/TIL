@@ -1,0 +1,25 @@
+{
+    "name": "React development environment",
+    "dockerComposeFile": [
+        "../docker-compose.yaml"
+    ],
+    "service": "app",
+    "workspaceFolder": "/work",
+
+    "settings": {
+        "telemetry.enableCrashReporter": false,
+        "telemetry.enableTelemetry": false,
+        "editor.copyWithSyntaxHighlighting": false,
+        "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+        "files.exclude": {
+            "**/.classpath": true,
+            "**/.project": true,
+            "**/.settings": true,
+            "**/.factorypath": true
+        }
+    },
+
+    "extensions": []
+
+}
+
