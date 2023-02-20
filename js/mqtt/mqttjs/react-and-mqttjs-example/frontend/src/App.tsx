@@ -4,6 +4,12 @@ import * as MQTT from 'mqtt';
 import { IPacket } from 'mqtt-packet';
 
 function App() {
+  const MQTT_USER_NAME = import.meta.env.VITE_MQTT_USER_NAME;
+  const MQTT_PASSWORD = import.meta.env.VITE_MQTT_PASSWORD;
+
+  console.log(MQTT_USER_NAME);
+  console.log(MQTT_PASSWORD);
+
   const [mqttUrl, setMqttUrl] = useState(import.meta.env.VITE_MQTT_URL)
   // 今回のロジックだと、 isConnected 作らなくても、 client の有無だけで判断して大丈夫そう
   const [client, setClient] = useState<MQTT.MqttClient|null>(null)
@@ -22,6 +28,8 @@ function App() {
     if (!isConnected) {
       // クライアントインスタンスの作成
       let newClient = MQTT.connect(mqttUrl, {
+        username: MQTT_USER_NAME,
+        password: MQTT_PASSWORD,
         keepalive: KEEPALIVE_TIME
       });
       setClient(newClient);
