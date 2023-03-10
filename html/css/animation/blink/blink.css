@@ -1,0 +1,21 @@
+@keyframes blink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+}
+
+ul > li {
+    list-style-type: none;
+}
+
+ul > li::before {
+    content: "👺";
+    opacity: 1;
+}
+
+li.blink::before {
+    animation: blink 2s step-end infinite;
+}

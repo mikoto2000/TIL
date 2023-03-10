@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Blink CSS Animation Example</title>
+        <link rel="stylesheet" type="text/css" href="blink.css"></link>
+    </head>
+    <body>
+        <h1>Blink CSS Animation Example</h1>
+
+        <ul id="add_target">
+            <li onclick="toggleBlink(arguments[0], this)">text 1</li>
+            <li onclick="toggleBlink(arguments[0], this)">text 2</li>
+            <li onclick="toggleBlink(arguments[0], this)">text 3</li>
+            <li onclick="toggleBlink(arguments[0], this)">text 4</li>
+        </ul>
+        <script type="text/javascript">
+            function toggleBlink(event) {
+                let classList = event.currentTarget.classList;
+                classList.toggle("blink");
+                console.log(classList);
+            }
+        </script>
+        <script src="http://localhost:35730/livereload.js"></script>
+    </body>
+</html>
+
