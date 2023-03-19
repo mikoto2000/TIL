@@ -2,7 +2,13 @@
  "rabbit_version": "3.6.6",
  "users": [
   {
-   "name": "myuser",
+   "name": "pubuser",
+   "password_hash": "3hWR+ze2TMkFV8p+o3yO2UeFBQhWD3A07s3xKLz+7y7rUutb",
+   "hashing_algorithm": "rabbit_password_hashing_sha256",
+   "tags": ""
+  },
+  {
+   "name": "subuser",
    "password_hash": "3hWR+ze2TMkFV8p+o3yO2UeFBQhWD3A07s3xKLz+7y7rUutb",
    "hashing_algorithm": "rabbit_password_hashing_sha256",
    "tags": ""
@@ -15,11 +21,18 @@
  ],
  "permissions": [
   {
-   "user": "myuser",
+   "user": "pubuser",
    "vhost": "/",
    "configure": ".*",
    "write": ".*",
    "read": ".*"
+  },
+  {
+   "user":"subuser",
+   "vhost":"/",
+   "configure":".*",
+   "write":"^mqtt-subscription*",
+   "read":".*"
   }
  ],
  "parameters": [],

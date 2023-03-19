@@ -8,7 +8,7 @@ services:
     environment:
       # MQTT ブローカー待ち受けポート
       VITE_MQTT_URL: ws://host.docker.internal:9090/mqtt
-      VITE_MQTT_USER_NAME: myuser
+      VITE_MQTT_USER_NAME: pubuser
       VITE_MQTT_PASSWORD: password
     command: ["sleep", "infinity"]
     ports:
@@ -30,7 +30,6 @@ services:
     volumes:
       - "./.devcontainer/config/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf"
       - "./.devcontainer/config/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins"
-      - "./.devcontainer/config/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.configjson"
       - "./.devcontainer/config/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json"
 
 volumes:
