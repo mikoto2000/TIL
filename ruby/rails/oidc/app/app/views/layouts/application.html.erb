@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>App</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  </head>
+
+  <body>
+<div>
+<% if !session[:user].nil? %>
+  user_info: <%= session[:user] %>
+
+  <%= form_tag('auth/logout', method: 'get', data: {turbo: false}) do %>
+  <button type='submit'>Logout</button>
+  <%- end %>
+
+  <%= yield %>
+
+<% else %>
+
+  <%= form_tag('/auth/openid_connect', method: 'post', data: {turbo: false}) do %>
+  <button type='submit'>Login</button>
+  <%- end %>
+
+  <p>ログインしてください</p>
+
+<% end %>
+
+</div>
+  </body>
+</html>

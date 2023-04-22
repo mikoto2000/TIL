@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  role: one
+  expiration_date: 2023-04-14
+
+two:
+  name: MyString
+  role: two
+  expiration_date: 2023-04-14
