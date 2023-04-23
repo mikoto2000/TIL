@@ -15,7 +15,7 @@
 <% if !session[:user].nil? %>
   user_info: <%= session[:user] %>
 
-  <%= form_tag('auth/logout', method: 'get', data: {turbo: false}) do %>
+  <%= form_tag('/auth/logout', method: 'get', data: {turbo: false}) do %>
   <button type='submit'>Logout</button>
   <%- end %>
 
