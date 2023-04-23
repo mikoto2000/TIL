@@ -1,0 +1,19 @@
+{
+    "name": "development environment",
+    "dockerComposeFile": [
+        "../docker-compose.yaml"
+    ],
+    "service": "app",
+    "workspaceFolder": "/work",
+
+    "settings": {
+        "telemetry.enableCrashReporter": false,
+        "telemetry.enableTelemetry": false,
+        "editor.copyWithSyntaxHighlighting": false,
+        "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    },
+
+    "extensions": []
+
+}
+
