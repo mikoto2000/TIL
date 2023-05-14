@@ -54,7 +54,7 @@ development:
 
 ### Model を編集して has_many 関係を定義
 
-今回は、。
+今回は、グループに複数のアカウントが所属しているという関連を定義。
 
 ```rb
 # app/models/group.rb
