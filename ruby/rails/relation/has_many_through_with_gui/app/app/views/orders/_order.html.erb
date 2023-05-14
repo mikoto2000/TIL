@@ -1,0 +1,13 @@
+<div id="<%= dom_id order %>">
+  <label>order id: </label><%= order.id %>
+
+  <div>
+    <ul>
+    <%- order.items.each { |i| %>
+      <li>
+        <%= link_to("item id: #{i.id}, item name: #{i.name}", item_url(i)) %>
+      </li>
+    <%- } %>
+    </ul>
+  </div>
+</div>

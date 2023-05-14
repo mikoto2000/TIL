@@ -1,0 +1,24 @@
+<%= form_with(model: order) do |form| %>
+  <% if order.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+        <% order.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div id='items'>
+    <%= form.fields_for :order_items do |order_item| %>
+      <%= render 'order_item_fields', :f => order_item %>
+    <% end %>
+    <%= link_to_add_association 'add item', form, :order_items %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

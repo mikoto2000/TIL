@@ -1,0 +1,9 @@
+<div class="nested-fields">
+  <div class="field">
+    <%= f.label :id, style: "display: block" %>
+    <%= f.hidden_field :order_id, :value => @order.id %>
+    <%= f.collection_select :item_id, Item.all, :id, :name %>
+  </div>
+  <%= link_to_remove_association "remove item", f %>
+</div>
+
