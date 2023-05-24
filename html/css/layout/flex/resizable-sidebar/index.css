@@ -1,0 +1,36 @@
+:root {
+  --header-height: 2em;
+  --footer-height: 2em;
+  --default-sidebar-width: 8em;
+}
+
+body {
+  display: flex; /* 縦並び flex レイアウト */
+  flex-flow: column; /* 縦並び flex レイアウト */
+  margin: 0px;
+}
+
+header {
+  flex: 0 0 var(--header-height); /* コンテンツに応じた自動サイズ調整をせずに、固定値の領域を確保 */
+}
+
+.contents-container {
+  display: flex; /* 横並び flex レイアウト */
+  max-height: calc(100vh - (var(--header-height) + var(--footer-height))); /* header と footer が使った領域の余りを利用 */
+}
+
+footer {
+  flex: 0 0 var(--footer-height); /* コンテンツに応じた自動サイズ調整をせずに、固定値の領域を確保 */
+}
+
+aside {
+  width: var(--default-sidebar-width); /* 初期のサイドバーの幅 */
+  flex-shrink: 0; /* コンテンツ幅が小さくても、初期幅をシュリンクしないようにする */
+  overflow-x: auto; /* サイドバーが、「サイズ変更の結果横幅が足りない」となった場合に横スクロールするように設定 */
+  overflow-y: auto; /* サイドバーが、ヘッダーからフッターの間でスクロールするように設定 */
+  resize: horizontal; /* サイドバーの横幅を可変にする設定 */
+}
+
+main {
+  overflow-y: auto; /* メインコンテンツが、ヘッダーからフッターの間でスクロールするように設定 */
+}
