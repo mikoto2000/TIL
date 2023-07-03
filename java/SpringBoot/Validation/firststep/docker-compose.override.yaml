@@ -6,8 +6,8 @@ services:
       SHELL: bash
     volumes:
       # vim 設定ファイル
-      # - "~/.vim:/root/.vim"
-      #- "~/.vim:/root/.vim"
+      # - "~/vimfiles:/root/.vim"
+      - "~/.vim:/root/.vim"
       # vim 配置場所
       - "vim:/vim"
   vim-installer:
