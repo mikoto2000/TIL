@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * User
+ * UserDto
  */
 @Data
 @AllArgsConstructor
