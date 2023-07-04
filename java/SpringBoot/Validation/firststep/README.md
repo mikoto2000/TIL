@@ -30,15 +30,15 @@ docker compose exec app bash
 # 動作確認
 
 - 妥当なリクエスト
-    - `curl localhost:8080/validation-test -H 'Content-Type: application/json' -d '{"integer":1, "name":"aaa", "mail":"user@example.com"}'`
+    - `curl -v localhost:8080/validation-test -H 'Content-Type: application/json' -d '{"integer":1, "name":"aaa", "mail":"user@example.com"}'`
 - 不当なリクエスト
     - `integer` が負の値
-        - `curl localhost:8080/validation-test -H 'Content-Type: application/json' -d '{"integer":-1, "name":"aaa", "mail":"user@example.com"}'`
+        - `curl -v localhost:8080/validation-test -H 'Content-Type: application/json' -d '{"integer":-1, "name":"aaa", "mail":"user@example.com"}'`
     - `mail` がメールアドレスではない
-        - `curl localhost:8080/validation-test -H 'Content-Type: application/json' -d '{"integer":1, "name":"aaa", "mail":"bbb"}'`
+        - `curl -v localhost:8080/validation-test -H 'Content-Type: application/json' -d '{"integer":1, "name":"aaa", "mail":"bbb"}'`
     - 必須属性 `name` が空
-        - `curl localhost:8080/validation-test -H 'Content-Type: application/json' -d '{"integer":1, "mail":"bbb"}'`
+        - `curl -v localhost:8080/validation-test -H 'Content-Type: application/json' -d '{"integer":1, "mail":"bbb"}'`
     - JSON パースエラー
-        - `curl localhost:8080/validation-test -H 'Content-Type: application/json' -d '{"integer":-1, "name":"aaa", "mail":"user@example.com"'`
+        - `curl -v localhost:8080/validation-test -H 'Content-Type: application/json' -d '{"integer":-1, "name":"aaa", "mail":"user@example.com"'`
 
 
