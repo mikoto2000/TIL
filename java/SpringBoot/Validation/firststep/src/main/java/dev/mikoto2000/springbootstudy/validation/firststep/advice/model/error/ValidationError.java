@@ -1,4 +1,4 @@
-package dev.mikoto2000.springbootstudy.validation.firststep.advice.dto.error;
+package dev.mikoto2000.springbootstudy.validation.firststep.advice.model.error;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ValidationErrorDto {
-    private List<ErrorDto> errors;
+public class ValidationError {
+    private List<ApiError> errors;
 }
 

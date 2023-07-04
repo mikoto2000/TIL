@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import dev.mikoto2000.springbootstudy.validation.firststep.advice.dto.error.ErrorDto;
-import dev.mikoto2000.springbootstudy.validation.firststep.advice.dto.error.ValidationErrorDto;
+import dev.mikoto2000.springbootstudy.validation.firststep.advice.model.error.ApiError;
+import dev.mikoto2000.springbootstudy.validation.firststep.advice.model.error.ValidationError;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -25,22 +25,22 @@ public class ApiExceptionHandler {
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ValidationErrorDto handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+  public ValidationError handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
 
-    List<ErrorDto> errors = e.getFieldErrors().stream().map((error) ->
-        new ErrorDto(error.getField(), error.getDefaultMessage())
+    List<ApiError> errors = e.getFieldErrors().stream().map((error) ->
+        new ApiError(error.getField(), error.getDefaultMessage())
     ).collect(Collectors.toList());
 
-    return new ValidationErrorDto(errors);
+    return new ValidationError(errors);
   }
 
   @ExceptionHandler(HttpMessageNotReadableException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public ValidationErrorDto handleMethodArgumentNotValidException(HttpMessageNotReadableException e) {
+  public ValidationError handleMethodArgumentNotValidException(HttpMessageNotReadableException e) {
 
-    List<ErrorDto> errors = Arrays.asList(new ErrorDto(null, e.getLocalizedMessage()));
+    List<ApiError> errors = Arrays.asList(new ApiError(null, e.getLocalizedMessage()));
 
-    return new ValidationErrorDto(errors);
+    return new ValidationError(errors);
   }
 }
 

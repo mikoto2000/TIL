@@ -42,3 +42,7 @@ docker compose exec app bash
         - `curl -v localhost:8080/validation-test -H 'Content-Type: application/json' -d '{"integer":-1, "name":"aaa", "mail":"user@example.com"'`
 
 
+
+# 参考資料
+
+- [【Spring】@RestControllerAdvice を使ってREST APIのエラーハンドラを作成する | SEのプログラミングと英語の勉強ブログ](https://sebenkyo.com/2020/08/02/post-1260/#)
