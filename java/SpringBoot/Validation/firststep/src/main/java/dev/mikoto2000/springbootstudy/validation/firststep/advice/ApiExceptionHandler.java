@@ -1,10 +1,12 @@
 package dev.mikoto2000.springbootstudy.validation.firststep.advice;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -28,6 +30,15 @@ public class ApiExceptionHandler {
     List<ErrorDto> errors = e.getFieldErrors().stream().map((error) ->
         new ErrorDto(error.getField(), error.getDefaultMessage())
     ).collect(Collectors.toList());
+
+    return new ValidationErrorDto(errors);
+  }
+
+  @ExceptionHandler(HttpMessageNotReadableException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ValidationErrorDto handleMethodArgumentNotValidException(HttpMessageNotReadableException e) {
+
+    List<ErrorDto> errors = Arrays.asList(new ErrorDto(null, e.getLocalizedMessage()));
 
     return new ValidationErrorDto(errors);
   }
