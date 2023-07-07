@@ -1,0 +1,10 @@
+body {
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+}
+
+#json {
+  width: 80em;
+  height: 25em;
+}
