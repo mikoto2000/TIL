@@ -84,3 +84,25 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('#decoded_mi_json').textContent = decoded_mi;
 
 });
+
+  // ゼロから JavaScript で組み立ててみる
+  import { MemberInfo } from "./MemberInfo.js"
+  const memberInfo: MemberInfo.MemberInfo = {
+    commonInfo: {
+      timestamp: "1234567890"
+    },
+    member: [
+      {
+        type: "student",
+        name: "mikoto2000",
+        studentProps: {
+          studentId: "std_xxxx"
+        }
+      }
+    ]
+  };
+
+  const memberInfoFromScript = MemberInfo.create(memberInfo);
+  document.querySelector('#build_from_code').textContent = JSON.stringify(memberInfoFromScript, null, 2);
+
+

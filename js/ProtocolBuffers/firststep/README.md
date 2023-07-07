@@ -27,3 +27,10 @@ npm i protobufjs-cli
 ```
 
 
+# TS ファイル生成
+
+```sh
+npx pbjs -t static-module -w commonjs -o compiled.js proto/MemberInfo.proto
+npx pbts -o compiled.d.ts compiled.js
+```
+

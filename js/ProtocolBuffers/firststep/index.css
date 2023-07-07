@@ -4,17 +4,7 @@ body {
   width: 100%;
 }
 
-#json {
-  width: 80em;
-  height: 30em;
-}
-
-#proto {
-  width: 80em;
-  height: 30em;
-}
-
-#decoded_mi_json {
+textarea {
   width: 80em;
   height: 30em;
 }
