@@ -6,5 +6,10 @@ body {
 
 #json {
   width: 80em;
-  height: 25em;
+  height: 30em;
+}
+
+#proto {
+  width: 80em;
+  height: 30em;
 }
