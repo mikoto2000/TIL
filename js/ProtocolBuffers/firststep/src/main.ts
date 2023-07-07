@@ -1,22 +1,30 @@
+import protobuf from "protobufjs"
+
 const DEFAULT_JSON_STRING = `{
   "common_info": {
     "timestamp": "1234567890"
   },
-  "members": [
+  "member": [
     {
       "type": "student",
       "name": "mikoto2000",
-      "student_id": "std_xxxx"
+      "student_props": {
+        "student_id": "std_xxxx"
+      }
     },
     {
       "type": "teacher",
       "name": "makoto2000",
-      "student_id": "tea_yyyy"
+      "teacher_props": {
+        "teacher_id": "tea_yyy"
+      }
     },
     {
       "type": "teacher",
       "name": "mokoto2000",
-      "student_id": "tea_zzzz"
+      "teacher_props": {
+        "teacher_id": "tea_zzzz"
+      }
     }
   ]
 }
@@ -29,11 +37,11 @@ message CommonInfo {
 }
 
 message TeacherProps {
-  string student_id = 1;
+  string teacher_id = 1;
 }
 
 message StudentProps {
-  string teacher_id = 1;
+  string student_id = 1;
 }
 
 message Member {
@@ -41,11 +49,11 @@ message Member {
   string name = 2;
   oneof properties {
     TeacherProps teacher_props = 3;
-    StudentProps teacher_props = 4;
+    StudentProps student_props = 4;
   }
 }
 
-message MebmerInfo {
+message MemberInfo {
   CommonInfo common_info = 1;
   repeated Member member = 2;
 }
@@ -54,4 +62,25 @@ message MebmerInfo {
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('#json').textContent = DEFAULT_JSON_STRING;
   document.querySelector('#proto').textContent = DEFAULT_PROTO_STRING;
+
+  // 今回の JSON は、スネークケースで定義しており、それをそのまま使いたい
+  // そのため、グローバルオプションでキャメルケース変換を抑制する
+  protobuf.parse.defaults = { keepCase: true };
+
+  // proto 定義を読み込む
+  const root = protobuf.parse(DEFAULT_PROTO_STRING).root;
+
+  // proto 定義から MemberInfo の定義を取得
+  const MemberInfo = root.lookupType('MemberInfo');
+
+  // JSON をパースして、 MemberInfo に流し込み、バイナリ化する
+  const json_object = JSON.parse(DEFAULT_JSON_STRING);
+  const mi = MemberInfo.create(json_object);
+  const buffer = MemberInfo.encode(mi).finish();
+
+
+  // デコードしてテキストエリアへ表示
+  const decoded_mi = JSON.stringify(MemberInfo.decode(buffer), null, 2);
+  document.querySelector('#decoded_mi_json').textContent = decoded_mi;
+
 });
