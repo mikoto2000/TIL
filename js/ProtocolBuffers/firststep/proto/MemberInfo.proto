@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+message CommonInfo {
+  string timestamp = 1;
+}
+
+message TeacherProps {
+  string teacher_id = 1;
+}
+
+message StudentProps {
+  string student_id = 1;
+}
+
+message Member {
+  string type = 1;
+  string name = 2;
+  oneof properties {
+    TeacherProps teacher_props = 3;
+    StudentProps student_props = 4;
+  }
+}
+
+message MemberInfo {
+  CommonInfo common_info = 1;
+  repeated Member member = 2;
+}
+

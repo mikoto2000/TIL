@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./index.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+  </head>
+  <body>
+    <div id="app">
+      <div id="json_input_section">
+        <label>元ネタ JSON:</label>
+        <textarea id="json"></textarea>
+      </div>
+      <div id="proto_input_section">
+        <label>インターフェース定義:</label>
+        <textarea id="proto"></textarea>
+      </div>
+      <div id="decoded_mi_json_input_section">
+        <label>元ネタ JSON を encode して decode しなおした JSON:</label>
+        <textarea id="decoded_mi_json"></textarea>
+      </div>
+      <div id="build_from_code_output_section">
+        <label>JavaScript で一から作ったオブジェクト:</label>
+        <textarea id="build_from_code"></textarea>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
