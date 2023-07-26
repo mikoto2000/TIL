@@ -11,6 +11,11 @@ date: 2023/7/26
 - 使用する Docker イメージ: `eclipse-temurin:17`
 
 
+# Maven プロジェクト作成
+
+[spring initializr で、 Mavem + Java17 + Lombok のプロジェクトを作成し、展開する](https://start.spring.io/#!type=maven-project&language=java&platformVersion=3.1.2&packaging=jar&jvmVersion=17&groupId=dev.mikoto2000.javastudy.protocolbuffers&artifactId=firststep&name=firststep&description=Protocol%20Buffers%20demo%20project%20for%20Spring%20Boot&packageName=dev.mikoto2000.javastudy.protocolbuffers.firststep&dependencies=lombok)
+
+
 # 開発用コンテナ起動
 
 共通ボリュームとして `maven_data` を利用しているので、あらかじめボリュームを作成しておいてください。
