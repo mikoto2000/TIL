@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  app:
+    image: eclipse-temurin:17
+    init: true
+    restart: always
+    command: ["sleep", "infinity"]
+    volumes:
+      # プロジェクトルート
+      - "./:/work"
+      # maven
+      - "maven_data:/root/.m2"
+    working_dir: /work
+
+volumes:
+  maven_data:
+    name: maven_data
+    external: true
+
