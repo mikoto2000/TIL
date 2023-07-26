@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option java_multiple_files = false;
+option java_package="dev.mikoto2000.javastudy.protocolbuffers.firststep.model";
+
+message CommonInfo {
+  string timestamp = 1;
+}
+
+message TeacherProps {
+  string teacher_id = 1;
+}
+
+message StudentProps {
+  string student_id = 1;
+}
+
+message Member {
+  string type = 1;
+  string name = 2;
+  oneof properties {
+    TeacherProps teacher_props = 3;
+    StudentProps student_props = 4;
+  }
+}
+
+message MemberInfo {
+  CommonInfo common_info = 1;
+  repeated Member member = 2;
+}
+

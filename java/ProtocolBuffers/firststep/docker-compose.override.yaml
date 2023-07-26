@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  app:
+    environment:
+      SHELL: bash
+    volumes:
+      # vim 設定ファイル
+      - "~/.vim:/root/.vim"
+      # vim 配置場所
+      - "vim:/vim"
+  vim-installer:
+    image: mikoto2000/curl-jq
+    init: true
+    restart: "no"
+    depends_on:
+      - app
+    volumes:
+      # vim 配置場所
+      - "vim:/vim"
+    # vim-bin のインストールスクリプトをダウンロードして実行
+    command: >
+      -c "curl -sOL https://raw.githubusercontent.com/mikoto2000/MiscellaneousTools/master/vim/install-vim-bin.sh
+      && chmod +x ./install-vim-bin.sh
+      && ./install-vim-bin.sh"
+volumes:
+  vim:
+
