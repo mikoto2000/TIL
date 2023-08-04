@@ -58,6 +58,22 @@
 				<artifactId>spotbugs-maven-plugin</artifactId>
 				<version>4.7.3.5</version>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.3.0</version>
+				<configuration>
+					<configLocation>${basedir}/checkstyle/google_checks.xml</configLocation>
+					<propertyExpansion>config_loc=${basedir}/checkstyle/</propertyExpansion>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>10.12.2</version>
+					</dependency>
+				</dependencies>
+			</plugin>
 		</plugins>
 	</build>
 
