@@ -1,0 +1,6 @@
+spring:
+  profiles:
+    group:
+      develop:
+        - mqtt-develop
+    active: develop

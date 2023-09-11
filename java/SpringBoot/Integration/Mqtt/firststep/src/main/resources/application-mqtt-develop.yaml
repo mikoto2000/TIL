@@ -1,0 +1,4 @@
+mqtt:
+  url: ${MQTT_URL:tcp://emqx}
+  userName: ${MQTT_USER:pubuser}
+  password: ${MQTT_PASSWORD:password}
