@@ -6,11 +6,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.IntegrationFlow;
+import org.springframework.integration.dsl.MessageChannels;
 import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
 import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
+import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
 import org.springframework.integration.mqtt.support.MqttHeaders;
+import org.springframework.messaging.MessageChannel;
 
 import dev.mikoto2000.study.springboot.integration.mqtt.firststep.property.MqttProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -89,6 +92,38 @@ public class MqttConfiguration {
                     System.out.println("Received MQTT message raw: " + message.getPayload());
                     System.out.println("Received MQTT message string: " + new String(payload));
                 })
+                .get();
+    }
+
+    /**
+     * MQTT 送信用ハンドラ
+     * @return
+     */
+    @Bean
+    public MqttPahoMessageHandler messageHandler() {
+        MqttPahoMessageHandler handler = new MqttPahoMessageHandler("sendClient", mqttClientFactory());
+        handler.setAsync(true);
+        handler.setDefaultTopic("testtopic/stringpayloadmessage");
+        return handler;
+    }
+
+    /**
+     * MQTT 送信用チャンネル
+     * @return
+     */
+    @Bean
+    public MessageChannel mqttOutboundChannel() {
+        return MessageChannels.direct().getObject();
+    }
+
+    /**
+     * MQTT 送信フロー
+     * @return
+     */
+    @Bean
+    public IntegrationFlow mqttOutboundFlow() {
+        return IntegrationFlow.from(mqttOutboundChannel())
+                .handle(messageHandler())
                 .get();
     }
 }
