@@ -19,8 +19,8 @@ public class FirststepApplication {
 		try {
 			MqttSendService mss = ctx.getBean(MqttSendService.class);
 			Thread.sleep(3000);
-			mss.sendToMqtt("testtopic/stringpayloadmessage", "stringpayloadmessage");
-			mss.sendToMqtt("testtopic/bytearraypayloadmessage", "bytearraypayloadmessage");
+			mss.sendToMqtt("testtopic/stringpayloadmessage", "👺stringpayloadmessage");
+			mss.sendToMqtt("testtopic/bytearraypayloadmessage", "👪bytearraypayloadmessage");
 			latch.await();
 		} catch (Exception e) {
 			e.printStackTrace();

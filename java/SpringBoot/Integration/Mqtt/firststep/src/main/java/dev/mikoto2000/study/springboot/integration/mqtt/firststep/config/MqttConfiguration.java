@@ -1,7 +1,6 @@
 package dev.mikoto2000.study.springboot.integration.mqtt.firststep.config;
 
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.config.EnableIntegration;
@@ -16,22 +15,22 @@ import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.messaging.MessageChannel;
 
 import dev.mikoto2000.study.springboot.integration.mqtt.firststep.property.MqttProperties;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * MqttConfiguration
  */
+@AllArgsConstructor
 @Configuration
 @EnableIntegration
 @Slf4j
 public class MqttConfiguration {
 
+    /**
+     * MQTT のプロパティ
+     */
     private final MqttProperties mqttProperties;
-
-    @Autowired
-    public MqttConfiguration(MqttProperties mqttProperties) {
-        this.mqttProperties = mqttProperties;
-    }
 
     @Bean
     public MqttPahoClientFactory mqttClientFactory() {
