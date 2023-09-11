@@ -1,0 +1,27 @@
+{
+  "name": "development environment",
+  "dockerComposeFile": [
+    "../docker-compose.yaml"
+  ],
+  "service": "dev",
+  "workspaceFolder": "/work",
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "telemetry.telemetryLevel": "off",
+        "telemetry.enableTelemetry": false,
+        "editor.copyWithSyntaxHighlighting": false,
+        "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
+      },
+      "extensions": [
+        "eamodio.gitlens",
+        "redhat.fabric8-analytics",
+        "shengchen.vscode-checkstyle",
+        "vmware.vscode-boot-dev-pack",
+        "vscjava.vscode-java-pack"
+      ]
+    }
+  }
+}
+
