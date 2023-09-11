@@ -1,5 +1,8 @@
 package dev.mikoto2000.study.springboot.integration.mqtt.firststep.config;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -57,6 +60,24 @@ public class MqttConfiguration {
         return factory;
     }
 
+    /**
+     * MQTT 受信処理用 Executor
+     * @return
+     */
+    @Bean
+    public Executor mqttInboundExecutor() {
+        return Executors.newCachedThreadPool();
+    }
+
+    /**
+     * MQTT String ペイロード受信用チャンネル
+     * @return
+     */
+    @Bean
+    public MessageChannel mqttStringPayloadInboundChannel() {
+        return MessageChannels.executor(mqttInboundExecutor()).getObject();
+    }
+
     @Bean
     public IntegrationFlow mqttStringPayloadInFlow() {
         // トピックを受信するアダプタを生成
@@ -65,11 +86,21 @@ public class MqttConfiguration {
 
         return IntegrationFlow
                 .from(adapter)
+                .channel(mqttStringPayloadInboundChannel())
                 .handle(message -> {
-                    System.out.println("Received MQTT topic: " + message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC));
-                    System.out.println("Received MQTT message: " + message.getPayload());
+                    log.info("Received MQTT topic: " + message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC));
+                    log.info("Received MQTT message: " + message.getPayload());
                 })
                 .get();
+    }
+
+    /**
+     * MQTT Byte Array ペイロード受信用チャンネル
+     * @return
+     */
+    @Bean
+    public MessageChannel mqttByteArrayPayloadInboundChannel() {
+        return MessageChannels.executor(mqttInboundExecutor()).getObject();
     }
 
     @Bean
@@ -85,11 +116,27 @@ public class MqttConfiguration {
 
         return IntegrationFlow
                 .from(adapter)
+                .channel(mqttByteArrayPayloadInboundChannel())
                 .handle(message -> {
+                    try {
+                        Thread.sleep(5000);
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                    }
                     byte[] payload = (byte[]) message.getPayload();
-                    System.out.println("Received MQTT topic: " + message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC));
-                    System.out.println("Received MQTT message raw: " + message.getPayload());
-                    System.out.println("Received MQTT message string: " + new String(payload));
+                    log.info("Received MQTT topic: " + message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC));
+                    try {
+                        Thread.sleep(5000);
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                    }
+                    log.info("Received MQTT message raw: " + message.getPayload());
+                    try {
+                        Thread.sleep(5000);
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                    }
+                    log.info("Received MQTT message string: " + new String(payload));
                 })
                 .get();
     }
