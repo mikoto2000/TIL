@@ -20,8 +20,10 @@ services:
     init: true
     restart: always
     ports:
-      # MQTT over WebSocket の待ち受けポート
+      # MQTT over WebSocket (非 TSL) の待ち受けポート
       - 0.0.0.0:8083:8083
+      # MQTT over WebSocket (TSL) の待ち受けポート
+      - 0.0.0.0:8084:8084
       # ダッシュボードの待ち受けポート
       - 0.0.0.0:18083:18083
     volumes:
