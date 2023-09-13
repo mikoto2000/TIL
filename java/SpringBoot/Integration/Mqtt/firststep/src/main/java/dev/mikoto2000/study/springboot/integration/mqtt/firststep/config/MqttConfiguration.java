@@ -145,24 +145,9 @@ public class MqttConfiguration {
                 .from(adapter)
                 .channel(mqttByteArrayPayloadInboundChannel())
                 .handle(message -> {
-                    try {
-                        Thread.sleep(5000);
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                    }
                     log.info("Received MQTT topic: "
                             + message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC));
-                    try {
-                        Thread.sleep(5000);
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                    }
                     log.info("Received MQTT message raw: " + message.getPayload());
-                    try {
-                        Thread.sleep(5000);
-                    } catch (Exception e) {
-                        // TODO: handle exception
-                    }
                     byte[] payload = (byte[]) message.getPayload();
                     log.info("Received MQTT message string: " + new String(payload));
                 })

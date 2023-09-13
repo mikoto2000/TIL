@@ -31,6 +31,10 @@ public class FirststepApplication {
             Thread.sleep(3000);
             mss.sendToMqtt("testtopic/stringpayloadmessage", "👺stringpayloadmessage");
             mss.sendToMqtt("testtopic/bytearraypayloadmessage", "👪bytearraypayloadmessage");
+
+            mss.sendToMqtt("testtopic/stringpayloadmessage", new User("firstName", "lastName"));
+            mss.sendToMqtt("testtopic/bytearraypayloadmessage",  new User("firstName", "lastName"));
+
             latch.await();
         } catch (Exception e) {
             e.printStackTrace();

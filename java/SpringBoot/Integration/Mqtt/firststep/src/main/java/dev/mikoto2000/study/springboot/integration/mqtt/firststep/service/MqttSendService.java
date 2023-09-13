@@ -21,15 +21,38 @@ public class MqttSendService {
     private MessageChannel mqttOutboundChannel;
 
     /**
-     * MQTT トピック送信。メソッド。
+     * JSON 変換用 ObjectMapper。
+     */
+    private ObjectMapper objectMapper;
+
+    /**
+     * MQTT トピック送信メソッド。
      *
      * @param topic トピック名
-     * @param data 送信データ
+     * @param payload 送信データ
      */
-    public void sendToMqtt(String topic, String data) {
+    public void sendToMqtt(String topic, String payload) {
         mqttOutboundChannel
                 .send(MessageBuilder
-                        .withPayload(data)
+                        .withPayload(payload)
+                        .setHeader(MqttHeaders.TOPIC, topic)
+                        .build());
+    }
+
+    /**
+     * MQTT トピック送信メソッド。
+     *
+     * @param topic トピック名
+     * @param payload 送信データ
+     * @throws JsonProcessingException JSON 文字列への変換に失敗した場合
+     */
+    public void sendToMqtt(String topic, Object payload) throws JsonProcessingException {
+
+        String stringifyPayload = this.objectMapper.writeValueAsString(payload);
+
+        mqttOutboundChannel
+                .send(MessageBuilder
+                        .withPayload(stringifyPayload)
                         .setHeader(MqttHeaders.TOPIC, topic)
                         .build());
     }
