@@ -26,6 +26,50 @@ Spring Initializr でプロジェクトを作成する。
 </dependency>
 ```
 
+# 動作確認用の実行
+
+```sh
+./mvnw spring-boot:run
+```
+
+実行時にプロパティを上書きしたい場合、以下のように `-Dspring-boot-.run.arguments` オプションで上書きする。
+
+```sh
+./mvnw spring-boot:run -Dspring-boot.run.arguments=--logging.level.root=TRACE
+```
+
+# テスト
+
+```sh
+./mvnw test
+```
+
+# 静的解析・テストを実施し、レポートを生成
+
+```sh
+./mvnw site
+```
+
+# デプロイ用の jar ファイルを生成
+
+```sh
+./mvnw package -Dmaven.test.skip=true
+```
+
+`target/firststep-<VERSION>.jar` が生成される。
+
+# デプロイ後の実行
+
+```sh
+java -jar firststep-<VERSION>.jar --spring.profiles.active=production
+```
+
+java コマンドで jar ファイルを実行する場合は、プロファイルの指定と同じようにプロパティの上書きも可能。
+
+```sh
+java -jar firststep-<VERSION>.jar --spring.profiles.active=production --logging.level.root=TRACE
+```
+
 # 参照資料
 
 - [Spring Integration MQTT サポート - リファレンス](https://spring.pleiades.io/spring-integration/docs/current/reference/html/mqtt.html)
