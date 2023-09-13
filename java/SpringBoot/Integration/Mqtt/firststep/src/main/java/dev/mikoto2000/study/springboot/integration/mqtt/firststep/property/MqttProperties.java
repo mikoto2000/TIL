@@ -5,6 +5,9 @@ import org.springframework.stereotype.Component;
 
 import lombok.Data;
 
+/**
+ * MQTT 用プロパティクラス。
+ */
 @Component
 @ConfigurationProperties("mqtt")
 @Data
