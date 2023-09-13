@@ -8,20 +8,28 @@ import org.springframework.stereotype.Service;
 import lombok.AllArgsConstructor;
 
 /**
- * MQTT 送信サービス
+ * MQTT 送信サービス。
  */
 @AllArgsConstructor
 @Service
 public class MqttSendService {
 
     /**
-     * MQTT 送信用チャンネル
+     * MQTT 送信用チャンネル。
      */
     private MessageChannel mqttOutboundChannel;
 
+    /**
+     * MQTT トピック送信。メソッド。
+     *
+     * @param topic トピック名
+     * @param data 送信データ
+     */
     public void sendToMqtt(String topic, String data) {
-        mqttOutboundChannel.send(MessageBuilder.withPayload(data)
-            .setHeader(MqttHeaders.TOPIC, topic)
-            .build());
+        mqttOutboundChannel
+                .send(MessageBuilder
+                        .withPayload(data)
+                        .setHeader(MqttHeaders.TOPIC, topic)
+                        .build());
     }
 }
