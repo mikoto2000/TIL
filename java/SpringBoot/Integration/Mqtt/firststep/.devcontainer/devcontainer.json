@@ -9,9 +9,31 @@
   "customizations": {
     "vscode": {
       "settings": {
+        "files.exclude": {
+            "**/.classpath": true,
+            "**/.project": true,
+            "**/.settings": true,
+            "**/.factorypath": true
+        },
+        "java.semanticHighlighting.enabled": true,
+        "java.requirements.JDK11Warning": false,
+        "java.checkstyle.version": "10.12.3",
+        "java.checkstyle.configuration": "checkstyle/google_checks.xml",
+        "java.format.settings.url": "format/eclipse-java-google-style.xml",
+        "java.completion.importOrder": [
+            "#",
+            "java",
+            "javax",
+            "org",
+            "com",
+            "lombok"
+        ],
+        "redhat.telemetry.enabled": false,
         "telemetry.telemetryLevel": "off",
         "telemetry.enableTelemetry": false,
         "editor.copyWithSyntaxHighlighting": false,
+        "editor.renderWhitespace": "all",
+        "ruby.rubocop.useBundler": true,
         "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
       },
       "extensions": [
@@ -24,4 +46,3 @@
     }
   }
 }
-
