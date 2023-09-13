@@ -3,4 +3,6 @@ spring:
     group:
       develop:
         - mqtt-develop
+      production:
+        - mqtt-production
     active: develop
