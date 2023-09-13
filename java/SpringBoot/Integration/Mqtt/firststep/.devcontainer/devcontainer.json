@@ -21,12 +21,11 @@
         "java.checkstyle.configuration": "checkstyle/google_checks.xml",
         "java.format.settings.url": "format/eclipse-java-google-style.xml",
         "java.completion.importOrder": [
-            "#",
-            "java",
-            "javax",
-            "org",
-            "com",
-            "lombok"
+          "#",
+          "java",
+          "javax",
+          "",
+          "dev.mikoto2000"
         ],
         "redhat.telemetry.enabled": false,
         "telemetry.telemetryLevel": "off",

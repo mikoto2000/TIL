@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import dev.mikoto2000.study.springboot.integration.mqtt.firststep.model.User;
 import dev.mikoto2000.study.springboot.integration.mqtt.firststep.service.MqttSendService;
 
 /**

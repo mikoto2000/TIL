@@ -271,8 +271,7 @@
     <module name="VariableDeclarationUsageDistance"/>
     <!-- Eclipse の Organize Import の-->
     <module name="CustomImportOrder">
-      <property name="customImportOrderRules" value="STANDARD_JAVA_PACKAGE###THIRD_PARTY_PACKAGE###SPECIAL_IMPORTS###SAME_PACKAGE(3)"/>
-      <property name="specialImportsRegExp" value="^lombok\."/>
+      <property name="customImportOrderRules" value="STANDARD_JAVA_PACKAGE###THIRD_PARTY_PACKAGE###SAME_PACKAGE(3)"/>
       <property name="sortImportsInGroupAlphabetically" value="true"/>
       <property name="separateLineBetweenGroups" value="true"/>
       <property name="tokens" value="IMPORT, STATIC_IMPORT, PACKAGE_DEF"/>
