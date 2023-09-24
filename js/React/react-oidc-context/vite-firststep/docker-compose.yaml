@@ -13,7 +13,7 @@ services:
     restart: always
     command: ["sleep", "infinity"]
     ports:
-      - 0.0.0.0:3000:3000
+      - 0.0.0.0:3000:5173
     volumes:
       - "./:/work"
       - "node_modules:/work/project/node_modules"

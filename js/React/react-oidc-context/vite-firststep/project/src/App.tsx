@@ -1,35 +1,56 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import { Routes, Route } from "react-router-dom";
+
+import AuthPage from './AuthPage';
+import AuthWrapper from './AuthWrapper';
+import Header from './Header';
+import PublicPage from './PublicPage';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="App">
+      <Header />
+      <h1>react-oidc-context と react-router を組み合わせて RBAC する</h1>
+      <Routes>
+        <Route path="/public" element={
+          <PublicPage />
+        } />
+        { /* ログイン済みユーザーにだけ見せたい要素は AuthWrapper の auth に渡す */ }
+        { /* 未ログインの時に見せる要素は AuthWrapper の noAuth に渡す */ }
+        <Route path="/auth" element={
+          <AuthWrapper
+            auth={<AuthPage />}
+            noAuth={
+            <React.Fragment>
+                <p>You need loged in.</p>
+            </React.Fragment>
+          } />
+        } />
+        { /* ログイン済み、かつ、指定のロールを持つユーザーにだけ見せたい要素は AuthWrapper の role と auth を渡す */ }
+        <Route path="/admin" element={
+          <AuthWrapper
+            role="admin"
+            auth={<React.Fragment><div>admin ページですよー</div></React.Fragment>}
+            noAuth={
+            <React.Fragment>
+                <p>Not Found.</p>
+            </React.Fragment>
+          } />
+        } />
+        <Route path="/" element={
+          <React.Fragment>
+          </React.Fragment>
+        } />
+        <Route path="*" element={
+          <React.Fragment>
+            <div>
+              Not Found.
+            </div>
+          </React.Fragment>
+        } />
+      </Routes>
+    </div>
+  );
 }
 
-export default App
+export default App;
