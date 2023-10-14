@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  app:
+    image: openjdk:17
+    volumes:
+      # プロジェクトルート
+      - "./:/work"
+      # maven 関連
+      - "maven_data:/root/.m2"
+    working_dir: /work
+    command: sleep infinity
+  postgres:
+    image: postgres:14.5
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./.devcontainer/config/postgres/initdb.d:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_DB: public
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - 0.0.0.0:5432:5432
+
+volumes:
+  postgres_data:
+    driver: local
+  maven_data:
+    external: true
+
