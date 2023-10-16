@@ -1,7 +1,7 @@
 version: '3'
 services:
   dev:
-    image: mikoto2000/rails-java-nodejs:latest
+    image: mikoto2000/vscode-rails-java-nodejs:latest
     init: true
     restart: always
     command: ["sleep", "infinity"]

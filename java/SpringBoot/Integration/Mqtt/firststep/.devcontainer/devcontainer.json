@@ -9,6 +9,8 @@
   "customizations": {
     "vscode": {
       "settings": {
+        "editor.copyWithSyntaxHighlighting": false,
+        "editor.renderWhitespace": "all",
         "files.exclude": {
             "**/.classpath": true,
             "**/.project": true,
@@ -16,12 +18,6 @@
             "**/.factorypath": true
         },
         "java.compile.nullAnalysis.mode": "automatic",
-        "java.configuration.updateBuildConfiguration": "interactive",
-        "java.semanticHighlighting.enabled": true,
-        "java.requirements.JDK11Warning": false,
-        "java.checkstyle.version": "10.12.3",
-        "java.checkstyle.configuration": "checkstyle/google_checks.xml",
-        "java.format.settings.url": "format/eclipse-java-google-style.xml",
         "java.completion.importOrder": [
           "#",
           "java",
@@ -29,12 +25,16 @@
           "",
           "dev.mikoto2000"
         ],
+        "java.configuration.updateBuildConfiguration": "interactive",
+        "java.semanticHighlighting.enabled": true,
+        "java.requirements.JDK11Warning": false,
+        "java.checkstyle.version": "10.12.3",
+        "java.checkstyle.configuration": "checkstyle/google_checks.xml",
+        "java.format.settings.url": "format/eclipse-java-google-style.xml",
         "redhat.telemetry.enabled": false,
+        "ruby.rubocop.useBundler": true,
         "telemetry.telemetryLevel": "off",
         "telemetry.enableTelemetry": false,
-        "editor.copyWithSyntaxHighlighting": false,
-        "editor.renderWhitespace": "all",
-        "ruby.rubocop.useBundler": true,
         "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
       },
       "extensions": [

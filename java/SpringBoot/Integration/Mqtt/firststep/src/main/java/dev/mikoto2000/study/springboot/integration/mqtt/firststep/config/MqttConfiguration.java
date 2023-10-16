@@ -69,7 +69,7 @@ public class MqttConfiguration {
 
     /**
      * MQTT 受信処理用 Executor 作成メソッド。
-     * スレッドプールを用意し、受信処理ごとに空いているスレッドを使用して
+     * ここで作成した ThreadPoolExecutor を使って MQTT 受信処理を実行する。
      *
      * @return MQTT 受信処理用 Executor
      */
