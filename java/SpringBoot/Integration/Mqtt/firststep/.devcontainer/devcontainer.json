@@ -1,0 +1,49 @@
+{
+  "name": "development environment",
+  "dockerComposeFile": [
+    "../docker-compose.yaml"
+  ],
+  "service": "dev",
+  "workspaceFolder": "/work",
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.copyWithSyntaxHighlighting": false,
+        "editor.renderWhitespace": "all",
+        "files.exclude": {
+            "**/.classpath": true,
+            "**/.project": true,
+            "**/.settings": true,
+            "**/.factorypath": true
+        },
+        "java.compile.nullAnalysis.mode": "automatic",
+        "java.completion.importOrder": [
+          "#",
+          "java",
+          "javax",
+          "",
+          "dev.mikoto2000"
+        ],
+        "java.configuration.updateBuildConfiguration": "interactive",
+        "java.semanticHighlighting.enabled": true,
+        "java.requirements.JDK11Warning": false,
+        "java.checkstyle.version": "10.12.3",
+        "java.checkstyle.configuration": "checkstyle/google_checks.xml",
+        "java.format.settings.url": "format/eclipse-java-google-style.xml",
+        "redhat.telemetry.enabled": false,
+        "ruby.rubocop.useBundler": true,
+        "telemetry.telemetryLevel": "off",
+        "telemetry.enableTelemetry": false,
+        "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
+      },
+      "extensions": [
+        "eamodio.gitlens",
+        "redhat.fabric8-analytics",
+        "shengchen.vscode-checkstyle",
+        "vmware.vscode-boot-dev-pack",
+        "vscjava.vscode-java-pack"
+      ]
+    }
+  }
+}

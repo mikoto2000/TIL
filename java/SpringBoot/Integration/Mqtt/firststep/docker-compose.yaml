@@ -1,0 +1,67 @@
+version: '3'
+services:
+  dev:
+    image: mikoto2000/vscode-rails-java-nodejs:latest
+    init: true
+    restart: always
+    command: ["sleep", "infinity"]
+    working_dir: "/work"
+    volumes:
+      - "./:/work"
+      - "maven_data:/root/.m2"
+    ports:
+      - "8080:8080"
+    environment:
+      MQTT_URL: tcp://emqx
+      MQTT_USER: pubuser
+      MQTT_PASSWORD: password
+  emqx:
+    image: emqx/emqx
+    init: true
+    restart: always
+    ports:
+      # MQTT over WebSocket (非 TSL) の待ち受けポート
+      - 0.0.0.0:8083:8083
+      # MQTT over WebSocket (TSL) の待ち受けポート
+      - 0.0.0.0:8084:8084
+      # ダッシュボードの待ち受けポート
+      - 0.0.0.0:18083:18083
+    volumes:
+      # emqx コア設定ファイル
+      - ./.devcontainer/config/emqx/etc/emqx.conf:/opt/emqx/etc/emqx.conf
+      # 認可設定ファイル
+      - ./.devcontainer/config/emqx/etc/acl.conf:/opt/emqx/etc/acl.conf
+      # 永続化用
+      - emqx_data:/opt/emqx/data
+      - emqx_log:/opt/emqx/log
+    environment:
+      # ユーザー認証用モジュールを有効化
+      EMQX_LOADED_PLUGINS: emqx_auth_username
+    healthcheck:
+      test: /opt/emqx/bin/emqx_ctl status
+      interval: 5s
+      timeout: 5s
+      retries: 6
+      start_period: 5s
+  emqx-init:
+    image: alpine/curl
+    init: true
+    restart: "no"
+    depends_on:
+      emqx:
+        condition: service_healthy
+    volumes:
+      # 初期化スクリプト
+      - "./.devcontainer/script/emqx-init/init.sh:/init.sh"
+    command:
+      - /init.sh
+
+volumes:
+  node_modules:
+    driver: local
+  emqx_data:
+    driver: local
+  emqx_log:
+    driver: local
+  maven_data:
+    driver: local
