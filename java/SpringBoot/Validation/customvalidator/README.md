@@ -29,22 +29,13 @@ docker compose exec app bash
 
 # 動作確認
 
-- 妥当なリクエスト
-    - `curl -v localhost:8080/validation-test -H 'Content-Type: application/json' -H 'Accept-Language: ja-JP' -d '{"integer":1, "name":"aaa", "mail":"user@example.com"}'`
-- 不当なリクエスト
-    - `integer` が負の値
-        - `curl -v localhost:8080/validation-test -H 'Content-Type: application/json' -H 'Accept-Language: ja-JP' -d '{"integer":-1, "name":"aaa", "mail":"user@example.com"}'`
-    - `mail` がメールアドレスではない
-        - `curl -v localhost:8080/validation-test -H 'Content-Type: application/json' -H 'Accept-Language: ja-JP' -d '{"integer":1, "name":"aaa", "mail":"bbb"}'`
-    - 必須属性 `name` が空
-        - `curl -v localhost:8080/validation-test -H 'Content-Type: application/json' -H 'Accept-Language: ja-JP' -d '{"integer":1, "mail":"user@example.com"}'`
-    - 上記 3 点セット
-        - `curl -v localhost:8080/validation-test -H 'Content-Type: application/json' -H 'Accept-Language: ja-JP' -d '{"integer":-1, "mail":"userexample.com"}'`
-    - JSON パースエラー
-        - `curl -v localhost:8080/validation-test -H 'Content-Type: application/json' -H 'Accept-Language: ja-JP' -d '{"integer":-1, "name":"aaa", "mail":"user@example.com"'`
+```sh
+./mvnw test
+```
 
-
+テストコードを見ながらどうなっているか把握してください...。
 
 # 参考資料
 
-- [【Spring】@RestControllerAdvice を使ってREST APIのエラーハンドラを作成する | SEのプログラミングと英語の勉強ブログ](https://sebenkyo.com/2020/08/02/post-1260/#)
+- [Hibernate Validator 8.0.1.Final - Jakarta Bean Validation Reference Implementation: Reference Guide](https://docs.jboss.org/hibernate/stable/validator/reference/en-US/html_single/)
+- [Spring Boot × Bean Validationで、自作Validator＋メッセージファイルを組み込む - CLOVER🍀](https://kazuhira-r.hatenablog.com/entry/2021/05/16/202818)
