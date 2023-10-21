@@ -1,11 +1,11 @@
+drop table if exists Attendance;
+
 drop table if exists Account;
 drop table if exists Role;
 
 drop table if exists Course;
 drop table if exists Classroom;
 drop table if exists ZoomChannel;
-
-drop table if exists Attendance;
 
 create table Role (
   id bigint primary key AUTO_INCREMENT,

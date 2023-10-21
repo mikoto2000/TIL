@@ -1,14 +1,7 @@
 INSERT INTO Role
-  (name)
+  (id, name)
 VALUES
-  ('admin'),
-  ('user'),
-  ('developer');
+  (1, 'admin'),
+  (2, 'user'),
+  (3, 'developer');
 
-
-INSERT INTO Account
-  (name, role)
-VALUES
-  ('mikoto2000', '1'),
-  ('makoto2000', '2'),
-  ('mokoto2000', '3');
