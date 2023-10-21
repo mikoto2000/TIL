@@ -85,6 +85,29 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.hibernate.tool</groupId>
+				<artifactId>hibernate-tools-maven</artifactId>
+				<version>6.3.1.Final</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.hibernate.tool</groupId>
+						<artifactId>hibernate-tools-orm</artifactId>
+						<version>6.3.1.Final</version>
+					</dependency>
+					<dependency>
+						<groupId>com.mysql</groupId>
+						<artifactId>mysql-connector-j</artifactId>
+						<version>${mysql.version}</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<ejb3>true</ejb3>
+					<createManyToOneForForeignKey>true</createManyToOneForForeignKey>
+					<packageName>dev.mikoto2000.study.springboot.data.jpa.firststep.entity</packageName>
+					<outputDirectory>./src/main/java</outputDirectory>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
