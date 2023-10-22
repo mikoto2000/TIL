@@ -1,4 +1,5 @@
 delete from Role;
+delete from Account;
 
 insert into Role
   (id, name)
