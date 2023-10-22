@@ -7,6 +7,10 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import dev.mikoto2000.study.springboot.data.jpa.firststep.entity.Role;
 
@@ -21,9 +25,14 @@ public class RoleRepositoryTest {
 
   @Test
   public void testFind() {
-    List<Role> page = roleRepository.findAll();
+    Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "id"));
+    Page<Role> page = roleRepository.findAll(pageable);
 
-    assertEquals(3, page.size());
+    var accounts = page.getContent();
+    assertEquals(3, accounts.size());
+    assertEquals(new Role(3L, "developer", null), accounts.get(0));
+    assertEquals(new Role(2L, "user", null), accounts.get(1));
+    assertEquals(new Role(1L, "admin", null), accounts.get(2));
   }
 }
 
