@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.context.jdbc.Sql;
 
 import dev.mikoto2000.study.springboot.data.jpa.firststep.entity.Role;
 
@@ -24,6 +25,7 @@ public class RoleRepositoryTest {
   private RoleRepository roleRepository;
 
   @Test
+  @Sql(scripts = "/dev/mikoto2000/study/springboot/data/jpa/firststep/repository/RoleRepositoryTestFindAll.sql")
   public void testFind() {
     Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "id"));
     Page<Role> page = roleRepository.findAll(pageable);

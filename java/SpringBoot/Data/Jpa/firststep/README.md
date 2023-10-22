@@ -42,3 +42,5 @@ argdo %s/^ *$// | :w
 - [MySQL でテーブルやカラムの情報を確認する方法まとめ :: by and for engineers](https://yulii.github.io/mysql-schema-information-20150901.html)
 - [MySQLでユニークキーや外部キーを確認する #Rails - Qiita](https://qiita.com/expajp/items/81a8773b49472925fe06)
 
+- [Page (Spring Data Core API) - Javadoc](https://spring.pleiades.io/spring-data/commons/docs/current/api/org/springframework/data/domain/Page.html)
+
