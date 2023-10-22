@@ -106,6 +106,7 @@
 					<createManyToOneForForeignKey>true</createManyToOneForForeignKey>
 					<packageName>dev.mikoto2000.study.springboot.data.jpa.firststep.entity</packageName>
 					<outputDirectory>./src/main/java</outputDirectory>
+					<propertyFile>./config/create_entity.properties</propertyFile>
 				</configuration>
 			</plugin>
 		</plugins>
