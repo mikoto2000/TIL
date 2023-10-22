@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: "${DB_URL:jdbc:mysql://mysql:3306/public}"
+    username: ${DB_USER:admin}
+    password: ${DB_PASSWORD:password}
+  jpa:
+    showSql: true
+    hibernate:
+      naming:
+        physicalStrategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
