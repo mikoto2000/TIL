@@ -11,7 +11,7 @@ services:
       - ./:/work
       - maven_data:/home/vscode/.m2
     environment:
-      DB_URL: jdbc:mysql://mysql:5432/public
+      DB_URL: jdbc:mysql://mysql:3306/public
       DB_USER: admin
       DB_PASSWORD: password
       TZ: Asia/Tokyo
