@@ -102,6 +102,7 @@
 					</dependency>
 				</dependencies>
 				<configuration>
+					<jdk5>true</jdk5>
 					<ejb3>true</ejb3>
 					<createManyToOneForForeignKey>true</createManyToOneForForeignKey>
 					<packageName>dev.mikoto2000.study.springboot.data.jpa.firststep.entity</packageName>
