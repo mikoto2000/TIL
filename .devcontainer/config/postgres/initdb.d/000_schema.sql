@@ -2,7 +2,7 @@ drop table if exists account, account_type;
 
 create table account_type (
     id bigserial primary key,
-    name varchar(128) not null unique
+    type_name varchar(128) not null unique
 );
 
 create table account (

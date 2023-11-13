@@ -1,9 +1,11 @@
-insert into account_type (id, name)
+insert into account_type (id, type_name)
 values
-    (1, '管理者'),
-    (2, '一般');
+    (1, 'admin'),
+    (2, 'member');
 
 insert into account (id, name, account_type_id)
 values
-    (1, 'mikoto2000', 1),
-    (2, 'makoto2000', 2);
+    (1, 'd', 1),
+    (2, 'c', 2),
+    (3, 'b', 1),
+    (4, 'a', 2);
