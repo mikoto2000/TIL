@@ -3,4 +3,5 @@ spring:
     url: jdbc:postgresql://${DB_HOST:postgres}:5432/${DB_NAME:public}
     username: ${DB_USER:admin}
     password: ${DB_PASSWORD:password}
-
+  jpa:
+    showSql: true
