@@ -1,0 +1,43 @@
+{
+  "name": "development environment",
+  "dockerComposeFile": [
+    "../docker-compose.yaml"
+  ],
+  "service": "dev",
+  "workspaceFolder": "/work",
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.copyWithSyntaxHighlighting": false,
+        "editor.renderWhitespace": "all",
+        "files.exclude": {
+            "**/.classpath": true,
+            "**/.project": true,
+            "**/.settings": true,
+            "**/.factorypath": true
+        },
+        "java.compile.nullAnalysis.mode": "automatic",
+        "java.completion.importOrder": [
+          "#",
+          "java",
+          "javax",
+          "",
+          "dev.mikoto2000"
+        ],
+        "java.configuration.updateBuildConfiguration": "interactive",
+        "java.semanticHighlighting.enabled": true,
+        "java.requirements.JDK11Warning": false,
+        "redhat.telemetry.enabled": false,
+        "telemetry.telemetryLevel": "off",
+        "telemetry.enableTelemetry": false,
+        "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
+      },
+      "extensions": [
+        "vmware.vscode-boot-dev-pack",
+        "vscjava.vscode-java-pack"
+      ]
+    }
+  }
+}
+
