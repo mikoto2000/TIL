@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "userCode": {
+      "description": "ユーザーコード",
+      "type": "string",
+      "pattern": "^USER-[0-9]+$"
+    },
+    "userName": {
+      "description": "ユーザー名",
+      "type": "string",
+      "minLength": 1
+    },
+    "birthday": {
+      "description": "誕生日",
+      "type": "string",
+      "format": "date"
+    },
+    "datetime": {
+      "description": "謎日時",
+      "type": "string",
+      "format": "date-time"
+    },
+    "mail": {
+      "type": "array",
+      "items": {
+        "description": "メールアドレス",
+        "type": "string",
+        "format": "email"
+      },
+      "minItems": 1
+    },
+    "homepage": {
+      "type": "array",
+      "items": {
+        "description": "URL",
+        "type": "string",
+        "format": "url"
+      }
+    }
+  },
+  "required": ["userName", "mail"]
+}
+
