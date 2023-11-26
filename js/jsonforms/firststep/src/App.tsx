@@ -1,32 +1,48 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
+import { JsonForms } from '@jsonforms/react';
+import {
+  materialCells,
+  materialRenderers,
+} from '@jsonforms/material-renderers';
+import { ErrorObject } from 'ajv';
+import userSchema from './User.schema.json';
+
 import './App.css'
+import { User } from './User.ts';
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const initialUser: User = {
+    userName: ""
+  };
+
+  const [data, setData] = useState<User>(initialUser);
+  const [errors, setErrors] = useState<ErrorObject[]>([]);
+
+  const handleFormChange = (event: {data: User, errors: ErrorObject[]}) => {
+    setData(event.data);
+    setErrors(event.errors);
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
+      <JsonForms
+        schema={userSchema}
+        data={data}
+        onChange={handleFormChange}
+        cells={materialCells}
+        renderers={materialRenderers}
+      />
+
+      <h1>data:</h1>
+      <p>
+        {JSON.stringify(data)}
+      </p>
+
+      <h1>errors:</h1>
+      <p>
+        {JSON.stringify(errors)}
       </p>
     </>
   )
