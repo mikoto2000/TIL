@@ -80,6 +80,9 @@ services:
       -s enabled=true
       -s registrationAllowed=false
       -s resetPasswordAllowed=true
+      -s ssoSessionIdleTimeout=180
+      -s ssoSessionMaxLifespan=600
+      -s accessTokenLifespan=120
       && kcadm.sh create clients
       -r \"$${REALM}\"
       -s clientId=\"$${CLIENT_ID}\"
@@ -107,5 +110,6 @@ services:
       && kcadm.sh set-password -r \"$${REALM}\" --username normal --new-password test
       && kcadm.sh create roles -r \"$${REALM}\" -s name=admin
       && kcadm.sh add-roles -r \"$${REALM}\" --uusername test --rolename admin
+      && kcadm.sh delete roles/offline_access -r \"$${REALM}\"
       "
 
