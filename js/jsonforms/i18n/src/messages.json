@@ -1,0 +1,43 @@
+{
+  "en": {
+    "userCode": {
+      "label": "User code"
+    },
+    "userName": {
+      "label": "User name"
+    },
+    "birthday": {
+      "label": "Birthday"
+    },
+    "datetime": {
+      "label": "Datetime(unknown)"
+    },
+    "mail": {
+      "label": "Mail"
+    },
+    "homepage": {
+      "label": "Homepage"
+    }
+  },
+  "ja": {
+    "userCode": {
+      "label": "ユーザーコード"
+    },
+    "userName": {
+      "label": "ユーザー名"
+    },
+    "birthday": {
+      "label": "誕生日"
+    },
+    "datetime": {
+      "label": "謎日時"
+    },
+    "mail": {
+      "label": "メールアドレス"
+    },
+    "homepage": {
+      "label": "ホームページ"
+    }
+  }
+}
+
