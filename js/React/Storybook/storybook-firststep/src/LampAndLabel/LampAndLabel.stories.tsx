@@ -10,6 +10,9 @@ export default meta;
 type Story = StoryObj<typeof LampAndLabel>;
 
 export const Primary: Story = {
-  render: () => <LampAndLabel lampStatus="blink" label="test" />,
+  args: {
+    lampStatus: "on",
+    label: "default",
+  }
 };
 
