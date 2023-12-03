@@ -4,6 +4,12 @@ import { LampAndLabel } from './LampAndLabel';
 
 const meta: Meta<typeof LampAndLabel> = {
   component: LampAndLabel,
+  argTypes: {
+    lampStatus: {
+      options: ["on", "off", "blink"],
+      control: { type: 'select' },
+    }
+  }
 };
 
 export default meta;
@@ -12,7 +18,7 @@ type Story = StoryObj<typeof LampAndLabel>;
 export const Primary: Story = {
   args: {
     lampStatus: "on",
-    label: "default",
+    label: "Default label",
   }
 };
 
