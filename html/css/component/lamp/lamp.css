@@ -1,0 +1,41 @@
+.lamp-and-label-container {
+  display: flex;
+  align-items: center;
+}
+
+.lamp {
+  display: inline-block;             /* インライン要素のように扱う */
+  width: 0.5em;                      /* 丸のサイズを設定 */
+  height: 0.5em;                     /* 丸のサイズを設定 */
+  margin: 0.25em;                    /* 本体とマージンを合わせて 1 文字分となるようにマージンを設定 */
+  padding: 0px;                      /* 本体とマージンで 1 文字分としているので、パディングは 0 とする */
+  border-radius: 50%;                /* 丸形にするために角度を50%に設定 */
+}
+
+.lamp.on {
+  background-color: lightgreen;      /* 丸の色を緑に設定 */
+  box-shadow: 0 0 0.25em lightgreen; /* 光る効果を追加（オプション） */
+  border: 1px solid green;           /* 濃い緑色で縁取り */
+}
+
+.lamp.off {
+  background-color: darkgray;       /* 丸の色を緑に設定 */
+  border: 1px solid gray;           /* 濃い緑色で縁取り */
+}
+
+@keyframes lamp-blink {
+  0% {
+  background-color: lightgreen;      /* 丸の色を緑に設定 */
+  box-shadow: 0 0 0.25em lightgreen; /* 光る効果を追加 */
+  border: 1px solid green;           /* 濃い緑色で縁取り */
+  }
+  50% {
+  background-color: darkgray;        /* 丸の色を緑に設定 */
+  box-shadow: none;                  /* 光る効果を無効化 */
+  border: 1px solid gray;            /* 濃い緑色で縁取り */
+  }
+}
+
+.lamp.blink {
+  animation: lamp-blink 2s step-end infinite;
+}
