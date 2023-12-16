@@ -1,0 +1,11 @@
+{
+  "name": "zod-firststep",
+  "version": "1.0.0",
+  "description": "Zod firststep",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mikoto2000",
+  "license": "MIT"
+}
