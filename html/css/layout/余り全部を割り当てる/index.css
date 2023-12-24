@@ -1,0 +1,34 @@
+.flex-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.amari-zenbu-by-flex {
+  flex-grow: 1;
+}
+
+.grid-container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+}
+
+.subgrid-row {
+  display: grid;
+  /* 親グリッドを継承(今回の場合 auto 1fr auto になる) */
+  grid-template-columns: subgrid;
+  /* 
+   * 親グリッドの配置の、どこからどこまでをこのサブグリッドに割り当てるかを指定
+   * 今回の場合、行すべてをサブグリッドとして扱いたいので 1 / -1 とする。
+   */
+  grid-column: 1 / -1;
+}
+
+.grid-row {
+  /*
+   *`display: contents` を指定した要素が存在しない扱いになり、
+   * 子要素が直接ぶら下がっている扱いになる。
+   */
+  display: contents;
+}

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <title>余り全部を割り当てる</title>
+  </head>
+  <body>
+    <h1>やりたいこと</h1>
+    <p>ラベル, テキストフィールド, ボタンを並べて、ラベルとボタンを配置した余りすべてをテキストフィールドに割り当てる。</p>
+
+    <h1>実現パターン</h1>
+
+    <h2>flex</h2>
+    <div class="flex-container">
+      <label>ラベル: </label>
+      <input type="text" class="amari-zenbu-by-flex"></input>
+      <button type="button">submit</button>
+    </div>
+
+    <h2>grid</h2>
+    <div class="grid-container">
+      <label>ラベル: </label>
+      <input type="text"></input>
+      <button type="button">submit</button>
+    </div>
+
+    <h1>複数行並べた場合</h1>
+
+    <h2>flex</h2>
+    <div class="flex-container">
+      <label>ラベル: </label>
+      <input type="text" class="amari-zenbu-by-flex"></input>
+      <button type="button">submit</button>
+    </div>
+    <div class="flex-container">
+      <label>ラベルるるるるる: </label>
+      <input type="text" class="amari-zenbu-by-flex"></input>
+      <div>
+        <button type="button">submit</button>
+        <button type="button">delete</button>
+      </div>
+    </div>
+
+    <h2>grid</h2>
+    <div class="grid-container">
+      <label>ラベル: </label>
+      <input type="text"></input>
+      <button type="button">submit</button>
+      <label>ラベルるるるるる: </label>
+      <input type="text"></input>
+      <div>
+        <button type="button">submit</button>
+        <button type="button">delete</button>
+      </div>
+    </div>
+
+    <h2>subgrid</h2>
+    <div class="grid-container">
+      <div class="subgrid-row">
+        <label>ラベル: </label>
+        <input type="text"></input>
+        <button type="button">submit</button>
+      </div>
+      <div class="subgrid-row">
+        <label>ラベルるるるるる: </label>
+        <input type="text"></input>
+        <div>
+          <button type="button">submit</button>
+          <button type="button">delete</button>
+        </div>
+      </div>
+    </div>
+
+    <h2>grid を使ったうえで、 display: contents を使って DOM を構造化</h2>
+    <div class="grid-container">
+      <div class="grid-row">
+        <label>ラベル: </label>
+        <input type="text"></input>
+        <button type="button">submit</button>
+      </div>
+      <div class="grid-row">
+        <label>ラベルるるるるる: </label>
+        <input type="text"></input>
+        <div>
+          <button type="button">submit</button>
+          <button type="button">delete</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
