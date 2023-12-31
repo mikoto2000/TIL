@@ -4,7 +4,7 @@
   "description": "Zod with fetch",
   "main": "index.js",
   "scripts": {
-    "test": "vitest"
+    "test": "vitest run"
   },
   "author": "mikoto2000",
   "license": "MIT",
