@@ -1,0 +1,19 @@
+{
+  "name": "with_fetch",
+  "version": "1.0.0",
+  "description": "Zod with fetch",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest"
+  },
+  "author": "mikoto2000",
+  "license": "MIT",
+  "devDependencies": {
+    "msw": "^2.0.11",
+    "typescript": "^5.2.2",
+    "vitest": "^1.1.1"
+  },
+  "dependencies": {
+    "zod": "^3.22.4"
+  }
+}
