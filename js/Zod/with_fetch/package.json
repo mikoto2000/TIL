@@ -9,6 +9,7 @@
   "author": "mikoto2000",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^20.10.6",
     "msw": "^2.0.11",
     "typescript": "^5.2.2",
     "vitest": "^1.1.1"
