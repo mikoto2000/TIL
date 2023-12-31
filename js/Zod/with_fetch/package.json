@@ -8,6 +8,7 @@
   },
   "author": "mikoto2000",
   "license": "MIT",
+  "type": "module",
   "devDependencies": {
     "@types/node": "^20.10.6",
     "msw": "^2.0.11",
