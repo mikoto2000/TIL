@@ -53,5 +53,7 @@ $tcpClient.Close()
 
 ### クライアント
 
-TODO
+```sh
+go run client.go
+```
 

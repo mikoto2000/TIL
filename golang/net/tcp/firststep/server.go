@@ -47,6 +47,9 @@ func handleConnection(conn net.Conn) {
 	buf := make([]byte, RECEIVE_BUFFER_SIZE)
 	for {
 		readSize, err := conn.Read(buf)
+		if readSize == 0 {
+			break
+		}
 		if err != nil {
 			fmt.Println(err)
 			return
