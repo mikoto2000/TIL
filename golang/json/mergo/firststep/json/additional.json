@@ -1,0 +1,10 @@
+{
+  "mounts": [
+    {
+      "type": "bind",
+      "source": "${localEnv:HOME}/.vim",
+      "target": "/home/vscode/.vim"
+    }
+  ]
+}
+

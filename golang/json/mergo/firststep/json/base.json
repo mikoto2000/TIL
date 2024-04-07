@@ -1,0 +1,14 @@
+{
+  "name":"Go",
+  "image":"mcr.microsoft.com/devcontainers/go:1-1.22-bookworm",
+  "mounts": [
+    {
+      "type": "bind",
+      "source": "${localEnv:HOME}/.gitconfig",
+      "target": "/home/vscode/.gitconfig"
+    }
+  ],
+  "features":{},
+  "remoteUser":"vscode"
+}
+
