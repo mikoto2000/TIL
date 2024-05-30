@@ -197,6 +197,12 @@ $ ./syscall 999999
 
 以上。
 
+# 補足
+
+ツイッターにて以下コメントをもらったので、この後そちらも試す予定。
+
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="ja" dir="ltr">gopsutil を使うとちょっと統一できるかもです。<a href="https://t.co/kwvbnbUOko">https://t.co/kwvbnbUOko</a></p>&mdash; mattn (@mattn_jp) <a href="https://twitter.com/mattn_jp/status/1796043980670484705?ref_src=twsrc%5Etfw">May 30, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+
 # 参考資料
 
 - 共通
