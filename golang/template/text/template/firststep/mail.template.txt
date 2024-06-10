@@ -1,0 +1,24 @@
+件名: 面談のお願い
+
+{{ .RecipientName }}様
+
+はじめまして。{{ .CompanyName }}の{{ .SenderName }}と申します。
+
+突然のご連絡失礼いたします。貴社のご活躍にいつも感銘を受けております。
+この度、ぜひ{{ .RecipientCompanyName }}の{{ .RecipientName }}様とお話をさせていただきたく、面談の機会をお願い申し上げます。
+
+具体的には、以下の日程でご都合の良いお時間をお知らせいただけますでしょうか。
+
+{{ .ProposedDates }}
+
+面談の内容としましては、{{ .DiscussionTopic }}についてお伺いできればと考えております。
+ご多忙のところ恐縮ですが、少しのお時間をいただけますと幸いです。
+
+お手数をおかけいたしますが、どうぞよろしくお願い申し上げます。
+
+敬具
+
+{{ .SenderName }}
+{{ .CompanyName }}
+{{ .YourEmail }}
+{{ .YourPhoneNumber }}
