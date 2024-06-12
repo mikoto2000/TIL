@@ -1,20 +1,26 @@
 ---
-title: Tauri v1 に入門する(プロジェクト作成から Linux 向けビルド・Windows 向けのクロスビルドまで)
+title: Tauri が生成したプログラムから最小構成まで削除する
 author: mikoto2000
 date: 2024/6/11
 ---
+
+いったん、 Tauri の機能紹介で紹介されているものを消していく。
 
 # 前提
 
 - 開発環境構築は済んでいるものとする
     - See: [mikoto2000/tauri](https://github.com/mikoto2000/docker-images/blob/master/tauri/Dockerfile)
+- Tauri:
+    - tauri-cli: 1.5.14
+    - rust: 1.78.0
+    - node: v22.2.0
 
 
 # create-tauri-app を使用したプロジェクト作成
 
 以下内容でプロジェクトを作成する。
 
-- プロジェクト名: tauri-v1-firststep
+- プロジェクト名: tauri-delete-default-event
 - パッケージ管理: npm
 - UI ライブラリ: React
 - フロントエンド言語: TypeScript
@@ -37,106 +43,80 @@ Template created! To get started run:
   npm run tauri dev
 ```
 
+# 生成されたプログラムの Command を削除する
 
-# 開発
+生成されたプログラムは、フロントエンドからバックエンドの Command を呼び出す実装がされている。
 
-`npm tauri dev` コマンドを実行すると、開発用にアプリが立ち上がる。
+ひとまずまっさらな状態から追加できるようにしたいので、この Command を削除する。
 
-```sh
-npm run tauri dev
+
+`src/App.tsx` の差分:
+
+`@tauri-apps/api/tauri` の `invoke` メソッドで、バックエンドの Command を呼び出しているので、それを削除。
+
+```tsx
+diff --git a/tauri/1.0.0/delete-default-event/tauri-delete-default-event/src/App.tsx b/tauri/1.0.0/delete-default-event/tauri-delete-default-event/src/App.tsx
+index a449915..19dbdc6 100644
+--- a/tauri/1.0.0/delete-default-event/tauri-delete-default-event/src/App.tsx
++++ b/tauri/1.0.0/delete-default-event/tauri-delete-default-event/src/App.tsx
+@@ -1,17 +1,11 @@
+ import { useState } from "react";
+ import reactLogo from "./assets/react.svg";
+-import { invoke } from "@tauri-apps/api/tauri";
+ import "./App.css";
+ 
+ function App() {
+   const [greetMsg, setGreetMsg] = useState("");
+   const [name, setName] = useState("");
+ 
+-  async function greet() {
+-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
+-    setGreetMsg(await invoke("greet", { name }));
+-  }
+-
+   return (
+     <div className="container">
+       <h1>Welcome to Tauri!</h1>
+@@ -34,7 +28,7 @@ function App() {
+         className="row"
+         onSubmit={(e) => {
+           e.preventDefault();
+-          greet();
++          setGreetMsg(`Hello, ${name}! You've been greeted from Rust!`);
+         }}
+       >
+         <input
 ```
 
-この状態でソースコードを変更すると、アプリに変更が反映される。
+`src-tauri/src/main.rs` の差分:
 
+- `#[tauri::command]` を定義した関数を削除
+- `tauri::Builder` の `invoke_handler` で前述の関数を登録しているので、その呼び出しを削除
 
-# デプロイ
-
-## Linux 用にネイティブコンパイル
-
-`src-tauri/tauri.conf.json` 内の `tauri/bundle/identifier` を書き換えたうえで、 `npm run tauri build` を実行する。
-
-```sh
-node@2a5899df88f3:/workspaces/TIL/tauri/1.0.0/firststep/tauri-v1-firststep$ npm run tauri build
-
-> tauri-v1-firststep@0.0.0 tauri
-> tauri build
-
-     Running beforeBuildCommand `npm run build`
-
-> tauri-v1-firststep@0.0.0 build
-> tsc && vite build
-
-vite v5.2.13 building for production...
-✓ 33 modules transformed.
-dist/index.html                   0.47 kB │ gzip:  0.30 kB
-dist/assets/react-CHdo91hT.svg    4.13 kB │ gzip:  2.05 kB
-dist/assets/index-Dfkbh-rD.css    1.37 kB │ gzip:  0.65 kB
-dist/assets/index-Cq7Jx5WI.js   144.12 kB │ gzip: 46.41 kB
-✓ built in 360ms
-   Compiling proc-macro2 v1.0.85
-   Compiling unicode-ident v1.0.12
-   ...(snip)
-   Compiling gdk v0.15.4
-   Compiling webkit2gtk v0.18.2
-    Finished `release` profile [optimized] target(s) in 45.62s
-    Bundling tauri-v1-firststep_0.0.0_amd64.deb (/workspaces/TIL/tauri/1.0.0/firststep/tauri-v1-firststep/src-tauri/target/release/bundle/deb/tauri-v1-firststep_0.0.0_amd64.deb)
-    Bundling tauri-v1-firststep_0.0.0_amd64.AppImage (/workspaces/TIL/tauri/1.0.0/firststep/tauri-v1-firststep/src-tauri/target/release/bundle/appimage/tauri-v1-firststep_0.0.0_amd64.AppImage)
-    Finished 2 bundles at:
-        /workspaces/TIL/tauri/1.0.0/firststep/tauri-v1-firststep/src-tauri/target/release/bundle/deb/tauri-v1-firststep_0.0.0_amd64.deb
-        /workspaces/TIL/tauri/1.0.0/firststep/tauri-v1-firststep/src-tauri/target/release/bundle/appimage/tauri-v1-firststep_0.0.0_amd64.AppImage
+```rs
+diff --git a/tauri/1.0.0/delete-default-event/tauri-delete-default-event/src-tauri/src/main.rs b/tauri/1.0.0/delete-default-event/tauri-delete-default-event/src-tauri/src/main.rs
+index 523550d..e6ad770 100644
+--- a/tauri/1.0.0/delete-default-event/tauri-delete-default-event/src-tauri/src/main.rs
++++ b/tauri/1.0.0/delete-default-event/tauri-delete-default-event/src-tauri/src/main.rs
+@@ -1,15 +1,8 @@
+ // Prevents additional console window on Windows in release, DO NOT REMOVE!!
+ #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+ 
+-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
+-#[tauri::command]
+-fn greet(name: &str) -> String {
+-    format!("Hello, {}! You've been greeted from Rust!", name)
+-}
+-
+ fn main() {
+     tauri::Builder::default()
+-        .invoke_handler(tauri::generate_handler![greet])
+         .run(tauri::generate_context!())
+         .expect("error while running tauri application");
+ }
 ```
 
-Linux では、 `.deb` と `.AppImage` が生成される。
-
-それぞれの出力先は以下。
-
-| 種類      | パス                                      |
-|-----------|-------------------------------------------|
-| deb       | src-tauri/target/release/bundle/deb       |
-| AppImage  | src-tauri/target/release/bundle/appimage  |
-
-
-## Windows 用にクロスコンパイル
-
-`.msi` の出力には失敗したが、`.exe` の出力には成功したので手順を記載。
-
-
-### クロスコンパイルに必要なパッケージの取得
-
-クロスコンパイルに MinGW を使用するので、パッケージをインストールする。
-
-```sh
-sudo apt install mingw-w64
-```
-
-### クロスコンパイルのターゲットをインストール
-
-`rustup` で、 `x86_64-pc-windows-gnu` のターゲットをインストールする。
-
-```sh
-cd src-tauri
-rustup target add x86_64-pc-windows-gnu
-```
-
-### クロスコンパイル
-
-プロジェクトルートに戻り、 `npm` コマンドでターゲットを指定しながらビルドする。
-
-```sh
-cd ${PROJECT_ROOT}
-npm run tauri build -- --target x86_64-pc-windows-gnu
-```
-
-`.exe` が `src-tauri/target/x86_64-pc-windows-gnu/release` に出力される。
+この修正で、「バックエンドはフレームワークを起動するだけ」「フロントエンドは静的な画面を表示するだけ」の状態になったので、これをベースに各機能を試していきたい。
 
 以上。
-
-
-# 参考資料
-
-- [Prerequisites | Tauri Apps](https://tauri.app/v1/guides/getting-started/prerequisites)
-- [Quick Start | Tauri Apps](https://tauri.app/v1/guides/getting-started/setup/)
-- [Linux Bundle | Tauri Apps](https://tauri.app/v1/guides/building/linux)
-- [Rust メモ Windows向けにクロスコンパイル - エンジニアですよ！](https://totem3.hatenablog.jp/entry/2016/11/21/080949)
-- [Rustでクロスコンパイル - ryochack.blog](https://ryochack.hatenablog.com/entry/2017/10/22/014735)
 
