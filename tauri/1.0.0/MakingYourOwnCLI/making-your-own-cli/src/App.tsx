@@ -14,6 +14,9 @@ function App() {
     setMatches(matches);
   })
 
+  const args = matches?.args;
+  const lastArgsArray = args?.lastArgs?.value as string[]
+
   return (
     <div className="container">
       <h1>Welcome to Tauri!</h1>
@@ -31,18 +34,25 @@ function App() {
       </div>
 
       <div>
+        <h1>Option parse result:</h1>
         <ul>
-          <li>option1: {matches?.args?.option1?.value?.toString()}</li>
-          <li>option2: {matches?.args?.option2?.value?.toString()}</li>
-          <li>option3: {matches?.args?.option3?.value?.toString()}</li>
-          <li>firstArg: {matches?.args?.firstArg?.value?.toString()}</li>
-          <li>secondArg: {matches?.args?.secondArg?.value?.toString()}</li>
-          <li>flagOption: {matches?.args?.flagOption?.value?.toString()}
+          <li>option1: {args?.option1?.value}</li>
+          <li>option2: {JSON.stringify(args?.option2?.value)}</li>
+          <li>option3: {args?.option3?.value}</li>
+          <li>flagOption: {args?.flagOption?.value}
             and
-            occurences: {matches?.args?.flagOption?.occurrences}</li>
-          <li>flagOptionWithOccurrence: {matches?.args?.flagOptionWithOccurrence?.value?.toString()}
+            occurences: {args?.flagOption?.occurrences}</li>
+          <li>flagOptionWithOccurrence: {args?.flagOptionWithOccurrence?.value}
             and
-            occurences: {matches?.args?.flagOptionWithOccurrence?.occurrences}</li>
+            occurences: {args?.flagOptionWithOccurrence?.occurrences}</li>
+          <li>firstArg: {args?.firstArg?.value}</li>
+          <li>secondArg: {args?.secondArg?.value}</li>
+          <li>lastArgs: {lastArgsArray ?
+            JSON.stringify(lastArgsArray)
+            :
+            <></>
+          }
+            </li>
         </ul>
       </div>
 

@@ -17,16 +17,6 @@
       "afterHelp": "👺ヘルプの後に表示されるテキスト👺",
       "args": [
         {
-          "name": "firstArg",
-          "index": 1,
-          "takesValue": true
-        },
-        {
-          "name": "secondArg",
-          "index": 2,
-          "takesValue": true
-        },
-        {
           "name": "option1",
           "short": "o",
           "takesValue": true
@@ -51,6 +41,22 @@
           "name": "flagOptionWithOccurrence",
           "short": "g",
           "multipleOccurrences": true
+        },
+        {
+          "name": "firstArg",
+          "index": 1,
+          "takesValue": true
+        },
+        {
+          "name": "secondArg",
+          "index": 2,
+          "takesValue": true
+        },
+        {
+          "name": "lastArgs",
+          "index": 3,
+          "takesValue": true,
+          "multiple": true
         }
       ]
     },
