@@ -42,6 +42,15 @@
           "short": "q",
           "takesValue": true,
           "possibleValues": ["are", "kore", "sore"]
+        },
+        {
+          "name": "flagOption",
+          "short": "f"
+        },
+        {
+          "name": "flagOptionWithOccurrence",
+          "short": "g",
+          "multipleOccurrences": true
         }
       ]
     },

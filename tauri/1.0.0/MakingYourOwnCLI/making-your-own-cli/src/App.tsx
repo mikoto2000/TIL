@@ -2,16 +2,16 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 
-import { getMatches } from '@tauri-apps/api/cli'
+import { CliMatches, getMatches } from '@tauri-apps/api/cli'
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
   const [name, setName] = useState("");
 
-  const [matches, setMatches] = useState<string>("none");
+  const [matches, setMatches] = useState<CliMatches|null>(null);
 
   getMatches().then((matches) => {
-    setMatches(JSON.stringify(matches));
+    setMatches(matches);
   })
 
   return (
@@ -31,9 +31,19 @@ function App() {
       </div>
 
       <div>
-        <p>
-        {JSON.stringify(matches)}
-        </p>
+        <ul>
+          <li>option1: {matches?.args?.option1?.value?.toString()}</li>
+          <li>option2: {matches?.args?.option2?.value?.toString()}</li>
+          <li>option3: {matches?.args?.option3?.value?.toString()}</li>
+          <li>firstArg: {matches?.args?.firstArg?.value?.toString()}</li>
+          <li>secondArg: {matches?.args?.secondArg?.value?.toString()}</li>
+          <li>flagOption: {matches?.args?.flagOption?.value?.toString()}
+            and
+            occurences: {matches?.args?.flagOption?.occurrences}</li>
+          <li>flagOptionWithOccurrence: {matches?.args?.flagOptionWithOccurrence?.value?.toString()}
+            and
+            occurences: {matches?.args?.flagOptionWithOccurrence?.occurrences}</li>
+        </ul>
       </div>
 
       <p>Click on the Tauri, Vite, and React logos to learn more.</p>
