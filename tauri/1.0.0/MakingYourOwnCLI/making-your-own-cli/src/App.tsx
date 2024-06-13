@@ -16,6 +16,9 @@ function App() {
 
   const args = matches?.args;
   const lastArgsArray = args?.lastArgs?.value as string[]
+  const subcommand = matches?.subcommand;
+  const subcommandArgs = subcommand?.matches?.args;
+  const subcommandLastArgsArray = subcommandArgs?.lastArgs?.value as string[]
 
   return (
     <div className="container">
@@ -49,6 +52,29 @@ function App() {
           <li>secondArg: {args?.secondArg?.value}</li>
           <li>lastArgs: {lastArgsArray ?
             JSON.stringify(lastArgsArray)
+            :
+            <></>
+          }
+            </li>
+        </ul>
+      </div>
+
+      <div>
+        <h1>Subcommand parse result:</h1>
+        <ul>
+          <li>option1: {subcommandArgs?.option1?.value}</li>
+          <li>option2: {JSON.stringify(subcommandArgs?.option2?.value)}</li>
+          <li>option3: {subcommandArgs?.option3?.value}</li>
+          <li>flagOption: {subcommandArgs?.flagOption?.value}
+            and
+            occurences: {subcommandArgs?.flagOption?.occurrences}</li>
+          <li>flagOptionWithOccurrence: {subcommandArgs?.flagOptionWithOccurrence?.value}
+            and
+            occurences: {subcommandArgs?.flagOptionWithOccurrence?.occurrences}</li>
+          <li>firstArg: {subcommandArgs?.firstArg?.value}</li>
+          <li>secondArg: {subcommandArgs?.secondArg?.value}</li>
+          <li>lastArgs: {subcommandLastArgsArray ?
+            JSON.stringify(subcommandLastArgsArray)
             :
             <></>
           }
