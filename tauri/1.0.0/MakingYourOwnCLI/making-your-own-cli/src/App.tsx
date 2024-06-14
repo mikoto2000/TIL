@@ -36,51 +36,54 @@ function App() {
         </a>
       </div>
 
-      <div>
-        <h1>Option parse result:</h1>
-        <ul>
-          <li>option1: {args?.option1?.value}</li>
-          <li>option2: {JSON.stringify(args?.option2?.value)}</li>
-          <li>option3: {args?.option3?.value}</li>
-          <li>flagOption: {args?.flagOption?.value}
-            and
-            occurences: {args?.flagOption?.occurrences}</li>
-          <li>flagOptionWithOccurrence: {args?.flagOptionWithOccurrence?.value}
-            and
-            occurences: {args?.flagOptionWithOccurrence?.occurrences}</li>
-          <li>firstArg: {args?.firstArg?.value}</li>
-          <li>secondArg: {args?.secondArg?.value}</li>
-          <li>lastArgs: {lastArgsArray ?
-            JSON.stringify(lastArgsArray)
-            :
-            <></>
-          }
-            </li>
-        </ul>
-      </div>
-
-      <div>
-        <h1>Subcommand parse result:</h1>
-        <ul>
-          <li>option1: {subcommandArgs?.option1?.value}</li>
-          <li>option2: {JSON.stringify(subcommandArgs?.option2?.value)}</li>
-          <li>option3: {subcommandArgs?.option3?.value}</li>
-          <li>flagOption: {subcommandArgs?.flagOption?.value}
-            and
-            occurences: {subcommandArgs?.flagOption?.occurrences}</li>
-          <li>flagOptionWithOccurrence: {subcommandArgs?.flagOptionWithOccurrence?.value}
-            and
-            occurences: {subcommandArgs?.flagOptionWithOccurrence?.occurrences}</li>
-          <li>firstArg: {subcommandArgs?.firstArg?.value}</li>
-          <li>secondArg: {subcommandArgs?.secondArg?.value}</li>
-          <li>lastArgs: {subcommandLastArgsArray ?
-            JSON.stringify(subcommandLastArgsArray)
-            :
-            <></>
-          }
-            </li>
-        </ul>
-      </div>
+      {!subcommand
+        ?
+        <div>
+          <h1>Option parse result:</h1>
+          <ul>
+            <li>option1: {args?.option1?.value}</li>
+            <li>option2: {JSON.stringify(args?.option2?.value)}</li>
+            <li>option3: {args?.option3?.value}</li>
+            <li>flagOption: {args?.flagOption?.value}
+              and
+              occurences: {args?.flagOption?.occurrences}</li>
+            <li>flagOptionWithOccurrence: {args?.flagOptionWithOccurrence?.value}
+              and
+              occurences: {args?.flagOptionWithOccurrence?.occurrences}</li>
+            <li>firstArg: {args?.firstArg?.value}</li>
+            <li>secondArg: {args?.secondArg?.value}</li>
+            <li>lastArgs: {lastArgsArray ?
+              JSON.stringify(lastArgsArray)
+              :
+              <></>
+            }
+              </li>
+          </ul>
+        </div>
+        :
+        <div>
+          <h1>Subcommand parse result:</h1>
+          <ul>
+            <li>option1: {subcommandArgs?.option1?.value}</li>
+            <li>option2: {JSON.stringify(subcommandArgs?.option2?.value)}</li>
+            <li>option3: {subcommandArgs?.option3?.value}</li>
+            <li>flagOption: {subcommandArgs?.flagOption?.value}
+              and
+              occurences: {subcommandArgs?.flagOption?.occurrences}</li>
+            <li>flagOptionWithOccurrence: {subcommandArgs?.flagOptionWithOccurrence?.value}
+              and
+              occurences: {subcommandArgs?.flagOptionWithOccurrence?.occurrences}</li>
+            <li>firstArg: {subcommandArgs?.firstArg?.value}</li>
+            <li>secondArg: {subcommandArgs?.secondArg?.value}</li>
+            <li>lastArgs: {subcommandLastArgsArray ?
+              JSON.stringify(subcommandLastArgsArray)
+              :
+              <></>
+            }
+              </li>
+          </ul>
+        </div>
+      }
 
       <p>Click on the Tauri, Vite, and React logos to learn more.</p>
 
