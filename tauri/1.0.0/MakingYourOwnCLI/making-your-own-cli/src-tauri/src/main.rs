@@ -10,24 +10,24 @@ fn main() {
   tauri::Builder::default()
     .setup(|app| {
         match app.get_cli_matches() {
-            Ok(matchers) => {
+            Ok(matches) => {
 
                 // ヘルプの表示
-                if let Some(x) = matchers.args.get("help").clone() {
+                if let Some(x) = matches.args.get("help").clone() {
                     println!("{}", x.value.as_str().unwrap());
                     process::exit(0);
                 }
 
                 // バージョンの表示
-                if let Some(_) = matchers.args.get("version").clone() {
+                if let Some(_) = matches.args.get("version").clone() {
                     let version = app.config().package.version.clone();
                     println!("{}", version.unwrap());
                     process::exit(0);
                 }
 
-                println!("{:?}", matchers);
-                let args = matchers.args;
-                let subcommand = matchers.subcommand;
+                println!("{:?}", matches);
+                let args = matches.args;
+                let subcommand = matches.subcommand;
 
                 if subcommand.is_none() {
                     println!("option1: {}", get_value(&args, "option1").as_str().unwrap());
