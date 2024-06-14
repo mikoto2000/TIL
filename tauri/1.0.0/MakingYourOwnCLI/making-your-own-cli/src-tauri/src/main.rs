@@ -1,7 +1,7 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use std::collections::HashMap;
+use std::{collections::HashMap, process};
 
 use serde_json::value;
 use tauri::api::cli::ArgData;
@@ -11,8 +11,21 @@ fn main() {
     .setup(|app| {
         match app.get_cli_matches() {
             Ok(matchers) => {
-                println!("{:?}", matchers);
 
+                // ヘルプの表示
+                if let Some(x) = matchers.args.get("help").clone() {
+                    println!("{}", x.value.as_str().unwrap());
+                    process::exit(0);
+                }
+
+                // バージョンの表示
+                if let Some(_) = matchers.args.get("version").clone() {
+                    let version = app.config().package.version.clone();
+                    println!("{}", version.unwrap());
+                    process::exit(0);
+                }
+
+                println!("{:?}", matchers);
                 let args = matchers.args;
                 let subcommand = matchers.subcommand;
 
