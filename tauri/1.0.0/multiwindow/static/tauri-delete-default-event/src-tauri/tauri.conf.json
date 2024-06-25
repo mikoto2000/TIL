@@ -21,12 +21,14 @@
       {
         "label": "main",
         "title": "Main Window",
-        "url": "index.html"
+        "url": "index.html",
+        "height": 1000
       },
       {
         "label": "sub",
         "title": "Sub Window",
-        "url": "index.html"
+        "url": "index.html",
+        "height": 1000
       }
     ],
     "security": {

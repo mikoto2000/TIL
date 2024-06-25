@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { WebviewWindow, appWindow, getCurrent } from "@tauri-apps/api/window";
 import { emit, listen } from "@tauri-apps/api/event";
+import { invoke } from "@tauri-apps/api";
 
 function App() {
   const currentWindow = getCurrent();
@@ -9,6 +10,7 @@ function App() {
 
   let initialized = false;
 
+  {/* useEffect を使って `event` という名前のイベントを購読する */}
   useEffect(() => {
     if (!initialized) {
       let unlisten: any = undefined;
@@ -55,7 +57,15 @@ function App() {
 
       <h2>バックエンドからのイベント送信</h2>
 
-      TODO: コマンドでバックエンドからイベント送信させる
+      <button onClick={() => {
+        invoke('to_all', {});
+      }}>表示中の全ウィンドウへイベント送信</button>
+      <button onClick={() => {
+        invoke('to_main', {});
+      }}>mainへのイベント送信</button>
+      <button onClick={() => {
+        invoke('to_sub', {});
+      }}>subへのイベント送信</button>
 
       <ul>
         {receivedEvent.map((e) => <li key={e.id}>{JSON.stringify(e)}</li>)}
