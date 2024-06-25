@@ -1,0 +1,7 @@
+[package]
+name = "rss_firststep"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+feed-rs = "2.0.0"
