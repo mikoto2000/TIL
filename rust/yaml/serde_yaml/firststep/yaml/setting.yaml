@@ -1,0 +1,31 @@
+- name: UINT64_value
+  offset: 0
+  size: 8
+  data_type: UINT64
+  endianness: LITTLE
+- name: UINT32_value
+  offset: 8
+  size: 4
+  data_type: UINT32
+  endianness: LITTLE
+- name: UINT16_value
+  offset: 12
+  size: 2
+  data_type: UINT16
+  endianness: LITTLE
+- name: UINT8_value
+  offset: 14
+  size: 1
+  data_type: UINT8
+  endianness: LITTLE
+- name: BIT_FLAG
+  offset: 15
+  size: 1
+  data_type: FLAGS
+  layout:
+    - name: LED1
+      position: 0
+    - name: LED2
+      position: 1
+      true_label: "high"
+      false_label: "low"
