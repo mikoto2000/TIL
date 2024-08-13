@@ -71,7 +71,7 @@ npm run tauri android build -- --target aarch64 -d
 adb.exe install \\wsl.localhost\Ubuntu-24.04\home\mikoto\project\TIL\tauri\2.0.0-beta\plugin\android\helloworld\tauri-plugin-helloworld\examples\tauri-app\src-tauri\gen\android\app\build\outputs\apk\universal\debug\app-universal-debug.apk
 ```
 
-![tauri2 0-plugin-example_001](https://github.com/user-attachments/assets/4900c093-8199-4f24-a51b-61f4a77369d5)
+![ひな形の動作確認結果](https://github.com/user-attachments/assets/5148f1a7-f511-408d-9256-5d2f261d1a8b)
 
 Ping したら Pong が返ってくる。OK.
 
@@ -135,6 +135,7 @@ mv android/src/main/java/ExamplePlugin.kt android/src/main/java/HelloWorldPlugin
 どこでつまづくかわからんので、何か修正するたびに動作確認するのを推奨。
 
 ```sh
+cd {PLUGIN_ROOT}
 cd examples/tauri-app
 npm run tauri android build -- --target aarch64 -d
 adb.exe install \\wsl.localhost\Ubuntu-24.04\home\mikoto\project\TIL\tauri\2.0.0-beta\plugin\android\helloworld\tauri-plugin-helloworld\examples\tauri-app\src-tauri\gen\android\app\build\outputs\apk\universal\debug\app-universal-debug.apk
@@ -144,7 +145,7 @@ adb.exe install \\wsl.localhost\Ubuntu-24.04\home\mikoto\project\TIL\tauri\2.0.0
 
 `Hello, World!` を返却するように実装を修正する。
 
-`android/src/main/java/ExamplePlugin.kt`:
+`android/src/main/java/HelloWorldPlugin.kt`:
 
 ```diff
 --- android/src/main/java/HelloWorldPlugin_old.kt       2024-08-10 07:56:36.663657163 +0000
@@ -238,11 +239,14 @@ rm android/src/main/java/Example.kt
 どこでつまづくかわからんので、何か修正するたびに動作確認するのを推奨。
 
 ```sh
+cd {PLUGIN_ROOT}
 npm run build
 cd examples/tauri-app
 npm run tauri android build -- --target aarch64 -d
 adb.exe install \\wsl.localhost\Ubuntu-24.04\home\mikoto\project\TIL\tauri\2.0.0-beta\plugin\android\helloworld\tauri-plugin-helloworld\examples\tauri-app\src-tauri\gen\android\app\build\outputs\apk\universal\debug\app-universal-debug.apk
 ```
+
+![挙動変更後の動作確認結果](https://github.com/user-attachments/assets/f2a6aa7f-97df-4b3f-b26e-1731dc4a979f)
 
 # コマンド名の変更
 
@@ -429,17 +433,20 @@ g' ? returnValue : JSON.stringify(returnValue)) + '<br>'
 どこでつまづくかわからんので、何か修正するたびに動作確認するのを推奨。
 
 ```sh
+cd {PLUGIN_ROOT}
 npm run build
 cd examples/tauri-app
 npm run tauri android build -- --target aarch64 -d
 adb.exe install \\wsl.localhost\Ubuntu-24.04\home\mikoto\project\TIL\tauri\2.0.0-beta\plugin\android\helloworld\tauri-plugin-helloworld\examples\tauri-app\src-tauri\gen\android\app\build\outputs\apk\universal\debug\app-universal-debug.apk
 ```
 
+![コマンド名変更後の動作確認結果](https://github.com/user-attachments/assets/4b2b52a1-738f-4569-b4d6-15816f2ba3ad)
+
 # 入出力の型名の変更
 
 `PingRequest`, `PingResponse` となっているのでそれを修正する。
 
-## `src/command.rx`:
+## `src/command.rs`:
 
 ```diff
 --- commands_old.rs     2024-08-10 09:08:01.554610301 +0000
@@ -456,7 +463,7 @@ adb.exe install \\wsl.localhost\Ubuntu-24.04\home\mikoto\project\TIL\tauri\2.0.0
  }
 ```
 
-## `src/desktop.rx`:
+## `src/desktop.rs`:
 
 ```diff
 --- desktop_old.rs      2024-08-10 09:08:25.065568537 +0000
@@ -474,7 +481,7 @@ adb.exe install \\wsl.localhost\Ubuntu-24.04\home\mikoto\project\TIL\tauri\2.0.0
    }
 ```
 
-## `src/mobile.rx`:
+## `src/mobile.rs`:
 
 ```diff
 --- mobile_old.rs       2024-08-10 09:09:26.290321301 +0000
@@ -520,6 +527,7 @@ adb.exe install \\wsl.localhost\Ubuntu-24.04\home\mikoto\project\TIL\tauri\2.0.0
 どこでつまづくかわからんので、何か修正するたびに動作確認するのを推奨。
 
 ```sh
+cd {PLUGIN_ROOT}
 npm run build
 cd examples/tauri-app
 npm run tauri android build -- --target aarch64 -d
@@ -545,11 +553,8 @@ adb.exe install \\wsl.localhost\Ubuntu-24.04\home\mikoto\project\TIL\tauri\2.0.0
 -  pub fn hello(&self, payload: HelloRequest) -> crate::Result<HelloResponse> {
 +  pub fn hello(&self) -> crate::Result<HelloResponse> {
      Ok(HelloResponse {
--      value: payload.value,
-+      value: "Hello, World!",
+       value: "Hello, World!",
      })
-   }
- }
 ```
 
 ### `src/mobile.rs`:
@@ -576,20 +581,17 @@ adb.exe install \\wsl.localhost\Ubuntu-24.04\home\mikoto\project\TIL\tauri\2.0.0
 ### `src/commands.rs`:
 
 ```diff
---- models_old.rs       2024-08-10 09:30:17.011585869 +0000
-+++ models.rs   2024-08-10 09:30:21.099833494 +0000
-@@ -1,11 +1,5 @@
- use serde::{Deserialize, Serialize};
- 
--#[derive(Debug, Deserialize, Serialize)]
--#[serde(rename_all = "camelCase")]
--pub struct HelloRequest {
--  pub value: Option<String>,
--}
--
- #[derive(Debug, Clone, Default, Deserialize, Serialize)]
- #[serde(rename_all = "camelCase")]
- pub struct HelloResponse {
+--- commands_old.rs     2024-08-10 11:36:36.714869837 +0000
++++ commands.rs 2024-08-10 11:36:39.536555095 +0000
+@@ -7,7 +7,6 @@
+ #[command]
+ pub(crate) async fn hello<R: Runtime>(
+     app: AppHandle<R>,
+-    payload: HelloRequest,
+ ) -> Result<HelloResponse> {
+-    app.helloworld().hello(payload)
++    app.helloworld().hello()
+ }
 ```
 
 ### `src/models.rs`:
@@ -652,8 +654,14 @@ adb.exe install \\wsl.localhost\Ubuntu-24.04\home\mikoto\project\TIL\tauri\2.0.0
 ここまでで一通り hello 向けに修正したので、最後の動作確認。
 
 ```sh
+cd {PLUGIN_ROOT}
 npm run build
 cd examples/tauri-app
 npm run tauri android build -- --target aarch64 -d
 adb.exe install \\wsl.localhost\Ubuntu-24.04\home\mikoto\project\TIL\tauri\2.0.0-beta\plugin\android\helloworld\tauri-plugin-helloworld\examples\tauri-app\src-tauri\gen\android\app\build\outputs\apk\universal\debug\app-universal-debug.apk
 ```
+
+# 参考資料
+
+- [Improvement plugin by mikoto2000 · Pull Request #2 · mikoto2000/OASIZ_TimeLogger2](https://github.com/mikoto2000/OASIZ_TimeLogger2/pull/2)
+
