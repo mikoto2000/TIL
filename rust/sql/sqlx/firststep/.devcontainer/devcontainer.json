@@ -1,0 +1,9 @@
+{
+  "name": "Rust and PostgreSQL",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "forwardPorts": [
+    "0.0.0.0:5432:5432"
+  ]
+}
