@@ -5,9 +5,6 @@
     "SHELL": "bash",
     "TERM": "xterm-256color"
   },
-  "appPort": [
-    "0.0.0.0:5432:5432"
-  ],
   "mounts": [
     {
       "type": "bind",
