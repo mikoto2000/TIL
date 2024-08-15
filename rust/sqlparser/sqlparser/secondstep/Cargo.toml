@@ -1,0 +1,7 @@
+[package]
+name = "secondstep"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+sqlparser = "0.49.0"
