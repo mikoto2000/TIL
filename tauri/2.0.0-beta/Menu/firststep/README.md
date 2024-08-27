@@ -166,5 +166,5 @@ OK, よさそう。
 - [Migrate to Menu Module - Upgrade from Tauri 1.0 | Tauri](https://v2.tauri.app/start/migrate/from-tauri-1/#migrate-to-menu-module)
 - [Menu Events - Upgrade from Tauri 1.0 | Tauri](https://v2.tauri.app/start/migrate/from-tauri-1/#menu-events)
 - [MenuItemKind in tauri::menu - Rust](https://docs.rs/tauri/2.0.0-rc/tauri/menu/enum.MenuItemKind.html#)
-- [Tauri 2.0 のウィンドウにメニューを追加する](https://github.com/mikoto2000/TIL/tree/master/tauri/2.0.0-beta/menu/firststep)
+- [Tauri 2.0 のウィンドウにメニューを追加する](https://github.com/mikoto2000/TIL/tree/master/tauri/2.0.0-beta/Menu/firststep)
 
