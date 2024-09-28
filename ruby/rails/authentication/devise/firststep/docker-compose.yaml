@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .devcontainer/dockerfile/app
+    init: true
+    restart: always
+    environment:
+      APP_DB_NAME: public
+      APP_DB_URL: jdbc:postgresql://postgres:5432/public
+      APP_DB_USERNAME: admin
+      APP_DB_PASSWORD: password
+      BUNDLE_PATH: /home/vscode/.bundle_data
+    command: ["sleep", "infinity"]
+    ports:
+      # アプリ待ち受けポート
+      - 0.0.0.0:3000:3000
+    volumes:
+      # プロジェクトルート
+      - "./:/work"
+      # bundle
+      - bundle_data:/home/vscode/.bundle_data
+    working_dir: /work
+  postgres:
+    image: postgres:15.2
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./.devcontainer/config/postgres/initdb.d:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_DB: public
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    ports:
+      - 0.0.0.0:5432:5432
+    command: postgres -c log_destination=stderr -c log_statement=all -c log_connections=on -c log_disconnections=on
+
+volumes:
+  bundle_data:
+    driver: local
+  postgres_data:
+    driver: local
+
