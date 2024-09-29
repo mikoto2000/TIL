@@ -1,5 +1,5 @@
 ---
-title: devise で認証を実現する
+title: Rails の Devise で認証を実現する
 author: mikoto2000
 date: 2024/9/29
 ---
@@ -13,6 +13,8 @@ rails new app --javascript importmap --css tailwind --asset-pipeline sprockets -
 # データベース設定
 
 ■ `config/database.yml`
+
+今回はただの学習目的なので、全定義を `default` に書いてしまう。
 
 ```yml
 # PostgreSQL. Versions 9.3 and up are supported.
@@ -263,30 +265,6 @@ firststep とは関係のない諸々のわけがあって、今回は `accounts
 
 ```sh
 rails generate devise:controllers account
-```
-
-## devise 用ルートの設定
-
-■ `app/config/routes.rb`
-
-```rb
-Rails.application.routes.draw do
-  devise_for :account # この行を追加
-
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
-
-  # Render dynamic PWA files from app/views/pwa/*
-  get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-  get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-
-  # Defines the root path route ("/")
-  # root "posts#index"
-  root to: "top#index"
-end
 ```
 
 ## ページ表示時に強制的にログインを促す
