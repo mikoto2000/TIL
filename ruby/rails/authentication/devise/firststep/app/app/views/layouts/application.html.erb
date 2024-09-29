@@ -20,6 +20,10 @@
 
   <body>
     <main class="container mx-auto mt-28 px-5 flex">
+    <div>
+      <p class="notice"><%= notice %></p> <!-- この行を追加 -->
+      <p class="alert"><%= alert %></p> <!-- この行を追加 -->
+    </div>
       <%= yield %>
     </main>
   </body>
