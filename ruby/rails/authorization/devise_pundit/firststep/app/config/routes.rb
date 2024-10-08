@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :admin_only_resources
+  resources :all_welcome_resources
   devise_for :account
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

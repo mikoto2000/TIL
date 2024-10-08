@@ -31,6 +31,24 @@ class AddRoleToAccounts < ActiveRecord::Migration[7.2]
 end
 ```
 
+## マイグレーション実行
+
+```sh
+rails db:migrate
+```
+
+管理者は、 DB から直接 role カラムを修正することとし、ログインのビューは変更しない。
+
+
+# 一般ユーザーも触れるリソースの追加
+
+## リソースの作成
+
+```sh
+rails generate scaffold AllWelcomeResource name:string
+rails db:migrate
+```
+
 
 
 ```sh
