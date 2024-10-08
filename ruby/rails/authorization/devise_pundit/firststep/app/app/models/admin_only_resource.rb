@@ -1,0 +1,2 @@
+class AdminOnlyResource < ApplicationRecord
+end

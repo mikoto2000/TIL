@@ -1,0 +1,2 @@
+module AllWelcomeResourcesHelper
+end
