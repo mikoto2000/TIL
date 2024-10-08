@@ -58,3 +58,5 @@ group :test do
   gem "selenium-webdriver"
 end
 gem "devise"
+
+gem "pundit", "~> 2.4"
