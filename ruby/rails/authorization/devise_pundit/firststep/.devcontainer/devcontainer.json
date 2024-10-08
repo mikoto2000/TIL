@@ -1,0 +1,23 @@
+{
+    "name": "development environment",
+    "dockerComposeFile": [
+        "../docker-compose.yaml"
+    ],
+    "service": "app",
+    "workspaceFolder": "/work",
+
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "telemetry.telemetryLevel": "off",
+                "telemetry.enableTelemetry": false,
+                "editor.copyWithSyntaxHighlighting": false,
+                "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
+            },
+            "extensions": [
+                "walkme.ruby-extension-pack"
+            ]
+        }
+    }
+}
+
