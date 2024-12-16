@@ -3,7 +3,8 @@ volumes:
 
 services:
   app:
-    image: mcr.microsoft.com/devcontainers/java:1-21-bookworm
+    build:
+      context: .devcontainer
     environment:
         POSTGRES_PASSWORD: postgres
         POSTGRES_USER: postgres
