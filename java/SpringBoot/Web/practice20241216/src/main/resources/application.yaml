@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOSTNAME:postgres}:5432/${POSTGRES_DB:postgres}
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+  jpa:
+    showSql: true
+  flyway:
+    baseline-version: 0
+    enabled: true
+    url: jdbc:postgresql://${POSTGRES_HOSTNAME:postgres}:5432/${POSTGRES_DB:postgres}
+    user: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+
+logging:
+  level:
+    root: debug
