@@ -2,22 +2,20 @@ package dev.mikoto2000.study.springboot.web.practice20241215.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.OneToOne;
 import lombok.Data;
 
 /**
- * Account
+ * BookMaster_Author_Relationship
  */
 @Entity
 @Data
-@Table(name = "accounts")
-public class Account {
+public class BookMasterAuthorRelationship {
   @Id
   private Long id;
-  private String name;
-
-  @ManyToOne
-  private Role role;
+  @OneToOne
+  private BookMaster bookMaster;
+  @OneToOne
+  private Author author;
 }
 
