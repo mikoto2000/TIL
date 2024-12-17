@@ -6,32 +6,27 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * BookMaster
  */
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class BookMaster {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+  @NotNull
   private String name;
-  @OneToMany
-  @JoinTable(
-    name = "book_master_author_relationship",
-    joinColumns = {
-      @JoinColumn(name="author_id", referencedColumnName="id")
-    },
-    inverseJoinColumns = {
-      @JoinColumn(name="book_master_id", referencedColumnName="id")
-    }
-  )
-  private List<BookMasterAuthorRelationship> bookMasterAuthorRelationship;
+  @ManyToMany
+  private List<Author> author;
 }
 
 

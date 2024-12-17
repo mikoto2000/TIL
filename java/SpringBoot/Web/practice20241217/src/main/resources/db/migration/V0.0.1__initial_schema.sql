@@ -1,5 +1,6 @@
-drop table if exists book_masters;
-drop table if exists roles;
+drop table if exists book_master_authors;
+drop table if exists author;
+drop table if exists book_master;
 
 create table book_master (
   id bigserial primary key,
@@ -11,7 +12,7 @@ create table author (
   name varchar(128)
 );
 
-create table book_master_author_relationship (
+create table book_master_author (
   id bigserial primary key,
   book_master_id bigint,
   author_id bigint,
