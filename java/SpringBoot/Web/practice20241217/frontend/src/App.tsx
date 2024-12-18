@@ -1,19 +1,21 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { AuthorEntityControllerApiFactory, Configuration, EntityModelAuthor } from './api'
 
 const BASE_URL = "http://localhost:8080"
 
 function App() {
-  const [authors, setAuthors] = useState([])
+  const [authors, setAuthors] = useState<EntityModelAuthor[] | undefined>([])
 
   useEffect(() => {
     (async () => {
-      const authorsResult = await fetch(BASE_URL + "/authors");
-      const authorsJson = await authorsResult.json();
-      console.log(authorsJson);
-      setAuthors(authorsJson._embedded.authors);
+      const authorApiFactory = AuthorEntityControllerApiFactory(new Configuration(), BASE_URL);
+      const authorsResult = await authorApiFactory.getCollectionResourceAuthorGet({})
+      console.log(authorsResult);
+      const authorsData = await authorsResult.data;
+      console.log(authorsData);
+
+      setAuthors(authorsData._embedded?.authors);
     })();
   }, []);
 
@@ -21,7 +23,11 @@ function App() {
     <>
       <ul>
         {
-          authors.map((e) => <li>{e.name}</li>)
+          authors
+            ?
+            authors.map((e) => <li>{e.name}</li>)
+            :
+            "表示するものがありませんでした。"
         }
       </ul>
     </>
