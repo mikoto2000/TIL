@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import { AuthorEntityControllerApiFactory, Configuration, EntityModelAuthor } from './api'
+import { AuthorEntityControllerApiFactory, BookMasterEntityControllerApiFactory, Configuration, EntityModelAuthor, EntityModelBookMaster } from './api'
 import { Link, Route, Routes } from 'react-router'
 
 const BASE_URL = "http://localhost:8080"
 
 function App() {
   const [authors, setAuthors] = useState<EntityModelAuthor[] | undefined>([])
+  const [bookMasters, setBookMasters] = useState<EntityModelBookMaster[] | undefined>([])
 
   useEffect(() => {
     (async () => {
@@ -17,6 +18,14 @@ function App() {
       console.log(authorsData);
 
       setAuthors(authorsData._embedded?.authors);
+
+      const bookMasterApiFactory = BookMasterEntityControllerApiFactory(new Configuration(), BASE_URL);
+      const bookMastersResult = await bookMasterApiFactory.getCollectionResourceBookmasterGet({});
+      console.log(bookMastersResult);
+      const bookMastersData = await bookMastersResult.data;
+      console.log(bookMastersData);
+
+      setBookMasters(bookMastersData._embedded?.bookMasters);
     })();
   }, []);
 
@@ -25,6 +34,7 @@ function App() {
       <Route path="/" element={
         <ul>
           <li><Link to="/authors">Authors</Link></li>
+          <li><Link to="/bookMasters">BookMasters</Link></li>
         </ul>
       }
       />
@@ -33,7 +43,19 @@ function App() {
           {
             authors
               ?
-              authors.map((e) => <li>{e.name}</li>)
+              authors.map((e) => <li>Name: {e.name}</li>)
+              :
+              "表示するものがありませんでした。"
+          }
+        </ul>
+      }
+      />
+      <Route path="/bookMasters" element={
+        <ul>
+          {
+            bookMasters
+              ?
+              bookMasters.map((e) => <li>Name: {e.name}</li>)
               :
               "表示するものがありませんでした。"
           }
