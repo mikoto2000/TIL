@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import { AuthorEntityControllerApiFactory, Configuration, EntityModelAuthor } from './api'
+import { Link, Route, Routes } from 'react-router'
 
 const BASE_URL = "http://localhost:8080"
 
@@ -20,17 +21,26 @@ function App() {
   }, []);
 
   return (
-    <>
-      <ul>
-        {
-          authors
-            ?
-            authors.map((e) => <li>{e.name}</li>)
-            :
-            "表示するものがありませんでした。"
-        }
-      </ul>
-    </>
+    <Routes>
+      <Route path="/" element={
+        <ul>
+          <li><Link to="/authors">Authors</Link></li>
+        </ul>
+      }
+      />
+      <Route path="/authors" element={
+        <ul>
+          {
+            authors
+              ?
+              authors.map((e) => <li>{e.name}</li>)
+              :
+              "表示するものがありませんでした。"
+          }
+        </ul>
+      }
+      />
+    </Routes>
   )
 }
 
