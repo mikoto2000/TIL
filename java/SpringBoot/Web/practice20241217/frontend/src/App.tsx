@@ -1,27 +1,30 @@
+import { useEffect, useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
 import './App.css'
-import { Link, Route, Routes } from 'react-router'
-import { BookMastersPage } from './pages/BookMastersPage'
-import { AuthorsPage } from './pages/AuthorsPage'
+
+const BASE_URL = "http://localhost:8080"
 
 function App() {
+  const [authors, setAuthors] = useState([])
+
+  useEffect(() => {
+    (async () => {
+      const authorsResult = await fetch(BASE_URL + "/authors");
+      const authorsJson = await authorsResult.json();
+      console.log(authorsJson);
+      setAuthors(authorsJson._embedded.authors);
+    })();
+  }, []);
+
   return (
-    <Routes>
-      <Route path="/" element={
-        <ul>
-          <li><Link to="/authors">Authors</Link></li>
-          <li><Link to="/bookMasters">BookMasters</Link></li>
-        </ul>
-      }
-      />
-      <Route path="/authors" element={
-        <AuthorsPage />
-      }
-      />
-      < Route path="/bookMasters" element={
-        <BookMastersPage />
-      }
-      />
-    </Routes>
+    <>
+      <ul>
+        {
+          authors.map((e) => <li>{e.name}</li>)
+        }
+      </ul>
+    </>
   )
 }
 
