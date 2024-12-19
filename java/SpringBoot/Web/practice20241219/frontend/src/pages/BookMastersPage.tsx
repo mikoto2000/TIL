@@ -23,14 +23,27 @@ export const BookMastersPage: React.FC<BookMastersPageProps> = ({ }) => {
 
 
   return (
-    <ul>
-      {
-        bookMasters
-          ?
-          bookMasters.map((e) => <li>Id: {e.id}, Name: {e.name}, publicationDate: {e.publicationDate}, Authors: {JSON.stringify(e.author)}</li>)
-          :
-          "表示するものがありませんでした。"
-      }
-    </ul>
+    <table>
+      <thead>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Publication Date</th>
+        <th>Authors</th>
+      </thead>
+      <tbody>
+        {
+          bookMasters
+            ?
+            bookMasters.map((e) => <tr>
+              <td>{e.id}</td>
+              <td>{e.name}</td>
+              <td>{e.publicationDate}</td>
+              <td>{JSON.stringify(e.author)}</td>
+            </tr>)
+            :
+            "表示するものがありませんでした。"
+        }
+      </tbody>
+    </table>
   )
 }

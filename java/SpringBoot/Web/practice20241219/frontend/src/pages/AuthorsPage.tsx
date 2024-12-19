@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../config";
-import { AuthorEntityControllerApiFactory, Configuration, EntityModelAuthor } from "../api";
+import { AuthorEntityControllerApiFactory, Configuration } from "../api";
 
 type AuthorsPageProps = {
 };
 
 export const AuthorsPage: React.FC<AuthorsPageProps> = ({ }) => {
-  const [authors, setAuthors] = useState<EntityModelAuthor[] | undefined>([])
+  const [authors, setAuthors] = useState<any[] | undefined>([])
   useEffect(() => {
     (async () => {
       const authorApiFactory = AuthorEntityControllerApiFactory(new Configuration(), BASE_URL);
@@ -19,14 +19,23 @@ export const AuthorsPage: React.FC<AuthorsPageProps> = ({ }) => {
   }, []);
 
   return (
-    <ul>
-      {
-        authors
-          ?
-          authors.map((e) => <li>Name: {e.name}</li>)
-          :
-          "表示するものがありませんでした。"
-      }
-    </ul>
+    <table>
+      <thead>
+        <th>Id</th>
+        <th>Name</th>
+      </thead>
+      <tbody>
+        {
+          authors
+            ?
+            authors.map((e) => <tr>
+              <td>{e.id}</td>
+              <td>{e.name}</td>
+            </tr>)
+            :
+            "表示するものがありませんでした。"
+        }
+      </tbody>
+    </table>
   )
 }
