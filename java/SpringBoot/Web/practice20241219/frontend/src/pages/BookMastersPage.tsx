@@ -14,15 +14,25 @@ export const BookMastersPage: React.FC<BookMastersPageProps> = ({ }) => {
 
   const search = useLocation().search;
   const queryParams = queryString.parse(search);
+  const id: any = queryParams['id'];
+  const name: any = queryParams['name'];
+  const publicationDateBegin: any = queryParams['publicationDateBegin'];
+  const publicationDateEnd: any = queryParams['publicationDateEnd'];
   const sort: any = queryParams['sort'];
   const page: any = queryParams['page'];
   const size: any = queryParams['size'];
+
+  console.log(publicationDateBegin);
 
   useEffect(() => {
     (async () => {
 
       const bookMasterApiFactory = BookMasterSearchControllerApiFactory(new Configuration(), BASE_URL);
       const bookMastersResult = await bookMasterApiFactory.executeSearchBookmasterGet({
+        id: id ? id : undefined,
+        name: name ? name : undefined,
+        publicationDateBegin: publicationDateBegin ? publicationDateBegin : undefined,
+        publicationDateEnd: publicationDateEnd ? publicationDateEnd : undefined,
         page: page ? page : undefined,
         size: size ? size : undefined,
         sort: sort ? sort : undefined,

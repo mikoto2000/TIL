@@ -1,6 +1,6 @@
 package dev.mikoto2000.study.springboot.web.practice20241215.repository;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,8 +33,8 @@ public interface BookMasterRepository extends PagingAndSortingRepository<BookMas
   Page<BookMaster> findByComplexConditions(
       Long id,
       String name,
-      LocalDateTime publicationDateBegin,
-      LocalDateTime publicationDateEnd,
+      LocalDate publicationDateBegin,
+      LocalDate publicationDateEnd,
       Pageable pageable);
 }
 
