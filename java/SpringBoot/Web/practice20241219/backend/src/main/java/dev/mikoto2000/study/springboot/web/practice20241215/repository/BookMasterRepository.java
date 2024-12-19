@@ -25,9 +25,9 @@ public interface BookMasterRepository extends PagingAndSortingRepository<BookMas
         and
         (b.name = :name or :name is null)
         and
-        (b.publicationDate >= :publicationDateBegin or :publicationDateBegin is null)
+        (b.publicationDate >= :publicationDateBegin or date(:publicationDateBegin) is null)
         and
-        (b.publicationDate <= :publicationDateEnd or :publicationDateEnd is null)
+        (b.publicationDate <= :publicationDateEnd or date(:publicationDateEnd) is null)
   """
   )
   Page<BookMaster> findByComplexConditions(
