@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { Route } from "react-router";
-import { AuthorEntityControllerApiFactory, Configuration, EntityModelAuthor } from "../api";
 import { BASE_URL } from "../config";
+import { AuthorEntityControllerApiFactory, Configuration, EntityModelAuthor } from "../api";
 
 type AuthorsPageProps = {
 };
