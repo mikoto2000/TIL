@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../config";
 import { BookMasterSearchControllerApiFactory, Configuration } from "../api";
+import { Table } from "../components/Table/Table";
 
 type BookMastersPageProps = {
 };
@@ -23,27 +24,20 @@ export const BookMastersPage: React.FC<BookMastersPageProps> = ({ }) => {
 
 
   return (
-    <table>
-      <thead>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Publication Date</th>
-        <th>Authors</th>
-      </thead>
-      <tbody>
-        {
-          bookMasters
-            ?
-            bookMasters.map((e) => <tr>
-              <td>{e.id}</td>
-              <td>{e.name}</td>
-              <td>{e.publicationDate}</td>
-              <td>{JSON.stringify(e.author)}</td>
-            </tr>)
-            :
-            "表示するものがありませんでした。"
-        }
-      </tbody>
-    </table>
+    <Table
+      headerInfo={[
+        { name: "Id" },
+        { name: "Name" },
+        { name: "Publication Date" },
+        { name: "Authors" },
+      ]}
+      contentInfo={[
+        { getValueFunc: (row: any) => row.id },
+        { getValueFunc: (row: any) => row.name },
+        { getValueFunc: (row: any) => row.publicationDate },
+        { getValueFunc: (row: any) => row.author.map((e: any) => e.name).join(", ") },
+      ]}
+      content={bookMasters}
+    />
   )
 }

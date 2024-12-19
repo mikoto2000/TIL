@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../config";
 import { AuthorEntityControllerApiFactory, Configuration } from "../api";
+import { Table } from "../components/Table/Table";
 
 type AuthorsPageProps = {
 };
@@ -19,23 +20,16 @@ export const AuthorsPage: React.FC<AuthorsPageProps> = ({ }) => {
   }, []);
 
   return (
-    <table>
-      <thead>
-        <th>Id</th>
-        <th>Name</th>
-      </thead>
-      <tbody>
-        {
-          authors
-            ?
-            authors.map((e) => <tr>
-              <td>{e.id}</td>
-              <td>{e.name}</td>
-            </tr>)
-            :
-            "表示するものがありませんでした。"
-        }
-      </tbody>
-    </table>
+    <Table
+      headerInfo={[
+        { name: "Id" },
+        { name: "Name" },
+      ]}
+      contentInfo={[
+        { getValueFunc: (row: any) => row.id },
+        { getValueFunc: (row: any) => row.name },
+      ]}
+      content={authors}
+    />
   )
 }
