@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../config";
-import { BookMasterEntityControllerApiFactory, Configuration, EntityModelBookMaster } from "../api";
+import { BookMasterSearchControllerApiFactory, Configuration } from "../api";
 
 type BookMastersPageProps = {
 };
 
 export const BookMastersPage: React.FC<BookMastersPageProps> = ({ }) => {
 
-  const [bookMasters, setBookMasters] = useState<EntityModelBookMaster[] | undefined>([])
+  const [bookMasters, setBookMasters] = useState<any[] | undefined>([])
 
   useEffect(() => {
     (async () => {
-      const bookMasterApiFactory = BookMasterEntityControllerApiFactory(new Configuration(), BASE_URL);
-      const bookMastersResult = await bookMasterApiFactory.getCollectionResourceBookmasterGet({});
+      const bookMasterApiFactory = BookMasterSearchControllerApiFactory(new Configuration(), BASE_URL);
+      const bookMastersResult = await bookMasterApiFactory.executeSearchBookmasterGet({});
       console.log(bookMastersResult);
       const bookMastersData = bookMastersResult.data;
       console.log(bookMastersData);
@@ -27,7 +27,7 @@ export const BookMastersPage: React.FC<BookMastersPageProps> = ({ }) => {
       {
         bookMasters
           ?
-          bookMasters.map((e) => <li>Name: {e.name}</li>)
+          bookMasters.map((e) => <li>Id: {e.id}, Name: {e.name}, publicationDate: {e.publicationDate}, Authors: {JSON.stringify(e.author)}</li>)
           :
           "表示するものがありませんでした。"
       }
