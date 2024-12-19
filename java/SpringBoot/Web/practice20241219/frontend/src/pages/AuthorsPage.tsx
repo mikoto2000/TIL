@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../config";
-import { AuthorEntityControllerApiFactory, Configuration } from "../api";
+import { AuthorSearchControllerApiFactory, Configuration } from "../api";
 import { Table } from "../components/Table/Table";
 import { useLocation } from "react-router";
 import queryString from "query-string";
@@ -13,14 +13,18 @@ export const AuthorsPage: React.FC<AuthorsPageProps> = ({ }) => {
 
   const search = useLocation().search;
   const queryParams = queryString.parse(search);
+  const id: any = queryParams['id'];
+  const name: any = queryParams['name'];
   const sort: any = queryParams['sort'];
   const page: any = queryParams['page'];
   const size: any = queryParams['size'];
 
   useEffect(() => {
     (async () => {
-      const authorApiFactory = AuthorEntityControllerApiFactory(new Configuration(), BASE_URL);
-      const authorsResult = await authorApiFactory.getCollectionResourceAuthorGet({
+      const authorApiFactory = AuthorSearchControllerApiFactory(new Configuration(), BASE_URL);
+      const authorsResult = await authorApiFactory.executeSearchAuthorGet({
+        id: id ? id : undefined,
+        name: name ? name : undefined,
         page: page ? page : undefined,
         size: size ? size : undefined,
         sort: sort ? sort : undefined,

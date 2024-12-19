@@ -19,9 +19,9 @@ public interface AuthorRepository extends PagingAndSortingRepository<Author, Lon
   @Query(value = """
     select a from Author a
       where
-        a.id = :id or :id is null
+        (a.id = :id or :id is null)
         and
-        a.name = :name or :name is null
+        (a.name like %:name% or :name is null)
   """
   )
   Page<Author> findByComplexConditions(Long id, String name, Pageable pageable);

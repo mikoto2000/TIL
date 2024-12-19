@@ -21,13 +21,13 @@ public interface BookMasterRepository extends PagingAndSortingRepository<BookMas
   @Query(value = """
     select b from BookMaster b
       where
-        b.id = :id or :id is null
+        (b.id = :id or :id is null)
         and
-        b.name = :name or :name is null
+        (b.name = :name or :name is null)
         and
-        b.publicationDate >= :publicationDateBegin or :publicationDateBegin is null
+        (b.publicationDate >= :publicationDateBegin or :publicationDateBegin is null)
         and
-        b.publicationDate <= :publicationDateEnd or :publicationDateEnd is null
+        (b.publicationDate <= :publicationDateEnd or :publicationDateEnd is null)
   """
   )
   Page<BookMaster> findByComplexConditions(
