@@ -38,3 +38,7 @@ npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.0.0
 npm notice To update run: npm install -g npm@11.0.0
 npm notice
 ```
+
+```sh
+npm i query-string
+```

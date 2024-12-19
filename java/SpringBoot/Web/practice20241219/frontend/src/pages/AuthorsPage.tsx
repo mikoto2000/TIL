@@ -22,8 +22,16 @@ export const AuthorsPage: React.FC<AuthorsPageProps> = ({ }) => {
   return (
     <Table
       headerInfo={[
-        { name: "Id" },
-        { name: "Name" },
+        {
+          name: "Id",
+          onClick: () => {
+          }
+        },
+        {
+          name: "Name",
+          onClick: () => {
+          }
+        },
       ]}
       contentInfo={[
         { getValueFunc: (row: any) => row.id },

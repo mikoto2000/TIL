@@ -2,6 +2,7 @@ import { ReactElement } from "react";
 
 type HeaderInfo = {
   name: string,
+  onClick: () => void,
 }[];
 
 type ContentInfo<T> = {
