@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import dev.mikoto2000.study.springboot.web.practice20241215.entity.Author;
 import dev.mikoto2000.study.springboot.web.practice20241215.projection.DefaultAuthorProjection;
@@ -13,6 +14,7 @@ import dev.mikoto2000.study.springboot.web.practice20241215.projection.DefaultAu
 /**
  * AuthorRepository
  */
+@RestResource(exported = false)
 @RepositoryRestResource(excerptProjection = DefaultAuthorProjection.class)
 public interface AuthorRepository extends PagingAndSortingRepository<Author, Long>, CrudRepository<Author, Long> {
 

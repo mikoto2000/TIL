@@ -528,6 +528,79 @@ export interface NdcCategoryRequestBody {
 /**
  * 
  * @export
+ * @interface PageMapStringObject
+ */
+export interface PageMapStringObject {
+    /**
+     * 
+     * @type {number}
+     * @memberof PageMapStringObject
+     */
+    'totalElements'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageMapStringObject
+     */
+    'totalPages'?: number;
+    /**
+     * 
+     * @type {PageableObject}
+     * @memberof PageMapStringObject
+     */
+    'pageable'?: PageableObject;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageMapStringObject
+     */
+    'size'?: number;
+    /**
+     * 
+     * @type {Array<{ [key: string]: object; }>}
+     * @memberof PageMapStringObject
+     */
+    'content'?: Array<{ [key: string]: object; }>;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageMapStringObject
+     */
+    'number'?: number;
+    /**
+     * 
+     * @type {SortObject}
+     * @memberof PageMapStringObject
+     */
+    'sort'?: SortObject;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageMapStringObject
+     */
+    'first'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageMapStringObject
+     */
+    'last'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageMapStringObject
+     */
+    'numberOfElements'?: number;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageMapStringObject
+     */
+    'empty'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface PageMetadata
  */
 export interface PageMetadata {
@@ -555,6 +628,49 @@ export interface PageMetadata {
      * @memberof PageMetadata
      */
     'number'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface PageableObject
+ */
+export interface PageableObject {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageableObject
+     */
+    'paged'?: boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageableObject
+     */
+    'pageNumber'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageableObject
+     */
+    'pageSize'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PageableObject
+     */
+    'offset'?: number;
+    /**
+     * 
+     * @type {SortObject}
+     * @memberof PageableObject
+     */
+    'sort'?: SortObject;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PageableObject
+     */
+    'unpaged'?: boolean;
 }
 /**
  * 
@@ -682,6 +798,31 @@ export interface RepresentationModelObject {
      * @memberof RepresentationModelObject
      */
     '_links'?: { [key: string]: Link; };
+}
+/**
+ * 
+ * @export
+ * @interface SortObject
+ */
+export interface SortObject {
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SortObject
+     */
+    'sorted'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SortObject
+     */
+    'empty'?: boolean;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SortObject
+     */
+    'unsorted'?: boolean;
 }
 
 /**
@@ -5761,224 +5902,6 @@ export class BookMasterPropertyReferenceControllerApi extends BaseAPI implements
 
 
 /**
- * BookMasterSearchControllerApi - axios parameter creator
- * @export
- */
-export const BookMasterSearchControllerApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
-        /**
-         * 
-         * @param {number} [id] 
-         * @param {string} [name] 
-         * @param {string} [publicationDateBegin] 
-         * @param {string} [publicationDateEnd] 
-         * @param {number} [page] Zero-based page index (0..N)
-         * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        executeSearchBookmasterGet: async (id?: number, name?: string, publicationDateBegin?: string, publicationDateEnd?: string, page?: number, size?: number, sort?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/bookMasters/search/findByComplexConditions`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (id !== undefined) {
-                localVarQueryParameter['id'] = id;
-            }
-
-            if (name !== undefined) {
-                localVarQueryParameter['name'] = name;
-            }
-
-            if (publicationDateBegin !== undefined) {
-                localVarQueryParameter['publicationDateBegin'] = (publicationDateBegin as any instanceof Date) ?
-                    (publicationDateBegin as any).toISOString() :
-                    publicationDateBegin;
-            }
-
-            if (publicationDateEnd !== undefined) {
-                localVarQueryParameter['publicationDateEnd'] = (publicationDateEnd as any instanceof Date) ?
-                    (publicationDateEnd as any).toISOString() :
-                    publicationDateEnd;
-            }
-
-            if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
-            }
-
-            if (size !== undefined) {
-                localVarQueryParameter['size'] = size;
-            }
-
-            if (sort) {
-                localVarQueryParameter['sort'] = sort;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-    }
-};
-
-/**
- * BookMasterSearchControllerApi - functional programming interface
- * @export
- */
-export const BookMasterSearchControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = BookMasterSearchControllerApiAxiosParamCreator(configuration)
-    return {
-        /**
-         * 
-         * @param {number} [id] 
-         * @param {string} [name] 
-         * @param {string} [publicationDateBegin] 
-         * @param {string} [publicationDateEnd] 
-         * @param {number} [page] Zero-based page index (0..N)
-         * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async executeSearchBookmasterGet(id?: number, name?: string, publicationDateBegin?: string, publicationDateEnd?: string, page?: number, size?: number, sort?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PagedModelEntityModelBookMaster>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.executeSearchBookmasterGet(id, name, publicationDateBegin, publicationDateEnd, page, size, sort, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['BookMasterSearchControllerApi.executeSearchBookmasterGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-    }
-};
-
-/**
- * BookMasterSearchControllerApi - factory interface
- * @export
- */
-export const BookMasterSearchControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = BookMasterSearchControllerApiFp(configuration)
-    return {
-        /**
-         * 
-         * @param {BookMasterSearchControllerApiExecuteSearchBookmasterGetRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        executeSearchBookmasterGet(requestParameters: BookMasterSearchControllerApiExecuteSearchBookmasterGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PagedModelEntityModelBookMaster> {
-            return localVarFp.executeSearchBookmasterGet(requestParameters.id, requestParameters.name, requestParameters.publicationDateBegin, requestParameters.publicationDateEnd, requestParameters.page, requestParameters.size, requestParameters.sort, options).then((request) => request(axios, basePath));
-        },
-    };
-};
-
-/**
- * BookMasterSearchControllerApi - interface
- * @export
- * @interface BookMasterSearchControllerApi
- */
-export interface BookMasterSearchControllerApiInterface {
-    /**
-     * 
-     * @param {BookMasterSearchControllerApiExecuteSearchBookmasterGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BookMasterSearchControllerApiInterface
-     */
-    executeSearchBookmasterGet(requestParameters?: BookMasterSearchControllerApiExecuteSearchBookmasterGetRequest, options?: RawAxiosRequestConfig): AxiosPromise<PagedModelEntityModelBookMaster>;
-
-}
-
-/**
- * Request parameters for executeSearchBookmasterGet operation in BookMasterSearchControllerApi.
- * @export
- * @interface BookMasterSearchControllerApiExecuteSearchBookmasterGetRequest
- */
-export interface BookMasterSearchControllerApiExecuteSearchBookmasterGetRequest {
-    /**
-     * 
-     * @type {number}
-     * @memberof BookMasterSearchControllerApiExecuteSearchBookmasterGet
-     */
-    readonly id?: number
-
-    /**
-     * 
-     * @type {string}
-     * @memberof BookMasterSearchControllerApiExecuteSearchBookmasterGet
-     */
-    readonly name?: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof BookMasterSearchControllerApiExecuteSearchBookmasterGet
-     */
-    readonly publicationDateBegin?: string
-
-    /**
-     * 
-     * @type {string}
-     * @memberof BookMasterSearchControllerApiExecuteSearchBookmasterGet
-     */
-    readonly publicationDateEnd?: string
-
-    /**
-     * Zero-based page index (0..N)
-     * @type {number}
-     * @memberof BookMasterSearchControllerApiExecuteSearchBookmasterGet
-     */
-    readonly page?: number
-
-    /**
-     * The size of the page to be returned
-     * @type {number}
-     * @memberof BookMasterSearchControllerApiExecuteSearchBookmasterGet
-     */
-    readonly size?: number
-
-    /**
-     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     * @type {Array<string>}
-     * @memberof BookMasterSearchControllerApiExecuteSearchBookmasterGet
-     */
-    readonly sort?: Array<string>
-}
-
-/**
- * BookMasterSearchControllerApi - object-oriented interface
- * @export
- * @class BookMasterSearchControllerApi
- * @extends {BaseAPI}
- */
-export class BookMasterSearchControllerApi extends BaseAPI implements BookMasterSearchControllerApiInterface {
-    /**
-     * 
-     * @param {BookMasterSearchControllerApiExecuteSearchBookmasterGetRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof BookMasterSearchControllerApi
-     */
-    public executeSearchBookmasterGet(requestParameters: BookMasterSearchControllerApiExecuteSearchBookmasterGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return BookMasterSearchControllerApiFp(this.configuration).executeSearchBookmasterGet(requestParameters.id, requestParameters.name, requestParameters.publicationDateBegin, requestParameters.publicationDateEnd, requestParameters.page, requestParameters.size, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-
-
-/**
  * EchoControllerApi - axios parameter creator
  * @export
  */
@@ -6013,6 +5936,79 @@ export const EchoControllerApiAxiosParamCreator = function (configuration?: Conf
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {number} [id] 
+         * @param {string} [name] 
+         * @param {string} [publicationDateBegin] 
+         * @param {string} [publicationDateEnd] 
+         * @param {string} [ndcCategoryName] 
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchBookMasters: async (id?: number, name?: string, publicationDateBegin?: string, publicationDateEnd?: string, ndcCategoryName?: string, page?: number, size?: number, sort?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/searchBookMasters`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+            if (name !== undefined) {
+                localVarQueryParameter['name'] = name;
+            }
+
+            if (publicationDateBegin !== undefined) {
+                localVarQueryParameter['publicationDateBegin'] = (publicationDateBegin as any instanceof Date) ?
+                    (publicationDateBegin as any).toISOString().substring(0,10) :
+                    publicationDateBegin;
+            }
+
+            if (publicationDateEnd !== undefined) {
+                localVarQueryParameter['publicationDateEnd'] = (publicationDateEnd as any instanceof Date) ?
+                    (publicationDateEnd as any).toISOString().substring(0,10) :
+                    publicationDateEnd;
+            }
+
+            if (ndcCategoryName !== undefined) {
+                localVarQueryParameter['ndcCategoryName'] = ndcCategoryName;
+            }
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (size !== undefined) {
+                localVarQueryParameter['size'] = size;
+            }
+
+            if (sort) {
+                localVarQueryParameter['sort'] = sort;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -6034,6 +6030,25 @@ export const EchoControllerApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['EchoControllerApi.hello']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @param {number} [id] 
+         * @param {string} [name] 
+         * @param {string} [publicationDateBegin] 
+         * @param {string} [publicationDateEnd] 
+         * @param {string} [ndcCategoryName] 
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async searchBookMasters(id?: number, name?: string, publicationDateBegin?: string, publicationDateEnd?: string, ndcCategoryName?: string, page?: number, size?: number, sort?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PageMapStringObject>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.searchBookMasters(id, name, publicationDateBegin, publicationDateEnd, ndcCategoryName, page, size, sort, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['EchoControllerApi.searchBookMasters']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -6052,6 +6067,15 @@ export const EchoControllerApiFactory = function (configuration?: Configuration,
         hello(options?: RawAxiosRequestConfig): AxiosPromise<string> {
             return localVarFp.hello(options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @param {EchoControllerApiSearchBookMastersRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchBookMasters(requestParameters: EchoControllerApiSearchBookMastersRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PageMapStringObject> {
+            return localVarFp.searchBookMasters(requestParameters.id, requestParameters.name, requestParameters.publicationDateBegin, requestParameters.publicationDateEnd, requestParameters.ndcCategoryName, requestParameters.page, requestParameters.size, requestParameters.sort, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -6069,6 +6093,78 @@ export interface EchoControllerApiInterface {
      */
     hello(options?: RawAxiosRequestConfig): AxiosPromise<string>;
 
+    /**
+     * 
+     * @param {EchoControllerApiSearchBookMastersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EchoControllerApiInterface
+     */
+    searchBookMasters(requestParameters?: EchoControllerApiSearchBookMastersRequest, options?: RawAxiosRequestConfig): AxiosPromise<PageMapStringObject>;
+
+}
+
+/**
+ * Request parameters for searchBookMasters operation in EchoControllerApi.
+ * @export
+ * @interface EchoControllerApiSearchBookMastersRequest
+ */
+export interface EchoControllerApiSearchBookMastersRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof EchoControllerApiSearchBookMasters
+     */
+    readonly id?: number
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EchoControllerApiSearchBookMasters
+     */
+    readonly name?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EchoControllerApiSearchBookMasters
+     */
+    readonly publicationDateBegin?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EchoControllerApiSearchBookMasters
+     */
+    readonly publicationDateEnd?: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof EchoControllerApiSearchBookMasters
+     */
+    readonly ndcCategoryName?: string
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof EchoControllerApiSearchBookMasters
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned
+     * @type {number}
+     * @memberof EchoControllerApiSearchBookMasters
+     */
+    readonly size?: number
+
+    /**
+     * Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @type {Array<string>}
+     * @memberof EchoControllerApiSearchBookMasters
+     */
+    readonly sort?: Array<string>
 }
 
 /**
@@ -6086,6 +6182,17 @@ export class EchoControllerApi extends BaseAPI implements EchoControllerApiInter
      */
     public hello(options?: RawAxiosRequestConfig) {
         return EchoControllerApiFp(this.configuration).hello(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {EchoControllerApiSearchBookMastersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof EchoControllerApi
+     */
+    public searchBookMasters(requestParameters: EchoControllerApiSearchBookMastersRequest = {}, options?: RawAxiosRequestConfig) {
+        return EchoControllerApiFp(this.configuration).searchBookMasters(requestParameters.id, requestParameters.name, requestParameters.publicationDateBegin, requestParameters.publicationDateEnd, requestParameters.ndcCategoryName, requestParameters.page, requestParameters.size, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

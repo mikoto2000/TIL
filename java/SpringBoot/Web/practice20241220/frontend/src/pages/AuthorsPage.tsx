@@ -37,24 +37,42 @@ export const AuthorsPage: React.FC<AuthorsPageProps> = ({ }) => {
   }, [search]);
 
   return (
-    <Table
-      headerInfo={[
-        {
-          name: "Id",
-          onClick: () => {
-          }
-        },
-        {
-          name: "Name",
-          onClick: () => {
-          }
-        },
-      ]}
-      contentInfo={[
-        { getValueFunc: (row: any) => row.id },
-        { getValueFunc: (row: any) => row.name },
-      ]}
-      content={authors}
-    />
+    <>
+      {/* TODO: ページ遷移せずに、 search の更新だけを行うように修正 */}
+      <form action="/authors">
+      <div>
+        <div>
+          <label>Id:</label>
+          <input type="number" name="id" defaultValue={id}></input>
+        </div>
+        <div>
+          <label>Name:</label>
+          <input type="text" name="name" defaultValue={name}></input>
+        </div>
+        <div>
+        <button type="submit">検索</button>
+        </div>
+      </div>
+      </form>
+      <Table
+        headerInfo={[
+          {
+            name: "Id",
+            onClick: () => {
+            }
+          },
+          {
+            name: "Name",
+            onClick: () => {
+            }
+          },
+        ]}
+        contentInfo={[
+          { getValueFunc: (row: any) => row.id },
+          { getValueFunc: (row: any) => row.name },
+        ]}
+        content={authors}
+      />
+    </>
   )
 }

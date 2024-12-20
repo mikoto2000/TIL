@@ -21,7 +21,12 @@ export const Table = <T,>({ headerInfo, contentInfo, content }: TableProps<T>): 
     <table>
       <thead>
         {
-          headerInfo.map((e) => <th>{e.name}</th>)
+          headerInfo.map((e) => <th
+              onClick={e.onClick}
+            >
+              {e.name}
+            </th>
+          )
         }
       </thead>
       <tbody>
