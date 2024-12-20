@@ -48,36 +48,54 @@ export const BookMastersPage: React.FC<BookMastersPageProps> = ({ }) => {
 
 
   return (
-    <Table
-      headerInfo={[
-        {
-          name: "Id",
-          onClick: () => {
-          }
-        },
-        {
-          name: "Name",
-          onClick: () => {
-          }
-        },
-        {
-          name: "Publication Date",
-          onClick: () => {
-          }
-        },
-        {
-          name: "Authors",
-          onClick: () => {
-          }
-        },
-      ]}
-      contentInfo={[
-        { getValueFunc: (row: any) => row.id },
-        { getValueFunc: (row: any) => row.name },
-        { getValueFunc: (row: any) => row.publicationDate },
-        { getValueFunc: (row: any) => row.author.map((e: any) => e.name).join(", ") },
-      ]}
-      content={bookMasters}
-    />
+    <>
+      {/* TODO: ページ遷移せずに、 search の更新だけを行うように修正 */}
+      <form action="/bookMasters">
+      <div>
+        <div>
+          <label>Id:</label>
+          <input type="number" name="id" defaultValue={id}></input>
+        </div>
+        <div>
+          <label>Name:</label>
+          <input type="text" name="name" defaultValue={name}></input>
+        </div>
+        <div>
+        <button type="submit">検索</button>
+        </div>
+      </div>
+      </form>
+      <Table
+        headerInfo={[
+          {
+            name: "Id",
+            onClick: () => {
+            }
+          },
+          {
+            name: "Name",
+            onClick: () => {
+            }
+          },
+          {
+            name: "Publication Date",
+            onClick: () => {
+            }
+          },
+          {
+            name: "Authors",
+            onClick: () => {
+            }
+          },
+        ]}
+        contentInfo={[
+          { getValueFunc: (row: any) => row.id },
+          { getValueFunc: (row: any) => row.name },
+          { getValueFunc: (row: any) => row.publicationDate },
+          { getValueFunc: (row: any) => row.author.map((e: any) => e.name).join(", ") },
+        ]}
+        content={bookMasters}
+      />
+    </>
   )
 }

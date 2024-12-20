@@ -23,7 +23,7 @@ public interface BookMasterRepository extends PagingAndSortingRepository<BookMas
       where
         (b.id = :id or :id is null)
         and
-        (b.name = :name or :name is null)
+        (b.name like %:name% or :name is null)
         and
         (b.publicationDate >= :publicationDateBegin or date(:publicationDateBegin) is null)
         and
