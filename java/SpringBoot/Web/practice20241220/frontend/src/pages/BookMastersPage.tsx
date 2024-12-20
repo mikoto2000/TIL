@@ -61,6 +61,12 @@ export const BookMastersPage: React.FC<BookMastersPageProps> = ({ }) => {
           <input type="text" name="name" defaultValue={name}></input>
         </div>
         <div>
+          <label>Publication Date:</label>
+          <input type="date" name="publicationDateBegin" defaultValue={publicationDateBegin}></input>
+          ～
+          <input type="date" name="publicationDateEnd" defaultValue={publicationDateEnd}></input>
+        </div>
+        <div>
         <button type="submit">検索</button>
         </div>
       </div>
