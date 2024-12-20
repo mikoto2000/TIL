@@ -20,7 +20,8 @@ public interface BookMasterRepository extends PagingAndSortingRepository<BookMas
 
   @Query(value = """
     select b from BookMaster b
-      inner join fetch b.ndcCategory n
+      outer join fetch b.author a
+      outer join fetch b.ndcCategory n
       where
         (b.id = :id or :id is null)
         and

@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { BASE_URL } from "../config";
 import { BookMasterSearchControllerApiFactory, Configuration } from "../api";
 import { Table } from "../components/Table/Table";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import queryString from "query-string";
+import { updateOrder } from "../util/util";
 
 type BookMastersPageProps = {
 };
@@ -12,7 +13,10 @@ export const BookMastersPage: React.FC<BookMastersPageProps> = ({ }) => {
 
   const [bookMasters, setBookMasters] = useState<any[] | undefined>([])
 
-  const search = useLocation().search;
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentPath = location.pathname
+  const search = location.search;
   const queryParams = queryString.parse(search);
   const id: any = queryParams['id'];
   const name: any = queryParams['name'];
@@ -82,26 +86,36 @@ export const BookMastersPage: React.FC<BookMastersPageProps> = ({ }) => {
           {
             name: "Id",
             onClick: () => {
+              const newUrl = updateOrder(currentPath, queryParams, sort, "id")
+              navigate(newUrl)
             }
           },
           {
             name: "Name",
             onClick: () => {
+              const newUrl = updateOrder(currentPath, queryParams, sort, "name")
+              navigate(newUrl)
             }
           },
           {
             name: "Publication Date",
             onClick: () => {
+              const newUrl = updateOrder(currentPath, queryParams, sort, "publicationDate")
+              navigate(newUrl)
             }
           },
           {
             name: "Authors",
             onClick: () => {
+              const newUrl = updateOrder(currentPath, queryParams, sort, "author")
+              navigate(newUrl)
             }
           },
           {
             name: "Ndc Category",
             onClick: () => {
+              const newUrl = updateOrder(currentPath, queryParams, sort, "ndcCategoryName")
+              navigate(newUrl)
             }
           },
         ]}
