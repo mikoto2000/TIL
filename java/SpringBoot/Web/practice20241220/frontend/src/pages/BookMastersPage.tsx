@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../config";
-import { BookMasterSearchControllerApiFactory, Configuration } from "../api";
+import { EchoControllerApiFactory, Configuration } from "../api";
 import { Table } from "../components/Table/Table";
 import { useLocation, useNavigate } from "react-router";
 import queryString from "query-string";
@@ -32,8 +32,8 @@ export const BookMastersPage: React.FC<BookMastersPageProps> = ({ }) => {
   useEffect(() => {
     (async () => {
 
-      const bookMasterApiFactory = BookMasterSearchControllerApiFactory(new Configuration(), BASE_URL);
-      const bookMastersResult = await bookMasterApiFactory.executeSearchBookmasterGet({
+      const bookMasterApiFactory = EchoControllerApiFactory(new Configuration(), BASE_URL);
+      const bookMastersResult = await bookMasterApiFactory.searchBookMasters({
         id: id ? id : undefined,
         name: name ? name : undefined,
         publicationDateBegin: publicationDateBegin ? publicationDateBegin : undefined,
@@ -47,7 +47,7 @@ export const BookMastersPage: React.FC<BookMastersPageProps> = ({ }) => {
       const bookMastersData = bookMastersResult.data;
       console.log(bookMastersData);
 
-      setBookMasters(bookMastersData._embedded?.bookMasters);
+      setBookMasters(bookMastersData?.content);
 
     })();
   }, [search]);
@@ -100,7 +100,7 @@ export const BookMastersPage: React.FC<BookMastersPageProps> = ({ }) => {
           {
             name: "Publication Date",
             onClick: () => {
-              const newUrl = updateOrder(currentPath, queryParams, sort, "publicationDate")
+              const newUrl = updateOrder(currentPath, queryParams, sort, "publication_date")
               navigate(newUrl)
             }
           },
@@ -114,7 +114,7 @@ export const BookMastersPage: React.FC<BookMastersPageProps> = ({ }) => {
           {
             name: "Ndc Category",
             onClick: () => {
-              const newUrl = updateOrder(currentPath, queryParams, sort, "ndcCategoryName")
+              const newUrl = updateOrder(currentPath, queryParams, sort, "n.name")
               navigate(newUrl)
             }
           },
@@ -123,8 +123,8 @@ export const BookMastersPage: React.FC<BookMastersPageProps> = ({ }) => {
           { getValueFunc: (row: any) => row.id },
           { getValueFunc: (row: any) => row.name },
           { getValueFunc: (row: any) => row.publicationDate },
-          { getValueFunc: (row: any) => row.author.map((e: any) => e.name).join(", ") },
-          { getValueFunc: (row: any) => row.ndcCategory.name },
+          { getValueFunc: (row: any) => row.author },
+          { getValueFunc: (row: any) => row.ndcCategoryName },
         ]}
         content={bookMasters}
       />
