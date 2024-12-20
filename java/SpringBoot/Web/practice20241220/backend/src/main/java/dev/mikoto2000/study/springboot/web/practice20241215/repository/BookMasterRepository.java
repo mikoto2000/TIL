@@ -20,6 +20,7 @@ public interface BookMasterRepository extends PagingAndSortingRepository<BookMas
 
   @Query(value = """
     select b from BookMaster b
+      inner join fetch b.ndcCategory n
       where
         (b.id = :id or :id is null)
         and
@@ -28,6 +29,8 @@ public interface BookMasterRepository extends PagingAndSortingRepository<BookMas
         (b.publicationDate >= :publicationDateBegin or date(:publicationDateBegin) is null)
         and
         (b.publicationDate <= :publicationDateEnd or date(:publicationDateEnd) is null)
+        and
+        (n.name like %:ndcCategoryName% or :ndcCategoryName is null)
   """
   )
   Page<BookMaster> findByComplexConditions(
@@ -35,6 +38,7 @@ public interface BookMasterRepository extends PagingAndSortingRepository<BookMas
       String name,
       LocalDate publicationDateBegin,
       LocalDate publicationDateEnd,
+      String ndcCategoryName,
       Pageable pageable);
 }
 

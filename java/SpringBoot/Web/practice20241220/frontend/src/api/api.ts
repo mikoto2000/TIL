@@ -5772,13 +5772,14 @@ export const BookMasterSearchControllerApiAxiosParamCreator = function (configur
          * @param {string} [name] 
          * @param {string} [publicationDateBegin] 
          * @param {string} [publicationDateEnd] 
+         * @param {string} [ndcCategoryName] 
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        executeSearchBookmasterGet: async (id?: number, name?: string, publicationDateBegin?: string, publicationDateEnd?: string, page?: number, size?: number, sort?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        executeSearchBookmasterGet: async (id?: number, name?: string, publicationDateBegin?: string, publicationDateEnd?: string, ndcCategoryName?: string, page?: number, size?: number, sort?: Array<string>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/bookMasters/search/findByComplexConditions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5801,14 +5802,18 @@ export const BookMasterSearchControllerApiAxiosParamCreator = function (configur
 
             if (publicationDateBegin !== undefined) {
                 localVarQueryParameter['publicationDateBegin'] = (publicationDateBegin as any instanceof Date) ?
-                    (publicationDateBegin as any).toISOString() :
+                    (publicationDateBegin as any).toISOString().substring(0,10) :
                     publicationDateBegin;
             }
 
             if (publicationDateEnd !== undefined) {
                 localVarQueryParameter['publicationDateEnd'] = (publicationDateEnd as any instanceof Date) ?
-                    (publicationDateEnd as any).toISOString() :
+                    (publicationDateEnd as any).toISOString().substring(0,10) :
                     publicationDateEnd;
+            }
+
+            if (ndcCategoryName !== undefined) {
+                localVarQueryParameter['ndcCategoryName'] = ndcCategoryName;
             }
 
             if (page !== undefined) {
@@ -5850,14 +5855,15 @@ export const BookMasterSearchControllerApiFp = function(configuration?: Configur
          * @param {string} [name] 
          * @param {string} [publicationDateBegin] 
          * @param {string} [publicationDateEnd] 
+         * @param {string} [ndcCategoryName] 
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async executeSearchBookmasterGet(id?: number, name?: string, publicationDateBegin?: string, publicationDateEnd?: string, page?: number, size?: number, sort?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PagedModelEntityModelBookMaster>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.executeSearchBookmasterGet(id, name, publicationDateBegin, publicationDateEnd, page, size, sort, options);
+        async executeSearchBookmasterGet(id?: number, name?: string, publicationDateBegin?: string, publicationDateEnd?: string, ndcCategoryName?: string, page?: number, size?: number, sort?: Array<string>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PagedModelEntityModelBookMaster>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.executeSearchBookmasterGet(id, name, publicationDateBegin, publicationDateEnd, ndcCategoryName, page, size, sort, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['BookMasterSearchControllerApi.executeSearchBookmasterGet']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -5879,7 +5885,7 @@ export const BookMasterSearchControllerApiFactory = function (configuration?: Co
          * @throws {RequiredError}
          */
         executeSearchBookmasterGet(requestParameters: BookMasterSearchControllerApiExecuteSearchBookmasterGetRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PagedModelEntityModelBookMaster> {
-            return localVarFp.executeSearchBookmasterGet(requestParameters.id, requestParameters.name, requestParameters.publicationDateBegin, requestParameters.publicationDateEnd, requestParameters.page, requestParameters.size, requestParameters.sort, options).then((request) => request(axios, basePath));
+            return localVarFp.executeSearchBookmasterGet(requestParameters.id, requestParameters.name, requestParameters.publicationDateBegin, requestParameters.publicationDateEnd, requestParameters.ndcCategoryName, requestParameters.page, requestParameters.size, requestParameters.sort, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -5936,6 +5942,13 @@ export interface BookMasterSearchControllerApiExecuteSearchBookmasterGetRequest 
     readonly publicationDateEnd?: string
 
     /**
+     * 
+     * @type {string}
+     * @memberof BookMasterSearchControllerApiExecuteSearchBookmasterGet
+     */
+    readonly ndcCategoryName?: string
+
+    /**
      * Zero-based page index (0..N)
      * @type {number}
      * @memberof BookMasterSearchControllerApiExecuteSearchBookmasterGet
@@ -5972,7 +5985,7 @@ export class BookMasterSearchControllerApi extends BaseAPI implements BookMaster
      * @memberof BookMasterSearchControllerApi
      */
     public executeSearchBookmasterGet(requestParameters: BookMasterSearchControllerApiExecuteSearchBookmasterGetRequest = {}, options?: RawAxiosRequestConfig) {
-        return BookMasterSearchControllerApiFp(this.configuration).executeSearchBookmasterGet(requestParameters.id, requestParameters.name, requestParameters.publicationDateBegin, requestParameters.publicationDateEnd, requestParameters.page, requestParameters.size, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
+        return BookMasterSearchControllerApiFp(this.configuration).executeSearchBookmasterGet(requestParameters.id, requestParameters.name, requestParameters.publicationDateBegin, requestParameters.publicationDateEnd, requestParameters.ndcCategoryName, requestParameters.page, requestParameters.size, requestParameters.sort, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -18,6 +18,7 @@ export const BookMastersPage: React.FC<BookMastersPageProps> = ({ }) => {
   const name: any = queryParams['name'];
   const publicationDateBegin: any = queryParams['publicationDateBegin'];
   const publicationDateEnd: any = queryParams['publicationDateEnd'];
+  const ndcCategoryName: any = queryParams['ndcCategoryName'];
   const sort: any = queryParams['sort'];
   const page: any = queryParams['page'];
   const size: any = queryParams['size'];
@@ -33,6 +34,7 @@ export const BookMastersPage: React.FC<BookMastersPageProps> = ({ }) => {
         name: name ? name : undefined,
         publicationDateBegin: publicationDateBegin ? publicationDateBegin : undefined,
         publicationDateEnd: publicationDateEnd ? publicationDateEnd : undefined,
+        ndcCategoryName: ndcCategoryName ? ndcCategoryName : undefined,
         page: page ? page : undefined,
         size: size ? size : undefined,
         sort: sort ? sort : undefined,
@@ -67,6 +69,10 @@ export const BookMastersPage: React.FC<BookMastersPageProps> = ({ }) => {
           <input type="date" name="publicationDateEnd" defaultValue={publicationDateEnd}></input>
         </div>
         <div>
+          <label>Ndc Category:</label>
+          <input type="text" name="ndcCategoryName" defaultValue={ndcCategoryName}></input>
+        </div>
+        <div>
         <button type="submit">検索</button>
         </div>
       </div>
@@ -93,12 +99,18 @@ export const BookMastersPage: React.FC<BookMastersPageProps> = ({ }) => {
             onClick: () => {
             }
           },
+          {
+            name: "Ndc Category",
+            onClick: () => {
+            }
+          },
         ]}
         contentInfo={[
           { getValueFunc: (row: any) => row.id },
           { getValueFunc: (row: any) => row.name },
           { getValueFunc: (row: any) => row.publicationDate },
           { getValueFunc: (row: any) => row.author.map((e: any) => e.name).join(", ") },
+          { getValueFunc: (row: any) => row.ndcCategory.name },
         ]}
         content={bookMasters}
       />
