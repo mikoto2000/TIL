@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { BASE_URL } from "../../config";
 import { EchoControllerApiFactory, Configuration } from "../../api";
 import { Table } from "../../components/Table/Table";
-import { useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import queryString from "query-string";
 import { updateOrder } from "../../util/util";
 
@@ -55,6 +55,7 @@ export const BookMastersPage: React.FC<BookMastersPageProps> = ({ }) => {
 
   return (
     <>
+      <Link to="/bookMasters/create">新規登録</Link>
       {/* TODO: ページ遷移せずに、 search の更新だけを行うように修正 */}
       <form action="/bookMasters">
       <div>

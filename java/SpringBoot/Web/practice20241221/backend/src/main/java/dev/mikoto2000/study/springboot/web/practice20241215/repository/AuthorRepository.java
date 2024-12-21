@@ -14,7 +14,6 @@ import dev.mikoto2000.study.springboot.web.practice20241215.projection.DefaultAu
 /**
  * AuthorRepository
  */
-@RestResource(exported = false)
 @RepositoryRestResource(excerptProjection = DefaultAuthorProjection.class)
 public interface AuthorRepository extends PagingAndSortingRepository<Author, Long>, CrudRepository<Author, Long> {
 
