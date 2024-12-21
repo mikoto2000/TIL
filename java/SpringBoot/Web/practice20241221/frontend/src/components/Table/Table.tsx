@@ -1,4 +1,5 @@
 import React, { ReactElement } from "react";
+import { useNavigate } from "react-router";
 
 type HeaderInfo = {
   name: string,
@@ -6,7 +7,6 @@ type HeaderInfo = {
 }[];
 
 type ContentInfo<T> = {
-  getKeyFunc: (row: T) => string,
   getValueFunc: (row: T) => string,
 }[];
 
@@ -18,17 +18,19 @@ type TableProps<T> = {
 
 export const Table = <T,>({ headerInfo, contentInfo, content }: TableProps<T>): ReactElement<any, any> => {
 
+  const navigate = useNavigate();
+
   return (
     <table>
       <thead>
         <tr>
           {
             headerInfo.map((e) => <th
-                key={e.name}
-                onClick={e.onClick}
-              >
-                {e.name}
-              </th>
+              key={e.name}
+              onClick={e.onClick}
+            >
+              {e.name}
+            </th>
             )
           }
         </tr>
@@ -38,11 +40,13 @@ export const Table = <T,>({ headerInfo, contentInfo, content }: TableProps<T>): 
           content
             ?
             React.Children.toArray(
-              content.map((e) => <tr>{
-                React.Children.toArray(
-                  contentInfo.map((c) => <td>{c.getValueFunc(e)}</td>)
-                )
-              }</tr>)
+              content.map((e: any) => <tr onClick={() => {
+                navigate("/bookMasters/" + e.id);
+              }}>{
+                  React.Children.toArray(
+                    contentInfo.map((c) => <td>{c.getValueFunc(e)}</td>)
+                  )
+                }</tr>)
             )
             :
             "表示するものがありませんでした。"

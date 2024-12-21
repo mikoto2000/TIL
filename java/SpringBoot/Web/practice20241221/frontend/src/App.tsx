@@ -3,6 +3,7 @@ import { Link, Route, Routes } from 'react-router'
 import { BookMastersPage } from './pages/bookmaster/BookMastersPage'
 import { AuthorsPage } from './pages/author/AuthorsPage'
 import { BookMasterCreatePage } from './pages/bookmaster/BookMasterCreatePage'
+import { BookMasterDetailPage } from './pages/bookmaster/BookMasterDetailPage'
 
 function App() {
   return (
@@ -20,6 +21,10 @@ function App() {
       />
       < Route path="/bookMasters" element={
         <BookMastersPage />
+      }
+      />
+      <Route path="/bookMasters/:id" element={
+        <BookMasterDetailPage />
       }
       />
       < Route path="/bookMasters/create" element={

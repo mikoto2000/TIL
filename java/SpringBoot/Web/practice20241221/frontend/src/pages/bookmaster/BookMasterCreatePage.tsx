@@ -1,16 +1,14 @@
-//import { BASE_URL } from "../../config";
-//import { BookMasterEntityControllerApiFactory, Configuration } from "../../api";
-
 import { useEffect, useState } from "react";
 import { AuthorEntityControllerApiFactory, BookMasterEntityControllerApiFactory, Configuration, EntityModelAuthor, EntityModelNdcCategory, NdcCategoryEntityControllerApiFactory } from "../../api";
 import { BASE_URL } from "../../config";
+import { Link, useNavigate } from "react-router";
 
 type BookMasterCreatePageProps = {
 };
 
 export const BookMasterCreatePage: React.FC<BookMasterCreatePageProps> = ({ }) => {
 
-  //const bookMasterApiFactory = BookMasterEntityControllerApiFactory(new Configuration(), BASE_URL);
+  const navigate = useNavigate();
   const [author, setAuthor] = useState<EntityModelAuthor[] | undefined>([]);
   const [ndcCategories, setNdcCategories] = useState<EntityModelNdcCategory[] | undefined>([]);
 
@@ -33,11 +31,14 @@ export const BookMasterCreatePage: React.FC<BookMasterCreatePageProps> = ({ }) =
     console.log(form);
     const name = form.name.value;
     const authorOptions = form.author.options
-    const author = [];
+    const authors = [];
     for (var i = 0; i < authorOptions.length; i++) {
-      author.push(authorOptions[i].value)
+      console.log(authorOptions[i].selected);
+      if (authorOptions[i].selected === true) {
+        authors.push(authorOptions[i].value)
+      }
     }
-    console.log(author);
+    console.log(authors);
     const publicationDate = form.publicationDate.value;
     const ndcCategory = form.ndcCategory.value;
 
@@ -47,7 +48,7 @@ export const BookMasterCreatePage: React.FC<BookMasterCreatePageProps> = ({ }) =
       bookMasterRequestBody: {
         name,
         publicationDate,
-        author,
+        authors,
         ndcCategory
       }
     }));
@@ -57,10 +58,13 @@ export const BookMasterCreatePage: React.FC<BookMasterCreatePageProps> = ({ }) =
       bookMasterRequestBody: {
         name,
         publicationDate,
-        author,
+        author: authors,
         ndcCategory
       }
-    })
+    }).then((result) => {
+      navigate(`/bookMasters/${(result.data as any).id}`);
+    });
+
   }
 
   return (
@@ -104,6 +108,7 @@ export const BookMasterCreatePage: React.FC<BookMasterCreatePageProps> = ({ }) =
           </div>
         </div>
       </form>
+      <Link to="/bookMasters">一覧に戻る</Link>
     </>
   )
 }
