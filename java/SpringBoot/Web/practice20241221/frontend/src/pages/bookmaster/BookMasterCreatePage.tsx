@@ -2,7 +2,7 @@
 //import { BookMasterEntityControllerApiFactory, Configuration } from "../../api";
 
 import { useEffect, useState } from "react";
-import { BookMasterEntityControllerApiFactory, Configuration, EntityModelNdcCategory, NdcCategoryEntityControllerApiFactory } from "../../api";
+import { AuthorEntityControllerApiFactory, BookMasterEntityControllerApiFactory, Configuration, EntityModelAuthor, EntityModelNdcCategory, NdcCategoryEntityControllerApiFactory } from "../../api";
 import { BASE_URL } from "../../config";
 
 type BookMasterCreatePageProps = {
@@ -11,6 +11,7 @@ type BookMasterCreatePageProps = {
 export const BookMasterCreatePage: React.FC<BookMasterCreatePageProps> = ({ }) => {
 
   //const bookMasterApiFactory = BookMasterEntityControllerApiFactory(new Configuration(), BASE_URL);
+  const [author, setAuthor] = useState<EntityModelAuthor[] | undefined>([]);
   const [ndcCategories, setNdcCategories] = useState<EntityModelNdcCategory[] | undefined>([]);
 
   useEffect(() => {
@@ -18,6 +19,10 @@ export const BookMasterCreatePage: React.FC<BookMasterCreatePageProps> = ({ }) =
       const ndcCategoryApi = NdcCategoryEntityControllerApiFactory(new Configuration(), BASE_URL);
       const ndcCategoryResult = await ndcCategoryApi.getCollectionResourceNdccategoryGet({});
       setNdcCategories(ndcCategoryResult.data._embedded?.ndcCategories);
+
+      const authorApi = AuthorEntityControllerApiFactory(new Configuration(), BASE_URL);
+      const authorResult = await authorApi.getCollectionResourceAuthorGet({});
+      setAuthor(authorResult.data._embedded?.authors);
     })();
   }, []);
 
@@ -27,8 +32,13 @@ export const BookMasterCreatePage: React.FC<BookMasterCreatePageProps> = ({ }) =
     const form: any = event.currentTarget.form;
     console.log(form);
     const name = form.name.value;
+    const authorOptions = form.author.options
+    const author = [];
+    for (var i = 0; i < authorOptions.length; i++) {
+      author.push(authorOptions[i].value)
+    }
+    console.log(author);
     const publicationDate = form.publicationDate.value;
-    //const author = form.author;
     const ndcCategory = form.ndcCategory.value;
 
     const api = BookMasterEntityControllerApiFactory(new Configuration(), BASE_URL);
@@ -37,6 +47,7 @@ export const BookMasterCreatePage: React.FC<BookMasterCreatePageProps> = ({ }) =
       bookMasterRequestBody: {
         name,
         publicationDate,
+        author,
         ndcCategory
       }
     }));
@@ -46,6 +57,7 @@ export const BookMasterCreatePage: React.FC<BookMasterCreatePageProps> = ({ }) =
       bookMasterRequestBody: {
         name,
         publicationDate,
+        author,
         ndcCategory
       }
     })
@@ -65,7 +77,15 @@ export const BookMasterCreatePage: React.FC<BookMasterCreatePageProps> = ({ }) =
           </div>
           <div>
             <label>Author:</label>
-            <input type="text" name="author"></input>
+            <select name="author" multiple>
+              {
+                author
+                  ?
+                  author.map((e: any) => <option value={"/author/" + e.id}>{e.name}</option>)
+                  :
+                  <></>
+              }
+            </select>
           </div>
           <div>
             <label>NdcCategory:</label>
