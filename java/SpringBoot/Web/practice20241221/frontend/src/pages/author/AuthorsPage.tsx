@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { BASE_URL } from "../config";
-import { AuthorSearchControllerApiFactory, Configuration } from "../api";
-import { Table } from "../components/Table/Table";
+import { BASE_URL } from "../../config";
+import { AuthorSearchControllerApiFactory, Configuration } from "../../api";
+import { Table } from "../../components/Table/Table";
 import { useLocation } from "react-router";
 import queryString from "query-string";
 

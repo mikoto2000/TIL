@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { BASE_URL } from "../config";
-import { EchoControllerApiFactory, Configuration } from "../api";
-import { Table } from "../components/Table/Table";
+import { BASE_URL } from "../../config";
+import { EchoControllerApiFactory, Configuration } from "../../api";
+import { Table } from "../../components/Table/Table";
 import { useLocation, useNavigate } from "react-router";
 import queryString from "query-string";
-import { updateOrder } from "../util/util";
+import { updateOrder } from "../../util/util";
 
 type BookMastersPageProps = {
 };
