@@ -48,6 +48,18 @@ export function Welcome() {
 
 const resources = [
   {
+    href: "/",
+    text: "/",
+  },
+  {
+    href: "/index",
+    text: "index(404)",
+  },
+  {
+    href: "/home",
+    text: "home",
+  },
+  {
     href: "https://reactrouter.com/docs",
     text: "React Router Docs",
     icon: (
