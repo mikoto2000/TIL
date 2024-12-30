@@ -9,8 +9,15 @@ import {
 import type { Route } from "./+types/root";
 
 import appStylesHref from "./app.css?url";
+import { getContacts } from "./data";
 
-export default function App() {
+export async function clientLoader() {
+  const contacts = await getContacts();
+  return { contacts };
+}
+
+export default function App({ loaderData }) {
+  const { contacts } = loaderData;
   return (
     <>
       <div id="sidebar">
@@ -31,14 +38,11 @@ export default function App() {
           </Form>
         </div>
         <nav>
-          <ul>
-            <li>
-              <Link to={`/contacts/1`}>Your Name</Link>
-            </li>
-            <li>
-              <Link to={`/contacts/2`}>Your Friend</Link>
-            </li>
-          </ul>
+          <pre>
+            {
+              JSON.stringify(contacts, null, 2)
+            }
+          </pre>
         </nav>
       </div>
       <div id="detail">
