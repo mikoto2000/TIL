@@ -2,8 +2,10 @@ import { Form, Link, NavLink, Outlet, useNavigation } from "react-router";
 import { getContacts } from "../data";
 import type { Route } from "./+types/sidebar";
 
-export async function loader() {
-  const contacts = await getContacts();
+export async function loader({ request }: Route.LoaderArgs) {
+  const url = new URL(request.url);
+  const q = url.searchParams.get("q");
+  const contacts = await getContacts(q);
   if (!contacts) {
     throw new Response("Contact not found", { status: 404 });
   }
