@@ -9,13 +9,13 @@ export async function loader({ request }: Route.LoaderArgs) {
   if (!contacts) {
     throw new Response("Contact not found", { status: 404 });
   }
-  return { contacts };
+  return { contacts, q };
 }
 
 export default function SidebarLayout({
   loaderData,
 }: Route.ComponentProps) {
-  const { contacts } = loaderData;
+  const { contacts, q } = loaderData;
   const navigation = useNavigation();
 
   return (
@@ -28,6 +28,7 @@ export default function SidebarLayout({
           <Form id="search-form" role="search">
             <input
               aria-label="Search contacts"
+              defaultValue={q || ""}
               id="q"
               name="q"
               placeholder="Search"
