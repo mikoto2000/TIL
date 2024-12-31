@@ -38,11 +38,30 @@ export default function App({ loaderData }) {
           </Form>
         </div>
         <nav>
-          <pre>
-            {
-              JSON.stringify(contacts, null, 2)
-            }
-          </pre>
+          {contacts.length ? (
+            <ul>
+              {contacts.map((contact) => (
+                <li key={contact.id}>
+                  <Link to={`contacts/${contact.id}`}>
+                    {contact.first || contact.last ? (
+                      <>
+                        {contact.first} {contact.last}
+                      </>
+                    ) : (
+                      <i>No Name</i>
+                    )}
+                    {contact.favorite ? (
+                      <span>★</span>
+                    ) : null}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>
+              <i>No contacts</i>
+            </p>
+          )}
         </nav>
       </div>
       <div id="detail">
