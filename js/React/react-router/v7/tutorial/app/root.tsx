@@ -11,6 +11,15 @@ import type { Route } from "./+types/root";
 import appStylesHref from "./app.css?url";
 import { getContacts } from "./data";
 
+export function HydrateFallback() {
+  return (
+    <div id="loading-splash">
+      <div id="loading-splash-spinner" />
+      <p>Loading, please wait...</p>
+    </div>
+  );
+}
+
 export async function clientLoader() {
   const contacts = await getContacts();
   return { contacts };
