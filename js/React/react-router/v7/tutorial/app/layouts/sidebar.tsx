@@ -1,6 +1,7 @@
 import { Form, Link, NavLink, Outlet, useNavigation } from "react-router";
 import { getContacts } from "../data";
 import type { Route } from "./+types/sidebar";
+import { useEffect } from "react";
 
 export async function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url);
@@ -17,6 +18,13 @@ export default function SidebarLayout({
 }: Route.ComponentProps) {
   const { contacts, q } = loaderData;
   const navigation = useNavigation();
+
+  useEffect(() => {
+    const searchField = document.getElementById("q");
+    if (searchField instanceof HTMLInputElement) {
+      searchField.value = q || "";
+    }
+  }, [q]);
 
   return (
     <>
