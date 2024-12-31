@@ -4,6 +4,9 @@ import type { Route } from "./+types/sidebar";
 
 export async function loader() {
   const contacts = await getContacts();
+  if (!contacts) {
+    throw new Response("Contact not found", { status: 404 });
+  }
   return { contacts };
 }
 
