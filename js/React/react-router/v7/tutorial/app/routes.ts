@@ -5,6 +5,7 @@ export default [
     index("routes/home.tsx"),
     route("contacts/:contactId", "routes/contact.tsx"),
     route("contacts/:contactId/edit", "routes/edit-contact.tsx"),
+    route("contacts/:contactId/destroy", "routes/destroy-contact.tsx"),
   ]),
   route("about", "routes/about.tsx"),
 ] satisfies RouteConfig;
