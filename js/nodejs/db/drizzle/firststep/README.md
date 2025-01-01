@@ -1,29 +1,58 @@
-# Drizzle firststep
+---
+title: Drizzle firststep
+author: mikoto2000
+date: 2025/1/1
+---
 
-## Install packages
+# 必要パッケージのインストール
 
 ```sh
 npm i drizzle-orm pg dotenv
 npm i -D drizzle-kit tsx @types/pg typescript
 ```
 
-## Create DB setting(env file)
+- dependencies
+    - `drizzle-orm`: ORM 本体
+    - `pg`: PostgreSQL へ接続するための Driver
+    - `dotenv`: 接続先設定を env に記述するために利用
+- devDependencies
+    - `drizzle-kit`: スキーマファイル生成や、マイグレーション等を行うのに利用
+    - `tsx`: 謎。チュートリアルに入っていたから入れた。
+    - `@types/pg`: `pg` の型情報
+    - `typescript`: TypeScript トランスパイルに利用
+
+
+# DB 接続設定の作成
+
+`.env` ファイルに接続先設定を記述する。
 
 ```env
 DATABASE_URL=postgres://postgres@postgres/postgres
 ```
 
-## Create TypeScript setting(tsconfig.json)
+
+# TypeScript 設定ファイル(tsconfig.json)の作成
+
+## `tsconfig.json` の作成
+
+`tsc` コマンドで、 `tsconfig.json` を作成する
 
 ```sh
 npx tsc --init
 ```
 
-### set tsconfig parameters
+## `tsconfig.json` のパラメーター編集
 
-- `outDir`: `./dist`
+以下表のとおりパラメーターを設定。
 
-## Test
+| パラメーター    | 値
+| --              | --
+| `outDir`        | `./dist`
+
+
+# ここまでの動作確認
+
+ひとまず TypeScript をコンパイル・実行できるかを確認。
 
 ```sh
 mkdir src
@@ -32,12 +61,14 @@ tsc
 node ./dist/index.js
 ```
 
-Printed `Hello, World!` ... ok!
+`Hello, World!` が表示される ... ok!
 
 
-## Setting drizzle
+# Drizzle の設定
 
-### Create connection config
+## コネクション初期化処理の作成
+
+以下の通りコネクション初期化処理を作成。
 
 ```sh
 mkdir -p ./src/db
@@ -47,7 +78,13 @@ import { drizzle } from 'drizzle-orm/node-postgres';
 
 const db = drizzle(process.env.DATABASE_URL!);
 EOF
+```
 
+## Drizzle の設定ファイル作成
+
+以下の通り設定ファイルを作成。
+
+```sh
 cat << EOF > ./drizzle.config.ts
 import 'dotenv/config';
 import { defineConfig } from 'drizzle-kit';
@@ -63,7 +100,11 @@ export default defineConfig({
 EOF
 ```
 
-## Create DB schema
+# DB スキーマの作成
+
+TypeScript でスキーマを書いていく。
+
+以下コードを見れば、どんなスキーマを作りたいのかわかるはず...
 
 ```sh
 cat << EOF > ./src/db/schema.ts
@@ -79,26 +120,30 @@ EOF
 ```
 
 
-## Create and apply migration
+# マイグレーションファイルの生成と適用
 
-### Create migrate file
+## マイグレーションファイルの生成
 
 ```sh
 npx drizzle-kit generate
 ```
 
-Write migration file to `./drizzle`.
+設定ファイルの `out` に指定したとおり、 `./drizzle` にマイグレーションファイルが出力される。
 
-### Apply migrate file
+## マイグレーションファイルの適用
+
+`migration` サブコマンドで生成したマイグレーションファイルを DB に反映させる。
 
 ```sh
 npx drizzle-kit migrate
 ```
 
-Create table from migrate file.
+A5:SQL-Mk2 で確認してみると、確かにテーブルが作成されている ... ok!
 
 
-## Create main file.
+# メインファイルの作成
+
+作成した Drizzle の設定で、DB にアクセスし、 CRD するアプリケーションを作成する。
 
 ```sh
 cat <<"EOF" > ./src/index.ts
@@ -146,12 +191,16 @@ main();
 EOF
 ```
 
-## Run and test
+# 動作確認
+
+## ビルド
 
 ```sh
 npx tsc
 node ./dist/src/index.js
 ```
+
+## 実行
 
 ```sh
 node ➜ /workspaces $ node ./dist/src/index.js
@@ -160,4 +209,11 @@ Getting all users from the database:  [ { id: 1, name: 'John', age: 30, email: '
 User info updated!
 User deleted!
 ```
+
+ok! 以上。
+
+# 参考資料
+
+- [Drizzle ORM - PostgreSQL](https://orm.drizzle.team/docs/get-started/postgresql-new)
+- [tsconfig.jsonを設定する | TypeScript入門『サバイバルTypeScript』](https://typescriptbook.jp/reference/tsconfig/tsconfig.json-settings)
 
