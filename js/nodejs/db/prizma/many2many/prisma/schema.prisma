@@ -27,8 +27,10 @@ model Author {
 
 model BooksOnAuthors {
   id         Int    @id @default(autoincrement())
-  book       Book   @relation(fields: [bookId], references: [id])
+  // 本を削除する際には、著者へのリレーションシップは消えて欲しいのでカスケード設定
+  book       Book   @relation(fields: [bookId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   bookId     Int // リレーションスカラーフィールド。 上記の `@relation` の `fields` で指定した名前にする。
+  // 著者を消そうとしたときに、その著者の本がまだある場合はエラーにして火しいのでカスケードなし
   author     Author @relation(fields: [authorId], references: [id])
   authorId Int // リレーションスカラーフィールド
 }
