@@ -1,0 +1,8 @@
+{
+  "name": "ddt.vim study",
+  "image": "ubuntu:24.04",
+  "features": {
+    "ghcr.io/devcontainers-community/features/deno:1": {}
+  }
+}
+
