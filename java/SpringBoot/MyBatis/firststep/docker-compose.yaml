@@ -1,11 +1,11 @@
 version: '3'
 services:
     java:
-      image: openjdk:17
+      image: mcr.microsoft.com/devcontainers/java:17
       volumes:
-        - "./:/project"
+        - "./:/workspaces"
         - "m2-volume:/root/.m2"
-      working_dir: "/project/project"
+      working_dir: "/workspaces"
       command: ["sleep", "infinity"]
       environment:
         POSTGRES_HOST: postgres

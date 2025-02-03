@@ -55,7 +55,7 @@ public class UserMapperTest {
 
         assertEquals(1, users.size());
 
-        User user10 = users.get(10);
+        User user10 = users.get(0);
         assertEquals(10, user10.getId());
         assertEquals("user10", user10.getName());
     }
