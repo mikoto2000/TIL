@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: multidatasource
+
+  datasource:
+    jdbcUrl: "jdbc:postgresql://db1:5432/public"
+    username: admin
+    password: password
+    driverClassName: org.postgresql.Driver
+
+secondary:
+  datasource:
+    jdbcUrl: "jdbc:postgresql://db2:5432/public2"
+    username: admin2
+    password: password2
+    driverClassName: org.postgresql.Driver
+

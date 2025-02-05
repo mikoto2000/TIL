@@ -1,0 +1,39 @@
+services:
+    java:
+      image: mcr.microsoft.com/devcontainers/java:21
+      volumes:
+        - "./:/workspaces"
+        - "m2-volume:/root/.m2"
+      working_dir: "/workspaces"
+      command: ["sleep", "infinity"]
+      environment:
+        POSTGRES_HOST: postgres
+        POSTGRES_USER: admin
+        POSTGRES_PASSWORD: password
+        POSTGRES_DB: public
+    db1:
+      image: postgres:17
+      volumes:
+        # 初期化スクリプト置き場
+        - ./config/postgres/init.d:/docker-entrypoint-initdb.d
+      ports:
+        - "5432:5432"
+      environment:
+        POSTGRES_USER: admin
+        POSTGRES_PASSWORD: password
+        POSTGRES_DB: public
+    db2:
+      image: postgres:17
+      volumes:
+        # 初期化スクリプト置き場
+        - ./config/postgres/init.d:/docker-entrypoint-initdb.d
+      ports:
+        - "5433:5432"
+      environment:
+        POSTGRES_USER: admin2
+        POSTGRES_PASSWORD: password2
+        POSTGRES_DB: public2
+volumes:
+  m2-volume:
+    name: m2-cache
+
