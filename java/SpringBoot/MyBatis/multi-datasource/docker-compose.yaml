@@ -1,7 +1,6 @@
-version: '3'
 services:
     java:
-      image: mcr.microsoft.com/devcontainers/java:17
+      image: mcr.microsoft.com/devcontainers/java:21
       volumes:
         - "./:/workspaces"
         - "m2-volume:/root/.m2"
