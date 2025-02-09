@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.mikoto2000.study.mybatis.xmlfirststep.mapper.UserMapper">
+
+  <resultMap id="UserWithAuthorResultMap" type="dev.mikoto2000.study.mybatis.xmlfirststep.dto.User">
+    <id property="id" column="book_id"/>
+    <result property="name" column="book_name"/>
+
+    <collection property="authors" ofType="dev.mikoto2000.study.mybatis.xmlfirststep.dto.Author">
+      <id property="id" column="author_id"/>
+      <result property="name" column="author_name"/>
+    </collection>
+  </resultMap>
+
+  <select id="findAll" resultMap="UserWithAuthorResultMap">
+    select
+      book.id as book_id,
+      book.name as book_name,
+      author.id as author_id,
+      author.name as author_name
+    from book
+    join book_author on book.id = book_author.book_id
+    join author on author.id = book_author.author_id
+    ;
+  </select>
+
+</mapper>
