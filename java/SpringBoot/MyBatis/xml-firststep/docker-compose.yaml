@@ -1,7 +1,7 @@
 version: '3'
 services:
     java:
-      image: mcr.microsoft.com/devcontainers/java:17
+      image: mcr.microsoft.com/devcontainers/java:21
       volumes:
         - "./:/workspaces"
         - "m2-volume:/root/.m2"
@@ -18,7 +18,7 @@ services:
         # 初期化スクリプト置き場
         - ./config/postgres/init.d:/docker-entrypoint-initdb.d
       ports:
-        - "5432:5432"
+        - "0.0.0.0:5432:5432"
       environment:
         POSTGRES_USER: admin
         POSTGRES_PASSWORD: password
@@ -26,5 +26,4 @@ services:
 volumes:
   m2-volume:
     name: m2-cache
-
 
