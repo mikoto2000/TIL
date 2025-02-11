@@ -16,7 +16,7 @@ services:
       - 0.0.0.0:8081:8081
     volumes:
       - "./:/workspaces"
-      - "m2-cache:/root/.m2"
+      - "m2-cache:/home/vscode/.m2"
     working_dir: /workspaces
   postgres:
     image: postgres:17

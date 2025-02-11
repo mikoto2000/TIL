@@ -1,0 +1,25 @@
+spring:
+  security:
+    saml2:
+      relyingparty:
+        registration:
+          myrealm:
+            entity-id: "saml-sp"
+            signing:
+              credentials:
+                - private-key-location: "classpath:private.key"
+                  certificate-location: "classpath:certificate.crt"
+                  private-key-password: "changeit"
+                  private-key-alias: "saml-key"
+                  key-store-password: "changeit"
+            assertingparty:
+              metadata-uri: "http://keycloak:8080/realms/myrealm/protocol/saml/descriptor"
+
+logging:
+  level:
+    org:
+      springframework.web: debug
+
+server:
+  port: 8081
+

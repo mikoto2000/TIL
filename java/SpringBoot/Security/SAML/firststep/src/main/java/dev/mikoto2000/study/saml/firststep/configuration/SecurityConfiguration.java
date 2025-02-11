@@ -18,7 +18,7 @@ public class SecurityConfiguration {
           .anyRequest().authenticated()
           )
       .saml2Login(saml2 -> saml2
-          .loginProcessingUrl("/login/saml2/sso/my-idp")
+          .loginProcessingUrl("/login/saml2/sso/myrealm")
           )
       .logout(logout -> logout
           .logoutSuccessUrl("/")
