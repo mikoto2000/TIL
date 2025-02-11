@@ -1,5 +1,5 @@
 ---
-title: Spring Boot で SAML 認証をする
+title: Spring Boot で SAML 認証をする(署名無しバージョン)
 author: mikoto2000
 date: 2025/2/11
 ---
@@ -161,6 +161,24 @@ server:
 ```
 
 
+# 表示するページの作成
+
+以下静的ページを `src/main/resources/static` 下に格納する。
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>test</title>
+</head>
+<body>
+  Hello, World!
+</body>
+</html>
+```
+
+
 # hosts ファイルの更新
 
 `hosts` ファイルに以下エントリーを追加。
@@ -170,4 +188,14 @@ server:
 ```
 
 
-# 
+# 動作確認
+
+1. `http://localhost:8081/index.html` へ接続すると、 keycloak へリダイレクトされる
+2. 先ほど作った test ユーザーでログインすると、 `index.html` が表示される
+
+OK.
+
+
+# 参考資料
+
+- 
