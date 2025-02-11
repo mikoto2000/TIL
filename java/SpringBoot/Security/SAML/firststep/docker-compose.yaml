@@ -1,0 +1,112 @@
+volumes:
+  postgres_data:
+    driver: local
+  node_modules:
+    driver: local
+  m2-cache:
+    driver: local
+
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/java:21
+    init: true
+    restart: always
+    command: ["sleep", "infinity"]
+    ports:
+      - 0.0.0.0:8081:8081
+    volumes:
+      - "./:/workspaces"
+      - "m2-cache:/root/.m2"
+    working_dir: /workspaces
+  postgres:
+    image: postgres:17
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+  keycloak:
+    # 本番環境で使用する場合には、ビルド済みの keycloak イメージを使うこと
+    # 本番は HTTPS 必須なので注意
+    # See: [Running Keycloak in a container - Keycloak](https://www.keycloak.org/server/containers)
+    image: quay.io/keycloak/keycloak:19.0
+    init: true
+    restart: always
+    environment:
+      KC_HEALTH_ENABLED: false
+      KC_METRICS_ENABLED: false
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: password
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: password
+    command: ["start-dev"]
+    ports:
+      - 0.0.0.0:8080:8080
+    depends_on:
+      - postgres
+#    healthcheck:
+#      test: curl --fail http://localhost:8080
+#      interval: 5s
+#      timeout: 5s
+#      retries: 6
+#      start_period: 10s
+#  kc-init:
+#    image: mikoto2000/kcadm:19
+#    init: true
+#    restart: "no"
+#    depends_on:
+#      keycloak:
+#        condition: service_healthy
+#    environment:
+#      KEYCLOAK_ADMIN: admin
+#      KEYCLOAK_ADMIN_PASSWORD: Pa55w0rd
+#      REALM: myoidc
+#      CLIENT_ID: myoidc-client
+#      CLIENT_SECRET: myoidc-secret
+#    command: >
+#      sh -c "
+#      kcadm.sh config credentials
+#      --server http://keycloak:8080
+#      --realm master
+#      --user $${KEYCLOAK_ADMIN}
+#      --password $${KEYCLOAK_ADMIN_PASSWORD}
+#      && kcadm.sh create realms
+#      -s realm=\"$${REALM}\"
+#      -s displayName=\"$${REALM}\"
+#      -s enabled=true
+#      -s registrationAllowed=false
+#      -s resetPasswordAllowed=true
+#      && kcadm.sh create clients
+#      -r \"$${REALM}\"
+#      -s clientId=\"$${CLIENT_ID}\"
+#      -s id=\"$${CLIENT_ID}\"
+#      -s redirectUris='[\"*\"]'
+#      -s webOrigins='[\"*\"]'
+#      -s directAccessGrantsEnabled=true
+#      -s secret=\"$${CLIENT_SECRET}\"
+#      && kcadm.sh update clients/\"$${CLIENT_ID}\"
+#      -r \"$${REALM}\"
+#      -s 'attributes={\"post.logout.redirect.uris\" : \"*\"}'
+#      && CLIENT_SCOPE_ROLES_ID=$$(kcadm.sh get client-scopes -r \"$${REALM}\" | jq -r '.[] | select( .name == \"roles\").id')
+#      && MAPPER_ID=$$(kcadm.sh get -r \"$${REALM}\" client-scopes/$${CLIENT_SCOPE_ROLES_ID}/protocol-mappers/models | jq -r '.[] | select(.name == \"realm roles\").id')
+#      && kcadm.sh update -r \"$${REALM}\" client-scopes/$${CLIENT_SCOPE_ROLES_ID}/protocol-mappers/models/$${MAPPER_ID} -s 'config={
+#      \"multivalued\" : \"true\",
+#      \"userinfo.token.claim\" : \"true\",
+#      \"id.token.claim\" : \"true\",
+#      \"access.token.claim\" : \"true\",
+#      \"claim.name\" : \"realm_access.roles\",
+#      \"jsonType.label\" : \"String\"
+#      }'
+#      && kcadm.sh create users -r \"$${REALM}\" -s username=test -s email=\"test@test.com\" -s enabled=true -s emailVerified=true
+#      && kcadm.sh set-password -r \"$${REALM}\" --username test --new-password test
+#      && kcadm.sh create users -r \"$${REALM}\" -s username=normal -s email=\"normal@test.com\" -s enabled=true -s emailVerified=true
+#      && kcadm.sh set-password -r \"$${REALM}\" --username normal --new-password test
+#      && kcadm.sh create roles -r \"$${REALM}\" -s name=admin
+#      && kcadm.sh add-roles -r \"$${REALM}\" --uusername test --rolename admin
+#      "
+
+
