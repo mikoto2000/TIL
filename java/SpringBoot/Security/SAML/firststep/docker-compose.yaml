@@ -31,7 +31,7 @@ services:
     # 本番環境で使用する場合には、ビルド済みの keycloak イメージを使うこと
     # 本番は HTTPS 必須なので注意
     # See: [Running Keycloak in a container - Keycloak](https://www.keycloak.org/server/containers)
-    image: quay.io/keycloak/keycloak:19.0
+    image: quay.io/keycloak/keycloak:26.0
     init: true
     restart: always
     environment:
