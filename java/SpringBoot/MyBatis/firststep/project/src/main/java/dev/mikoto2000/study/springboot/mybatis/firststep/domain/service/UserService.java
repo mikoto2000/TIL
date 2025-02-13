@@ -30,4 +30,12 @@ public class UserService {
         UserSearchRequest userSearchRequest = new UserSearchRequest(id);
         return userMapper.search(userSearchRequest);
     }
+
+    public int insert(long id, String name) {
+        return userMapper.insert(id, name);
+    }
+
+    public void delete(long id) {
+        userMapper.delete(id);
+    }
 }

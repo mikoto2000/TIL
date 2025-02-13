@@ -3,6 +3,8 @@ package dev.mikoto2000.study.springboot.mybatis.firststep.domain.repository;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -21,5 +23,11 @@ public interface UserMapper {
 
     @Select("SELECT id, name FROM user1 WHERE id = #{id}")
     User search(UserSearchRequest user);
+
+    @Insert("INSERT INTO user1 VALUES (#{id}, #{name})")
+    int insert(long id, String name);
+
+    @Delete("DELETE FROM user1 WHERE id = #{id}")
+    void delete(long id);
 }
 

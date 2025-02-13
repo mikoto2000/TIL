@@ -20,6 +20,17 @@ public class FirststepApplication {
 
         List<User> users = userService.searchAll();
         System.out.println(users);
+
+        int insertCount = userService.insert(1000, "inserted user");
+        System.out.println(insertCount);
+
+        List<User> users2 = userService.searchAll();
+        System.out.println(users2);
+
+        userService.delete(1000);
+
+        List<User> users3 = userService.searchAll();
+        System.out.println(users3);
     }
 
 }
