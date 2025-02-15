@@ -9,7 +9,7 @@ date: 2025/2/11
 
 - Java: 21
 - Spring Boot: 3.4.2
-- Keycloak: 19
+- Keycloak: 26
 
 
 # 開発環境の起動
