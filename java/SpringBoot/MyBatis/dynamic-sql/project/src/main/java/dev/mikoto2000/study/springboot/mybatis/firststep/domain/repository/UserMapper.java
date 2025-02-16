@@ -27,6 +27,21 @@ public interface UserMapper {
     @Insert("INSERT INTO user1 VALUES (#{id}, #{name})")
     int insert(long id, String name);
 
+    @Insert("""
+            <script>
+            INSERT INTO user1
+            (
+             id,
+             name
+            )
+            VALUES
+            <foreach item="item" collection="collection" separator=", ">
+              (#{item.id}, #{item.name})
+            </foreach>
+            </script>
+            """)
+    int insertBulk(List<User> users);
+
     @Delete("DELETE FROM user1 WHERE id = #{id}")
     void delete(long id);
 }

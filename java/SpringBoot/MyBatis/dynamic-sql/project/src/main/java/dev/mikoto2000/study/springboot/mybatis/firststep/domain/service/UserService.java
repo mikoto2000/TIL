@@ -35,6 +35,10 @@ public class UserService {
         return userMapper.insert(id, name);
     }
 
+    public int insertBulk(List<User> users) {
+        return userMapper.insertBulk(users);
+    }
+
     public void delete(long id) {
         userMapper.delete(id);
     }

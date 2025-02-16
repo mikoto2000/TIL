@@ -1,5 +1,6 @@
 package dev.mikoto2000.study.springboot.mybatis.firststep;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.boot.SpringApplication;
@@ -31,6 +32,21 @@ public class FirststepApplication {
 
         List<User> users3 = userService.searchAll();
         System.out.println(users3);
+
+        List<User> users4 = Arrays.<User>asList(
+          new User(1000L, "test1"), new User(1001L, "test2"), new User(1002L, "test3")
+        );
+        userService.insertBulk(users4);
+
+        List<User> users5 = userService.searchAll();
+        System.out.println(users5);
+
+        userService.delete(1000);
+        userService.delete(1001);
+        userService.delete(1002);
+
+        List<User> users6 = userService.searchAll();
+        System.out.println(users6);
     }
 
 }
