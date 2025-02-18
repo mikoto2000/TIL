@@ -27,6 +27,12 @@ window.PDFViewerApplication.pdfDocument.getPage(1).then((e) => {e.getAnnotations
 
 ？？？これを知りたい...
 
+以下のあたりか？？？
+
+```js
+window.PDFViewerApplication.pdfDocument.annotationStorage.serializable
+```
+
 # 参考資料
 
 - [PDF.js - Getting Started](https://mozilla.github.io/pdf.js/getting_started/)
