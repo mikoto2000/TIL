@@ -31,6 +31,18 @@ window.PDFViewerApplication.pdfDocument.getPage(1).then((e) => {e.getAnnotations
 
 ```js
 window.PDFViewerApplication.pdfDocument.annotationStorage.serializable
+
+const data = await window.PDFViewerApplication.pdfDocument.saveDocument()
+```
+
+以下でアノテーション情報として取得はできる。(読み込むまで PDF が消える)
+
+```js
+data = await window.PDFViewerApplication.pdfDocument.saveDocument()
+
+window.PDFViewerApplication.open({data:data})
+
+window.PDFViewerApplication.pdfDocument.getPage(1).then((e) => {e.getAnnotations().then((a) => {console.log(a)})})
 ```
 
 # 参考資料
