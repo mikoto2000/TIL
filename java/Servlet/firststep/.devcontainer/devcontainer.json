@@ -1,6 +1,8 @@
 {
   "name": "app",
-  "image": "mcr.microsoft.com/devcontainers/java:21",
+  "dockerComposeFile": "../docker-compose.yaml",
+  "service": "app",
+  "workspaceFolder": "/workspaces",
   "features": {
     "ghcr.io/devcontainers/features/java:1": {
       "version": "none",
