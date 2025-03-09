@@ -7,7 +7,7 @@ services:
       - firststep-webapps:/tomcat-webapps
     command: "sleep infinity"
   tomcat:
-    image: tomcat:10
+    image: tomcat:11
     volumes:
       - firststep-webapps:/usr/local/tomcat/webapps
     ports:
