@@ -1,0 +1,17 @@
+version: '3'
+services:
+  app:
+    image: "mcr.microsoft.com/devcontainers/java:21"
+    volumes:
+      - .:/workspaces
+      - firststep-webapps:/tomcat-webapps
+    command: "sleep infinity"
+  tomcat:
+    image: tomcat:11
+    volumes:
+      - firststep-webapps:/usr/local/tomcat/webapps
+    ports:
+      - 8080:8080
+volumes:
+  firststep-webapps:
+    driver: local
