@@ -57,6 +57,10 @@ after:
 </web-app>
 ```
 
+## プログラム作成
+
+リポジトリのコードを参照。
+
 
 ## war の作成
 
@@ -69,3 +73,12 @@ mvn package
 ```sh
 sudo cp firststep/target/firststep.war /tomcat-webapps/
 ```
+
+## 動作確認
+
+`http://localhost:8080/firststep/` で JSP の実行結果が、
+`http://localhost:8080/firststep/hello` でサーブレットの実行結果が
+それぞれ表示される。
+
+以上。
+
