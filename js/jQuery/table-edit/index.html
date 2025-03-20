@@ -67,88 +67,82 @@
       </thead>
       <tbody>
         <tr>
-          <form action="./index.html" method="POST">
-            <td>
-              <span>あ</span>
-              <input style="display: none;" name="ko" type="text" value="あ"></input>
-            </td>
-            <td>
-              <span>い</span>
-              <input style="display: none;" name="so" type="text" value="い"></input>
-            </td>
-            <td>
-              <span>う</span>
-              <input style="display: none;" name="a"  type="text" value="う"></input>
-            </td>
-            <td>
-              <span>え</span>
-              <input style="display: none;" name="do" type="text" value="え"></input>
-            </td>
-            <td>
-              <button type="button" class="edit">編集</button>
-              <button type="button" style="display: none;" class="cancel">キャンセル</button>
-              <input style="display: none;" type="submit" value="保存"></input>
-            </td>
-            <td style="display: none">
-              <input type="hidden" name="item_id" value="2"></input>
-            </td>
-          </form>
+          <td>
+            <span>あ</span>
+            <input style="display: none;" name="ko" type="text" value="あ"></input>
+          </td>
+          <td>
+            <span>い</span>
+            <input style="display: none;" name="so" type="text" value="い"></input>
+          </td>
+          <td>
+            <span>う</span>
+            <input style="display: none;" name="a"  type="text" value="う"></input>
+          </td>
+          <td>
+            <span>え</span>
+            <input style="display: none;" name="do" type="text" value="え"></input>
+          </td>
+          <td>
+            <button type="button" class="edit">編集</button>
+            <button type="button" style="display: none;" class="cancel">キャンセル</button>
+            <button style="display: none;" type="button" class="save">保存</button>
+          </td>
+          <td style="display: none">
+            <input type="hidden" name="item_id" value="2"></input>
+          </td>
         </tr>
         <tr>
-          <form action="./index.html" method="POST">
-            <td>
-              <span>あ</span>
-              <input style="display: none;" name="ko" type="text" value="あ"></input>
-            </td>
-            <td>
-              <span>い</span>
-              <input style="display: none;" name="so" type="text" value="い"></input>
-            </td>
-            <td>
-              <span>う</span>
-              <input style="display: none;" name="a"  type="text" value="う"></input>
-            </td>
-            <td>
-              <span>え</span>
-              <input style="display: none;" name="do" type="text" value="え"></input>
-            </td>
-            <td>
-              <button type="button" class="edit">編集</button>
-              <button type="button" style="display: none;" class="cancel">キャンセル</button>
-              <input style="display: none;" type="submit" value="保存"></input>
-            </td>
-            <td style="display: none">
-              <input type="hidden" name="item_id" value="2"></input>
-            </td>
-          </form>
+          <td>
+            <span>あ</span>
+            <input style="display: none;" name="ko" type="text" value="あ"></input>
+          </td>
+          <td>
+            <span>い</span>
+            <input style="display: none;" name="so" type="text" value="い"></input>
+          </td>
+          <td>
+            <span>う</span>
+            <input style="display: none;" name="a"  type="text" value="う"></input>
+          </td>
+          <td>
+            <span>え</span>
+            <input style="display: none;" name="do" type="text" value="え"></input>
+          </td>
+          <td>
+            <button type="button" class="edit">編集</button>
+            <button type="button" style="display: none;" class="cancel">キャンセル</button>
+            <button style="display: none;" type="button" class="save">保存</button>
+          </td>
+          <td style="display: none">
+            <input type="hidden" name="item_id" value="2"></input>
+          </td>
         </tr>
         <tr>
-          <form action="./index.html" method="POST">
-            <td>
-              <span>あ</span>
-              <input style="display: none;" name="ko" type="text" value="あ"></input>
-            </td>
-            <td>
-              <span>い</span>
-              <input style="display: none;" name="so" type="text" value="い"></input>
-            </td>
-            <td>
-              <span>う</span>
-              <input style="display: none;" name="a"  type="text" value="う"></input>
-            </td>
-            <td>
-              <span>え</span>
-              <input style="display: none;" name="do" type="text" value="え"></input>
-            </td>
-            <td>
-              <button type="button" class="edit">編集</button>
-              <button type="button" style="display: none;" class="cancel">キャンセル</button>
-              <input style="display: none;" type="submit" value="保存"></input>
-            </td>
-            <td style="display: none">
-              <input type="hidden" name="item_id" value="3"></input>
-            </td>
-          </form>
+          <td>
+            <span>あ</span>
+            <input style="display: none;" name="ko" type="text" value="あ"></input>
+          </td>
+          <td>
+            <span>い</span>
+            <input style="display: none;" name="so" type="text" value="い"></input>
+          </td>
+          <td>
+            <span>う</span>
+            <input style="display: none;" name="a"  type="text" value="う"></input>
+          </td>
+          <td>
+            <span>え</span>
+            <input style="display: none;" name="do" type="text" value="え"></input>
+          </td>
+          <td>
+            <button type="button" class="edit">編集</button>
+            <button type="button" style="display: none;" class="cancel">キャンセル</button>
+            <button style="display: none;" type="button" class="save">保存</button>
+          </td>
+          <td style="display: none">
+            <input type="hidden" name="item_id" value="3"></input>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -178,6 +172,40 @@
         $(this).on("submit", function(event) {
           event.preventDefault();
           submit(this);
+        });
+      })
+
+      const save = function(row) {
+        const k = $(row).find("input[name=ko]").val();
+        const s = $(row).find("input[name=so]").val();
+        const a = $(row).find("input[name=a]").val();
+        const d = $(row).find("input[name=do]").val();
+        // const queryString = new URLSearchParams(formData).toString();
+
+        const formData = new FormData();
+        formData.append("ko", k);
+        formData.append("so", s);
+        formData.append("a", a);
+        formData.append("do", d);
+
+        console.log(formData);
+        $.ajax({
+          url: "./index.html"/* + "?" + queryString */,
+          type: "POST",
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function(response) {
+            console.log("サーバーからの応答:", response);
+          },
+          error: function(error) {
+            console.error("エラー:", error);
+          }
+        });
+      };
+      $('button.save').each(function() {
+        $(this).on("click", function(event) {
+          save($(this).parent().parent());
         });
       })
 
