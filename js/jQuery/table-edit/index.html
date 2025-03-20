@@ -55,7 +55,7 @@
       </tbody>
     </table>
 
-    <table>
+    <table id="2">
       <thead>
         <tr>
           <th>これ</th>
@@ -175,7 +175,7 @@
         });
       })
 
-      const save = function(row) {
+      const save = function(row, button) {
         const k = $(row).find("input[name=ko]").val();
         const s = $(row).find("input[name=so]").val();
         const a = $(row).find("input[name=a]").val();
@@ -202,18 +202,39 @@
             console.error("エラー:", error);
           }
         });
+
+        // span に編集後テキストを設定
+        $(row).find("input[type=text]").each(function() {
+          $(this).prev().text($(this).val());
+        })
+
+        // ボタン制御(編集以外を非表示に変更)
+        $(button).prev().prev().css("display", "unset");
+        $(button).prev().css("display", "none");
+        $(button).css("display", "none");
+
+        // テキストを表示、インプットを非表示
+        $(row).find("span").each(function() {
+          $(this).css("display", "unset");
+        });
+        $(row).find("input[type=text]").each(function() {
+          $(this).css("display", "none");
+        });
       };
       $('button.save').each(function() {
         $(this).on("click", function(event) {
-          save($(this).parent().parent());
+          save($(this).parent().parent(), this);
         });
       })
 
       const edit = function(button) {
+        // ボタン制御(編集ボタン以外を表示)
         $(button).siblings().each(function() {
           $(this).css("display", "unset");
         });
         $(button).css("display", "none");
+
+        // span を非表示・input を表示
         const row = $($(button).parent().parent());
         $(row).find("span").each(function() {
           $(this).css("display", "none");
@@ -229,9 +250,12 @@
       })
 
       const cancel = function(button) {
+        // ボタン制御(編集ボタン以外を表示)
         $(button).prev().css("display", "unset");
         $(button).css("display", "none");
         $(button).next().css("display", "none");
+
+        // テキストを表示、インプットを非表示
         const row = $($(button).parent().parent());
         $(row).find("span").each(function() {
           $(this).css("display", "unset");
