@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>テーブルの行を直接編集できるやつ</title>
+  </head>
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <th>これ</th>
+          <th>それ</th>
+          <th>あれ</th>
+          <th>どれ</th>
+          <th>更新</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <form action="./index.html" method="POST">
+            <td><input name="ko" type="text" value="あ"></input></td>
+            <td><input name="so" type="text" value="い"></input></td>
+            <td><input name="a"  type="text" value="う"></input></td>
+            <td><input name="do" type="text" value="え"></input></td>
+            <td>
+              <input type="hidden" name="item_id" value="1"></input>
+              <input type="submit" value="更新"></input>
+            </td>
+          </form>
+        </tr>
+        <tr>
+          <form action="./index.html" method="POST">
+            <td><input name="ko" type="text" value="あ"></input></td>
+            <td><input name="so" type="text" value="い"></input></td>
+            <td><input name="a"  type="text" value="う"></input></td>
+            <td><input name="do" type="text" value="え"></input></td>
+            <td>
+              <input type="hidden" name="item_id" value="2"></input>
+              <input type="submit" value="更新"></input>
+            </td>
+          </form>
+        </tr>
+        <tr>
+          <form action="./index.html" method="POST">
+            <td><input name="ko" type="text" value="あ"></input></td>
+            <td><input name="so" type="text" value="い"></input></td>
+            <td><input name="a"  type="text" value="う"></input></td>
+            <td><input name="do" type="text" value="え"></input></td>
+            <td>
+              <input type="hidden" name="item_id" value="3"></input>
+              <input type="submit" value="更新"></input>
+            </td>
+          </form>
+        </tr>
+      </tbody>
+    </table>
+
+    <table id="2">
+      <thead>
+        <tr>
+          <th>これ</th>
+          <th>それ</th>
+          <th>あれ</th>
+          <th>どれ</th>
+          <th>編集</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <span>あ</span>
+            <input style="display: none;" name="ko" type="text" value="あ"></input>
+          </td>
+          <td>
+            <span>い</span>
+            <input style="display: none;" name="so" type="text" value="い"></input>
+          </td>
+          <td>
+            <span>う</span>
+            <input style="display: none;" name="a"  type="text" value="う"></input>
+          </td>
+          <td>
+            <span>え</span>
+            <input style="display: none;" name="do" type="text" value="え"></input>
+          </td>
+          <td>
+            <button type="button" class="edit">編集</button>
+            <button type="button" style="display: none;" class="cancel">キャンセル</button>
+            <button style="display: none;" type="button" class="save">保存</button>
+          </td>
+          <td style="display: none">
+            <input type="hidden" name="item_id" value="2"></input>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span>あ</span>
+            <input style="display: none;" name="ko" type="text" value="あ"></input>
+          </td>
+          <td>
+            <span>い</span>
+            <input style="display: none;" name="so" type="text" value="い"></input>
+          </td>
+          <td>
+            <span>う</span>
+            <input style="display: none;" name="a"  type="text" value="う"></input>
+          </td>
+          <td>
+            <span>え</span>
+            <input style="display: none;" name="do" type="text" value="え"></input>
+          </td>
+          <td>
+            <button type="button" class="edit">編集</button>
+            <button type="button" style="display: none;" class="cancel">キャンセル</button>
+            <button style="display: none;" type="button" class="save">保存</button>
+          </td>
+          <td style="display: none">
+            <input type="hidden" name="item_id" value="2"></input>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span>あ</span>
+            <input style="display: none;" name="ko" type="text" value="あ"></input>
+          </td>
+          <td>
+            <span>い</span>
+            <input style="display: none;" name="so" type="text" value="い"></input>
+          </td>
+          <td>
+            <span>う</span>
+            <input style="display: none;" name="a"  type="text" value="う"></input>
+          </td>
+          <td>
+            <span>え</span>
+            <input style="display: none;" name="do" type="text" value="え"></input>
+          </td>
+          <td>
+            <button type="button" class="edit">編集</button>
+            <button type="button" style="display: none;" class="cancel">キャンセル</button>
+            <button style="display: none;" type="button" class="save">保存</button>
+          </td>
+          <td style="display: none">
+            <input type="hidden" name="item_id" value="3"></input>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+      const submit = function(form) {
+        const formData = new FormData(form);
+        // const queryString = new URLSearchParams(formData).toString();
+
+        console.log(formData);
+        $.ajax({
+          url: "./index.html"/* + "?" + queryString */,
+          type: "POST",
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function(response) {
+            console.log("サーバーからの応答:", response);
+          },
+          error: function(error) {
+            console.error("エラー:", error);
+          }
+        });
+      };
+      $('form').each(function() {
+        $(this).on("submit", function(event) {
+          event.preventDefault();
+          submit(this);
+        });
+      })
+
+      const save = function(row, button) {
+        const k = $(row).find("input[name=ko]").val();
+        const s = $(row).find("input[name=so]").val();
+        const a = $(row).find("input[name=a]").val();
+        const d = $(row).find("input[name=do]").val();
+        // const queryString = new URLSearchParams(formData).toString();
+
+        const formData = new FormData();
+        formData.append("ko", k);
+        formData.append("so", s);
+        formData.append("a", a);
+        formData.append("do", d);
+
+        console.log(formData);
+        $.ajax({
+          url: "./index.html"/* + "?" + queryString */,
+          type: "POST",
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function(response) {
+            console.log("サーバーからの応答:", response);
+          },
+          error: function(error) {
+            console.error("エラー:", error);
+          }
+        });
+
+        // span に編集後テキストを設定
+        $(row).find("input[type=text]").each(function() {
+          $(this).prev().text($(this).val());
+        })
+
+        // ボタン制御(編集以外を非表示に変更)
+        $(button).prev().prev().css("display", "unset");
+        $(button).prev().css("display", "none");
+        $(button).css("display", "none");
+
+        // テキストを表示、インプットを非表示
+        $(row).find("span").each(function() {
+          $(this).css("display", "unset");
+        });
+        $(row).find("input[type=text]").each(function() {
+          $(this).css("display", "none");
+        });
+      };
+      $('button.save').each(function() {
+        $(this).on("click", function(event) {
+          save($(this).parent().parent(), this);
+        });
+      })
+
+      const edit = function(button) {
+        // ボタン制御(編集ボタン以外を表示)
+        $(button).siblings().each(function() {
+          $(this).css("display", "unset");
+        });
+        $(button).css("display", "none");
+
+        // span を非表示・input を表示
+        const row = $($(button).parent().parent());
+        $(row).find("span").each(function() {
+          $(this).css("display", "none");
+        });
+        $(row).find("input[type=text]").each(function() {
+          $(this).css("display", "unset");
+        });
+      }
+      $('button.edit').each(function() {
+        $(this).on("click", function(event) {
+          edit(this);
+        });
+      })
+
+      const cancel = function(button) {
+        // ボタン制御(編集ボタン以外を表示)
+        $(button).prev().css("display", "unset");
+        $(button).css("display", "none");
+        $(button).next().css("display", "none");
+
+        // テキストを表示、インプットを非表示
+        const row = $($(button).parent().parent());
+        $(row).find("span").each(function() {
+          $(this).css("display", "unset");
+        });
+        $(row).find("input[type=text]").each(function() {
+          $(this).css("display", "none");
+        });
+      }
+      $('button.cancel').each(function() {
+        $(this).on("click", function(event) {
+          cancel(this);
+        });
+      })
+
+    </script>
+  </body>
+</html>
