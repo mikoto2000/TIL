@@ -1,0 +1,8 @@
+.target {
+  display: flex;
+  align-items: center;
+}
+
+input,button {
+  height: 2em;
+}
