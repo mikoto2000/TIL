@@ -5,8 +5,6 @@ services:
     volumes:
       - "./config/app/.ssh:/home/vscode/.ssh"
       - "./:/workspaces"
-      - "./in:/in"
-      - "./out:/out"
   sftp:
     build:
       context: ./dockerfile/sftp

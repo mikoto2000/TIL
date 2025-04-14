@@ -6,13 +6,13 @@ RUN apt update \
 
 # 送る企業ユーザーの追加
 RUN useradd -m sendcompany
-COPY ./sendcompany_id_ed25519.pub /home/sendcompany/.ssh/authorized_keys
+COPY ./sendcompany_id_rsa.pub /home/sendcompany/.ssh/authorized_keys
 RUN chown -R sendcompany:sendcompany /home/sendcompany/.ssh
 RUN chmod 700 /home/sendcompany/.ssh
 
 # 受け取る企業ユーザーの追加
 RUN useradd -m receivecompany
-COPY ./receivecompany_id_ed25519.pub /home/receivecompany/.ssh/authorized_keys
+COPY ./receivecompany_id_rsa.pub /home/receivecompany/.ssh/authorized_keys
 RUN chown -R receivecompany:receivecompany /home/receivecompany/.ssh
 RUN chmod 700 /home/receivecompany/.ssh
 
