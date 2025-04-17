@@ -1,7 +1,6 @@
 package dev.mikoto2000.study.spring.integration.sftp.configuration;
 
 import java.io.File;
-import java.util.Arrays;
 
 import org.apache.sshd.sftp.client.SftpClient;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +12,8 @@ import org.springframework.integration.dsl.Pollers;
 import org.springframework.integration.file.remote.session.CachingSessionFactory;
 import org.springframework.integration.file.remote.session.SessionFactory;
 import org.springframework.integration.sftp.dsl.Sftp;
+import org.springframework.integration.sftp.filters.SftpSimplePatternFileListFilter;
+import org.springframework.integration.sftp.filters.SftpSystemMarkerFilePresentFileListFilter;
 import org.springframework.integration.sftp.session.DefaultSftpSessionFactory;
 
 /**
@@ -42,7 +43,8 @@ public class SftpConfiguration {
                         .localDirectory(new File("./dir/sendcompany"))
                         .autoCreateLocalDirectory(true)
                         .deleteRemoteFiles(false)
-                        .filter(files -> Arrays.stream(files).filter(entry -> entry.getFilename().endsWith(".csv")).toList()),
+                        // `<ファイル名>.complete` が存在しない場合、ファイルを受信しない
+                        .filter(new SftpSystemMarkerFilePresentFileListFilter(new SftpSimplePatternFileListFilter("*.csv"))),
                         e -> e.poller(Pollers.fixedDelay(5000))) // 5秒おきにポーリング
                 .handle(m -> {
                     // 受信したファイルの処理
