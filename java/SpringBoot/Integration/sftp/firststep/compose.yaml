@@ -1,0 +1,16 @@
+services:
+  app:
+    image: "mcr.microsoft.com/devcontainers/java:1-21-bullseye"
+    command: "sleep infinity"
+    volumes:
+      - "./config/app/.ssh:/home/vscode/.ssh"
+      - "./:/workspaces"
+  sftp:
+    build:
+      context: ./dockerfile/sftp
+    restart: always
+    ports:
+      - "2222:22"
+    volumes:
+      - "./config/sftp/ssh:/etc/ssh"
+
