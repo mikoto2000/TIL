@@ -1,0 +1,40 @@
+{
+  "remoteEnv": {
+    "EDITOR": "~/squashfs-root/AppRun",
+    "PAGER": "sed -r 's/\\x1B\\[[0-9;]*[mGKH]//g' | ~/squashfs-root/AppRun -R -",
+    "LESSCHARSET": "utf-8",
+    "SHELL": "bash",
+    "TERM": "xterm-256color",
+    "HISTCONTROL": "erasedups",
+  },
+  "mounts": [
+    {
+      "type": "bind",
+      "source": "${localEnv:HOME}/.vim",
+      "target": "/home/vscode/.vim"
+    },
+    {
+      "type": "bind",
+      "source": "${localEnv:HOME}/.gitconfig",
+      "target": "/home/vscode/.gitconfig"
+    },
+    {
+      "type": "bind",
+      "source": "${localEnv:HOME}/.ssh",
+      "target": "/home/vscode/.ssh"
+    },
+  ],
+  // denops など、別の実行環境が必要な場合や、
+  // 後乗せで追加したいツールがある場合には以下の対象行をコメントアウトするか
+  // https://containers.dev/features から必要な feature を探して追加してください。
+  "features": {
+  //  "ghcr.io/devcontainers-community/features/deno:1": {}
+    "ghcr.io/devcontainers/features/node:1": {}
+  //  "ghcr.io/devcontainers/features/python:1": {}
+  //  "ghcr.io/devcontainers/features/ruby:1": {}
+  //  "ghcr.io/devcontainers-extra/features/fzf:1": {}
+  //  "ghcr.io/jungaretti/features/ripgrep:1": {}
+  //  "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+  //  "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  }
+}
