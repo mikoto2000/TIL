@@ -1,11 +1,14 @@
 package dev.mikoto2000.study.spring.integration.file.configuration;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.Pollers;
@@ -13,6 +16,8 @@ import org.springframework.integration.file.dsl.Files;
 import org.springframework.integration.file.filters.FileSystemMarkerFilePresentFileListFilter;
 import org.springframework.integration.file.filters.SimplePatternFileListFilter;
 import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.MessageHandler;
 
 /**
  * SftpConfiguration
@@ -79,9 +84,67 @@ public class FileConfiguration {
           Map<String, File> files = (Map<String, File>) m.getPayload();
           var main = files.get("main");
           var sub = files.get("sub");
-
           System.out.println(String.format("Received: %s, %s\n", main.getName(), sub.getName()));
+
+          // ファイル送信チャンネルへ送信
+          fileOutboundChannel().send(m);
         })
+        .get();
+  }
+
+  /**
+   * ファイル出力用チャネル。
+   */
+  @Bean
+  public MessageChannel fileOutboundChannel() {
+    return new DirectChannel();
+  }
+
+  /**
+   * ファイル出力用ハンドラ。
+   *
+   * 受信したファイルを指定のディレクトリに書き込む。
+   * 受信元ファイルと、 .complete ファイルを削除する。
+   */
+  @Bean
+  public MessageHandler fileOutboundHandler() {
+    return message -> {
+      try {
+        // 受信したグループから main/sub を取得
+        Map<String, File> files = (Map<String, File>) message.getPayload();
+        var main = files.get("main");
+        var sub = files.get("sub");
+
+        // 指定のディレクトリを作成
+        var targetDirPath = Paths.get("./dir/receivecompany");
+        java.nio.file.Files.createDirectories(targetDirPath);
+
+        // 指定のディレクトリへ移動
+        var targetDir = new File("./dir/receivecompany");
+        main.renameTo(new File(targetDir, main.getName()));
+        sub.renameTo(new File(targetDir, sub.getName()));
+
+        // 受信元の .complete ファイルを削除する
+        File mainCompleteFile = new File(main.getAbsolutePath() + ".complete");
+        mainCompleteFile.delete();
+        File subCompleteFile = new File(sub.getAbsolutePath() + ".complete");
+        subCompleteFile.delete();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    };
+  }
+
+  /**
+   * ファイル出力用 IntegrationFlow。
+   *
+   * 受信したファイルを指定のディレクトリに書き込む。
+   */
+  @Bean
+  public IntegrationFlow fileOutboundFlow() {
+    return IntegrationFlow
+        .from(fileOutboundChannel())
+        .handle(fileOutboundHandler())
         .get();
   }
 }
