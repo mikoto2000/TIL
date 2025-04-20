@@ -1,0 +1,7 @@
+services:
+  app:
+    image: "mcr.microsoft.com/devcontainers/java:1-21-bullseye"
+    command: "sleep infinity"
+    volumes:
+      - "./:/workspaces"
+

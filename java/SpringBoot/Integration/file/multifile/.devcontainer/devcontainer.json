@@ -1,0 +1,6 @@
+{
+  "name": "Java",
+  "dockerComposeFile": "../compose.yaml",
+  "service": "app",
+  "workspaceFolder": "/workspaces",
+}
