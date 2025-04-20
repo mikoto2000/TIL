@@ -19,6 +19,8 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 
+import dev.mikoto2000.study.spring.integration.file.handler.FileOutboundHandler;
+
 /**
  * SftpConfiguration
  */
@@ -108,31 +110,7 @@ public class FileConfiguration {
    */
   @Bean
   public MessageHandler fileOutboundHandler() {
-    return message -> {
-      try {
-        // 受信したグループから main/sub を取得
-        Map<String, File> files = (Map<String, File>) message.getPayload();
-        var main = files.get("main");
-        var sub = files.get("sub");
-
-        // 指定のディレクトリを作成
-        var targetDirPath = Paths.get("./dir/receivecompany");
-        java.nio.file.Files.createDirectories(targetDirPath);
-
-        // 指定のディレクトリへ移動
-        var targetDir = new File("./dir/receivecompany");
-        main.renameTo(new File(targetDir, main.getName()));
-        sub.renameTo(new File(targetDir, sub.getName()));
-
-        // 受信元の .complete ファイルを削除する
-        File mainCompleteFile = new File(main.getAbsolutePath() + ".complete");
-        mainCompleteFile.delete();
-        File subCompleteFile = new File(sub.getAbsolutePath() + ".complete");
-        subCompleteFile.delete();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    };
+    return new FileOutboundHandler(new File("./dir/receivecompany"));
   }
 
   /**
