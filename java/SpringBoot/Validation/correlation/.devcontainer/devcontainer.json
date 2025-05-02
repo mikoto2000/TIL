@@ -1,0 +1,9 @@
+{
+    "name": "development environment",
+    "dockerComposeFile": [
+        "../docker-compose.yaml"
+    ],
+    "service": "app",
+    "workspaceFolder": "/work",
+}
+
