@@ -1,7 +1,11 @@
 package dev.mikoto2000.springboot.beanutils.firststep;
 
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
@@ -43,4 +47,24 @@ class FirststepApplicationTests {
 
   }
 
+  @Test
+  void testIntrospector() throws Exception {
+
+    List<String> propertyNames = List.of("string", "integer", "bigDecimal");
+    List<PropertyDescriptor> descriptors = List.of(Introspector.getBeanInfo(SrcModel.class).getPropertyDescriptors());
+    List<String> srcModelProperties = descriptors.stream()
+      .map((descriptor) -> descriptor.getName())
+      .toList();
+
+    System.out.printf("srcModelProperties: %s\n", srcModelProperties);
+
+    // propertyNames で定義されている名前すべてが Bean に存在するかを確認
+    for (String propertyName : propertyNames) {
+      System.out.printf("propertyName: %s\n", propertyName);
+      if (!srcModelProperties.contains(propertyName)) {
+        throw new RuntimeException("property(" + propertyName + ") not found.");
+      }
+    }
+  }
 }
+
