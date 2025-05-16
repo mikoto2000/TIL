@@ -16,10 +16,10 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException {
         // 第一引数で指定されたディレクトリ以下を走査
-        Path target = Paths.get(args[0]);
+        Path root = Paths.get(args[0]);
 
         List<Path> paths = new ArrayList<>();
-        Files.walkFileTree(target,
+        Files.walkFileTree(root,
                 new SimpleFileVisitor<Path>() {
                     @Override
                     public FileVisitResult visitFile(
@@ -32,12 +32,11 @@ public class Main {
 
         System.out.println(paths);
 
-        int fileContentDepth = 2;
         Path backupBasePath = Paths.get("./testdata/bkup");
 
         for (var path : paths) {
           // path をルートからの相対パスに変更
-          Path relativePathFromRoot = path.subpath(path.getNameCount() - fileContentDepth, path.getNameCount());
+          Path relativePathFromRoot = path.subpath(root.getNameCount(), path.getNameCount());
 
           // バックアップ先計算
           Path backupPath = backupBasePath.resolve(relativePathFromRoot);
