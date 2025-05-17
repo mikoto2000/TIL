@@ -31,14 +31,25 @@ func main() {
 		Did:        output.Did,
 	}
 
+	// 最新の投稿の時刻
+	var latestTimestamp time.Time
+
 	// 初回でタイムラインを取得
-tl, err := bsky.FeedGetTimeline(context.TODO(), cli, "", "", 10)
+	tl, err := bsky.FeedGetTimeline(context.TODO(), cli, "", "", 10)
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	// 初回はすべてのメッセージを表示
 	for _, feed := range tl.Feed {
-		fmt.Println(feed.Post.Record.Val.(*bsky.FeedPost).Text)
+		message := feed.Post.Record.Val.(*bsky.FeedPost).Text
+		timestampStr := feed.Post.Record.Val.(*bsky.FeedPost).CreatedAt // 投稿時刻を取得
+		timestamp, _ := time.Parse(time.RFC3339, timestampStr)
+		fmt.Println(message)
+		// 最新の投稿時刻を更新
+		if timestamp.After(latestTimestamp) {
+			latestTimestamp = timestamp
+		}
 	}
 
 	del := time.NewTicker(1 * time.Minute)
@@ -47,13 +58,20 @@ tl, err := bsky.FeedGetTimeline(context.TODO(), cli, "", "", 10)
 	for {
 		select {
 		case <-del.C:
-			tl, err := bsky.FeedGetTimeline(context.TODO(), cli, "", "", 10)
+			tl, err = bsky.FeedGetTimeline(context.TODO(), cli, "", "", 10)
 			if err != nil {
 				log.Println("Error fetching timeline:", err)
 			}
 
 			for _, feed := range tl.Feed {
-				fmt.Println(feed.Post.Record.Val.(*bsky.FeedPost).Text)
+				message := feed.Post.Record.Val.(*bsky.FeedPost).Text
+				timestampStr := feed.Post.Record.Val.(*bsky.FeedPost).CreatedAt // 投稿時刻を取得
+				timestamp, _ := time.Parse(time.RFC3339, timestampStr)
+				// 最新の投稿時刻よりも新しい場合のみ表示
+				if timestamp.After(latestTimestamp) {
+					latestTimestamp = timestamp
+					fmt.Println(message)
+				}
 			}
 		}
 		}
