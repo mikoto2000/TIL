@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/bluesky-social/indigo/api/atproto"
 	"github.com/bluesky-social/indigo/api/bsky"
@@ -30,7 +31,8 @@ func main() {
 		Did:        output.Did,
 	}
 
-	tl, err := bsky.FeedGetTimeline(context.TODO(), cli, "", "", 10)
+	// 初回でタイムラインを取得
+tl, err := bsky.FeedGetTimeline(context.TODO(), cli, "", "", 10)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -39,4 +41,20 @@ func main() {
 		fmt.Println(feed.Post.Record.Val.(*bsky.FeedPost).Text)
 	}
 
-}
+	del := time.NewTicker(1 * time.Minute)
+	defer del.Stop()
+
+	for {
+		select {
+		case <-del.C:
+			tl, err := bsky.FeedGetTimeline(context.TODO(), cli, "", "", 10)
+			if err != nil {
+				log.Println("Error fetching timeline:", err)
+			}
+
+			for _, feed := range tl.Feed {
+				fmt.Println(feed.Post.Record.Val.(*bsky.FeedPost).Text)
+			}
+		}
+		}
+	}
