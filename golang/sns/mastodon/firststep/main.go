@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"strings"
+	"time"
 
 	"github.com/mattn/go-mastodon"
 	"github.com/PuerkitoBio/goquery"
@@ -18,6 +19,23 @@ func extractTextFromHTML(html string) (string, error) {
 	return doc.Text(), nil
 }
 
+func fetchAndDisplayTimeline(c *mastodon.Client) {
+	timeline, err := c.GetTimelineHome(context.Background(), nil)
+	if err != nil {
+		log.Println("Error fetching timeline:", err)
+		return
+	}
+
+	for _, status := range timeline {
+		text, err := extractTextFromHTML(status.Content)
+		if err != nil {
+			log.Println("Error extracting text:", err)
+			continue
+		}
+		fmt.Println(text)
+	}
+}
+
 func main() {
 	config := &mastodon.Config{
 		Server:       "https://social.mikutter.hachune.net",
@@ -28,17 +46,13 @@ func main() {
 
 	c := mastodon.NewClient(config)
 
-	timeline, err := c.GetTimelineHome(context.Background(), nil)
-	if err != nil {
-		log.Fatal(err)
-	}
+	fetchAndDisplayTimeline(c) // Initial fetch
 
-	for _, status := range timeline {
-		text, err := extractTextFromHTML(status.Content)
-		if err != nil {
-			log.Println("Error extracting text:", err)
-			continue
-		}
-		fmt.Println(text)
+	// Set up a ticker to fetch the timeline every 1 minute
+	ticker := time.NewTicker(1 * time.Minute)
+	defer ticker.Stop()
+
+	for range ticker.C {
+		fetchAndDisplayTimeline(c)
 	}
 }
