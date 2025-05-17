@@ -2,9 +2,11 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 
 	"github.com/bluesky-social/indigo/api/atproto"
+	"github.com/bluesky-social/indigo/api/bsky"
 	"github.com/bluesky-social/indigo/xrpc"
 )
 
@@ -27,5 +29,14 @@ func main() {
 		Handle:     output.Handle,
 		Did:        output.Did,
 	}
-	_ = cli
+
+	tl, err := bsky.FeedGetTimeline(context.TODO(), cli, "", "", 10)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, feed := range tl.Feed {
+		fmt.Println(feed.Post.Record.Val.(*bsky.FeedPost).Text)
+	}
+
 }
