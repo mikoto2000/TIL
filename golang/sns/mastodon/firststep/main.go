@@ -4,28 +4,41 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"strings"
 
 	"github.com/mattn/go-mastodon"
+	"github.com/PuerkitoBio/goquery"
 )
 
-// あらかじめマストドンインスタンスでアプリケーションを作成し、
-// それの ClientID, ClientSecret, AccessToken をここに記載する。
+func extractTextFromHTML(html string) (string, error) {
+	doc, err := goquery.NewDocumentFromReader(strings.NewReader(html))
+	if err != nil {
+		return "", err
+	}
+	return doc.Text(), nil
+}
+
 func main() {
 	config := &mastodon.Config{
 		Server:       "https://social.mikutter.hachune.net",
-		ClientID:     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-		ClientSecret: "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
-		AccessToken:  "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+		ClientID:     "HUJAAl22WH6juFnw_oO5t8sNs_0vCtC02C-AoKTmMTk",
+		ClientSecret: "0e-qCGDdUb8p5L7l73Ez4L2dPZ6RH2JX7tZqgvAIlyc",
+		AccessToken:  "F8fGXwvOR_hiM3sdSwpjxxxed_i-ZC-60ipVHX_lGvg",
 	}
 
 	c := mastodon.NewClient(config)
 
-	timeline, err := c.GetTimelineHome(context.Background(), nil);
-	if (err != nil) {
-		log.Fatal(err);
+	timeline, err := c.GetTimelineHome(context.Background(), nil)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	for _, status := range timeline {
-		fmt.Println(status.Content);
+		text, err := extractTextFromHTML(status.Content)
+		if err != nil {
+			log.Println("Error extracting text:", err)
+			continue
+		}
+		fmt.Println(text)
 	}
 }
