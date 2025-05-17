@@ -46,9 +46,9 @@ func fetchAndDisplayTimeline(c *mastodon.Client, since time.Time) time.Time {
 func main() {
 	config := &mastodon.Config{
 		Server:       "https://social.mikutter.hachune.net",
-		ClientID:     "HUJAAl22WH6juFnw_oO5t8sNs_0vCtC02C-AoKTmMTk",
-		ClientSecret: "0e-qCGDdUb8p5L7l73Ez4L2dPZ6RH2JX7tZqgvAIlyc",
-		AccessToken:  "F8fGXwvOR_hiM3sdSwpjxxxed_i-ZC-60ipVHX_lGvg",
+		ClientID:     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+		ClientSecret: "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+		AccessToken:  "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
 	}
 
 	c := mastodon.NewClient(config)
