@@ -19,21 +19,28 @@ func extractTextFromHTML(html string) (string, error) {
 	return doc.Text(), nil
 }
 
-func fetchAndDisplayTimeline(c *mastodon.Client) {
+func fetchAndDisplayTimeline(c *mastodon.Client, since time.Time) time.Time {
 	timeline, err := c.GetTimelineHome(context.Background(), nil)
 	if err != nil {
 		log.Println("Error fetching timeline:", err)
-		return
+		return since
 	}
 
+	newSince := since
 	for _, status := range timeline {
-		text, err := extractTextFromHTML(status.Content)
-		if err != nil {
-			log.Println("Error extracting text:", err)
-			continue
+		if status.CreatedAt.After(since) {
+			text, err := extractTextFromHTML(status.Content)
+			if err != nil {
+				log.Println("Error extracting text:", err)
+				continue
+			}
+			fmt.Println(text)
+			if status.CreatedAt.After(newSince) {
+				newSince = status.CreatedAt
+			}
 		}
-		fmt.Println(text)
 	}
+	return newSince
 }
 
 func main() {
@@ -45,14 +52,15 @@ func main() {
 	}
 
 	c := mastodon.NewClient(config)
+	var latest time.Time
 
-	fetchAndDisplayTimeline(c) // Initial fetch
+	latest = fetchAndDisplayTimeline(c, latest) // Initial fetch
 
 	// Set up a ticker to fetch the timeline every 1 minute
 	ticker := time.NewTicker(1 * time.Minute)
 	defer ticker.Stop()
 
 	for range ticker.C {
-		fetchAndDisplayTimeline(c)
+		latest = fetchAndDisplayTimeline(c, latest)
 	}
 }
