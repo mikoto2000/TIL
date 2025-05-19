@@ -25,5 +25,6 @@ services:
     volumes:
       - .:/workspace:cached
     working_dir: /workspace
+    command: "sleep infinity"
     stdin_open: true
     tty: true
