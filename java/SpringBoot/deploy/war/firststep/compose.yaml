@@ -3,6 +3,7 @@ services:
     image: tomcat:11
     container_name: dev
     environment:
+      # プロファイルを dev にする設定
       CATALINA_OPTS: "-Dspring.profiles.active=dev"
     ports:
       - "8080:8080"
@@ -13,6 +14,7 @@ services:
     image: tomcat:11
     container_name: prod
     environment:
+      # プロファイルを prod にする設定
       CATALINA_OPTS: "-Dspring.profiles.active=prod"
     ports:
       - "8081:8080"
