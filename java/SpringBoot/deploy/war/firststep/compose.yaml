@@ -1,23 +1,23 @@
 services:
   dev:
-    image: tomcat:9.0
+    image: tomcat:11
     container_name: dev
     environment:
       CATALINA_OPTS: "-Dspring.profiles.active=dev"
     ports:
       - "8080:8080"
     volumes:
-      - ./src/main/webapp:/usr/local/tomcat/webapps/ROOT
+      - ./webapp_dev:/usr/local/tomcat/webapps
 
   prod:
-    image: tomcat:9.0
+    image: tomcat:11
     container_name: prod
     environment:
       CATALINA_OPTS: "-Dspring.profiles.active=prod"
     ports:
       - "8081:8080"
     volumes:
-      - ./src/main/webapp:/usr/local/tomcat/webapps/ROOT
+      - ./webapp_prod:/usr/local/tomcat/webapps
 
   dev-java:
     image: mcr.microsoft.com/vscode/devcontainers/java:21-bookworm
