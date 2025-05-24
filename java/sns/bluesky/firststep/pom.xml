@@ -29,9 +29,19 @@
   </dependencyManagement>
 
   <dependencies>
-<dependency>
-    <groupId>work.socialhub.kbsky</groupId>
+    <dependency>
+      <groupId>dev.whyoleg.cryptography</groupId>
+      <artifactId>cryptography-core</artifactId>
+      <version>0.4.0</version>
+    </dependency>
+    <dependency>
+      <groupId>work.socialhub.kbsky</groupId>
       <artifactId>core-jvm</artifactId>
+      <version>0.3.0</version>
+    </dependency>
+    <dependency>
+      <groupId>work.socialhub.kbsky</groupId>
+      <artifactId>auth-jvm</artifactId>
       <version>0.3.0</version>
     </dependency>
     <dependency>
