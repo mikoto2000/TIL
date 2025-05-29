@@ -120,6 +120,9 @@
             <manifest>
               <mainClass>dev.mikoto2000.study.sns.mastodon.App</mainClass>
             </manifest>
+            <manifestEntries>
+              <Multi-Release>true</Multi-Release>
+            </manifestEntries>
           </archive>
         </configuration>
         <executions>
