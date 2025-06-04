@@ -1,0 +1,11 @@
+services:
+  app:
+    image: eclipse-temurin:17
+    init: true
+    restart: always
+    command: ["sleep", "infinity"]
+    volumes:
+      # プロジェクトルート
+      - "./:/work"
+    working_dir: /work
+

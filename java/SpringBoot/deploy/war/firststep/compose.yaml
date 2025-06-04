@@ -1,0 +1,32 @@
+services:
+  dev:
+    image: tomcat:11
+    container_name: dev
+    environment:
+      # プロファイルを dev にする設定
+      CATALINA_OPTS: "-Dspring.profiles.active=dev"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./webapp_dev:/usr/local/tomcat/webapps
+
+  prod:
+    image: tomcat:11
+    container_name: prod
+    environment:
+      # プロファイルを prod にする設定
+      CATALINA_OPTS: "-Dspring.profiles.active=prod"
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./webapp_prod:/usr/local/tomcat/webapps
+
+  dev-java:
+    image: mcr.microsoft.com/vscode/devcontainers/java:21-bookworm
+    container_name: dev-java
+    volumes:
+      - .:/workspace:cached
+    working_dir: /workspace
+    command: "sleep infinity"
+    stdin_open: true
+    tty: true

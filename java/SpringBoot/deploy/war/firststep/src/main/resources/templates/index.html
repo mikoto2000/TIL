@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Active Profiles</title>
+</head>
+<body>
+<h1>現在実行中のプロファイル</h1>
+<ul>
+    <li th:each="profile : ${activeProfiles}" th:text="${profile}"></li>
+</ul>
+</body>
+</html>

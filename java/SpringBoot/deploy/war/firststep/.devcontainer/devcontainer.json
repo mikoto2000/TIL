@@ -1,0 +1,9 @@
+{
+  "name": "firststep",
+  "dockerComposeFile": ["../compose.yaml"],
+  "service": "dev-java",
+  "workspaceFolder": "/workspace",
+  "remoteUser": "vscode",
+  "shutdownAction": "stopCompose",
+  "forwardPorts": [8080, 8081],
+}
