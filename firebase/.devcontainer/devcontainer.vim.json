@@ -8,6 +8,9 @@
     "HISTCONTROL": "erasedups",
   },
   "postCreateCommand": "npm install -g @anthropic-ai/claude-code && npm install -g @google/gemini-cli",
+  "appPort": [
+    "5173:5173"
+  ],
   "mounts": [
     {
       "type": "bind",
