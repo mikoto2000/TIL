@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { addDoc, collection, getFirestore } from "firebase/firestore";
+import { addDoc, collection, getDocs, getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCtgjntK9RJ266HtARxgqynO3UFZl3SwZE",
@@ -26,6 +26,37 @@ async function addDocument() {
   });
 }
 
+async function fetchDocument() {
+  const docs = await getDocs(testCollection);
+  const documentsElm = document.getElementById('documents');
+  if (documentsElm) {
+    docs.forEach((doc) => {
+
+      // テンプレ取得
+      const template = document.getElementById('doc-template');
+      if (!template) {
+        console.error('#doc-template not found.');
+        return
+      }
+
+      // 追加するために複製
+      const appendNode = template.cloneNode(true) as HTMLElement;
+
+      // 複製したノードに値を注入
+      const data: any = doc.data();
+      appendNode.getElementsByClassName('document-id')[0].textContent = doc.id;
+      appendNode.getElementsByClassName('document-title')[0].textContent = data.title;
+      appendNode.getElementsByClassName('document-detail')[0].textContent = data.detail;
+
+      // display: none; を削除
+      appendNode.style.removeProperty('display');
+
+      documentsElm.append(appendNode);
+    });
+  }
+}
+
+// ドキュメント作成ボタン定義
 const createButton = document.getElementById('document-create-button');
 if (createButton) {
   createButton.addEventListener('click', addDocument);
@@ -33,3 +64,4 @@ if (createButton) {
   console.error('`#document-create-button` not found.');
 }
 
+fetchDocument();

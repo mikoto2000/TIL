@@ -8,6 +8,7 @@
   </head>
   <body>
     <div>
+      <h2>ドキュメント追加</h2>
       <div>
         <label>タイトル: <input type="text" id="document-title"></input></label>
       </div>
@@ -16,6 +17,20 @@
       </div>
       <div>
         <button id="document-create-button">Document 作成</button>
+      </div>
+    </div>
+    <div id="documents">
+      <h2>fetch したドキュメント</h2>
+    </div>
+    <div id="doc-template" style="display: none;">
+      <div>
+        <label>id: <span class="document-id"></span></label>
+      </div>
+      <div>
+        <label>タイトル: <span class="document-title"></span></label>
+      </div>
+      <div>
+        <label>詳細 <span class="document-detail"></span></label>
       </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
