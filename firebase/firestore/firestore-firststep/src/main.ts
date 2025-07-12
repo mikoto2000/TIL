@@ -1,24 +1,35 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
+import { initializeApp } from "firebase/app";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+const firebaseConfig = {
+  apiKey: "AIzaSyCtgjntK9RJ266HtARxgqynO3UFZl3SwZE",
+  authDomain: "firestore-firststep.firebaseapp.com",
+  projectId: "firestore-firststep",
+  storageBucket: "firestore-firststep.firebasestorage.app",
+  messagingSenderId: "422794914716",
+  appId: "1:422794914716:web:02cc22a4b84c9ce9ff7659"
+};
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+const app = initializeApp(firebaseConfig);
+
+// DB 取得
+const db = getFirestore(app)
+
+// コレクション定義(この時点でコレクションが存在していなくてもよい)
+const testCollection = collection(db, 'test');
+
+async function addDocument() {
+  const title = (document.getElementById('document-title') as HTMLInputElement | null)?.value;
+  const detail = (document.getElementById('document-detail') as HTMLTextAreaElement | null)?.value;
+  await addDoc(testCollection, {
+    title, detail
+  });
+}
+
+const createButton = document.getElementById('document-create-button');
+if (createButton) {
+  createButton.addEventListener('click', addDocument);
+} else {
+  console.error('`#document-create-button` not found.');
+}
+

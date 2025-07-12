@@ -125,7 +125,10 @@ npm run dev
 {"_isDeleted":false,"_options":{"apiKey":"AIzaSyBN246f4FotZ0iwlidNxFWPakVsaGFMgBM","authDomain":"hello-world-project-cd5b9.firebaseapp.com","projectId":"hello-world-project-cd5b9","storageBucket":"hello-world-project-cd5b9.firebasestorage.app","messagingSenderId":"1028786778","appId":"1:1028786778:web:5c52b662014062a9632663"},"_config":{"name":"[DEFAULT]","automaticDataCollectionEnabled":true},"_name":"[DEFAULT]","_automaticDataCollectionEnabled":true,"_container":{"name":"[DEFAULT]","providers":{}}}
 ```
 
-## Google ログイン
+## Firestore 操作
+
+Firestore に collection を作成し、ドキュメントを追加。
+
 
 ### 実装
 
@@ -141,8 +144,17 @@ npm run dev
     <title>Vite + TS</title>
   </head>
   <body>
-    <div id="uid"></div>
-    <div id="app"></div>
+    <div>
+      <div>
+        <label>タイトル: <input type="text" id="document-title"></input></label>
+      </div>
+      <div>
+        <label>詳細<textarea id="document-detail"></textarea></label>
+      </div>
+      <div>
+        <button id="document-create-button">Document 作成</button>
+      </div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
@@ -151,50 +163,6 @@ npm run dev
 `src/main.ts`:
 
 ```ts
-import { initializeApp } from "firebase/app";
-import {
-  getAuth,
-  signInWithPopup,
-  GoogleAuthProvider,
-  type User,
-} from "firebase/auth";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBN246f4FotZ0iwlidNxFWPakVsaGFMgBM",
-  authDomain: "hello-world-project-cd5b9.firebaseapp.com",
-  projectId: "hello-world-project-cd5b9",
-  storageBucket: "hello-world-project-cd5b9.firebasestorage.app",
-  messagingSenderId: "1028786778",
-  appId: "1:1028786778:web:5c52b662014062a9632663"
-};
-
-const app = initializeApp(firebaseConfig);
-
-// app の情報を #app へ出力
-const appElm = document.getElementById('app');
-if (appElm) {
-  appElm.innerHTML = JSON.stringify(app);
-}
-
-const auth = getAuth(app);
-
-let currentUser: User | null = null;
-
-async function login() {
-  const provider = new GoogleAuthProvider();
-  const result = await signInWithPopup(auth, provider);
-  currentUser = result.user;
-}
-
-// ログイン処理実行
-await login();
-
-// uid の情報を #uid へ出力
-const uidElm = document.getElementById('uid');
-if (uidElm) {
-  uidElm.innerHTML = JSON.stringify(currentUser);
-}
-
 ```
 
 リロードすると、 Google ログインのポップアップが表示され、ログイン後、画面にユーザー情報を `JSON.stringify` した文字列が表示される。良さそう。
