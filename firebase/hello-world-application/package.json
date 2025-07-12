@@ -1,11 +1,15 @@
 {
   "name": "hello-world-application",
-  "version": "1.0.0",
-  "description": "Firebase の練習用アプリケーションその１",
-  "main": "index.js",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
-  "author": "mikoto2000",
-  "license": "MIT"
+  "devDependencies": {
+    "typescript": "~5.8.3",
+    "vite": "^7.0.4"
+  }
 }
