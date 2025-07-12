@@ -1,0 +1,11 @@
+{
+  "name": "hello-world-application",
+  "version": "1.0.0",
+  "description": "Firebase の練習用アプリケーションその１",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mikoto2000",
+  "license": "MIT"
+}
