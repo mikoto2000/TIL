@@ -22,8 +22,8 @@
     <div id="documents">
       <h2>fetch したドキュメント</h2>
     </div>
-    <template id="doc-template">
-      <div>
+    <template id="doc-show-template">
+      <form class="document-form">
         <div>
           <label>id: <span class="document-id"></span></label>
         </div>
@@ -33,7 +33,24 @@
         <div>
           <label>詳細 <span class="document-detail"></span></label>
         </div>
-      </div>
+        <button type="submit" class="document-edit-button">編集</button>
+        <!--<button class="document-delete-button">削除</button>-->
+      </form>
+    </template>
+    <template id="doc-edit-template">
+      <form class="document-form">
+        <div>
+          <label>id: <span class="document-id"></span></label>
+        </div>
+        <div>
+          <label>タイトル: <input type="text" class="document-title"></input></label>
+        </div>
+        <div>
+          <label>詳細 <textarea class="document-detail"></textarea></label>
+        </div>
+        <button type="submit" class="document-edit-button">編集</button>
+        <!--<button class="document-delete-button">削除</button>-->
+      </form>
     </template>
     <script type="module" src="/src/main.ts"></script>
   </body>

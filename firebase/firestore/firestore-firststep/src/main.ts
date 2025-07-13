@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { addDoc, collection, getDocs, getFirestore } from "firebase/firestore";
+import { addDoc, collection, getDocs, getFirestore, QuerySnapshot, type DocumentData } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCtgjntK9RJ266HtARxgqynO3UFZl3SwZE",
@@ -11,6 +11,9 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+
+// appのグローバル変数を定義
+let docs: QuerySnapshot<DocumentData, DocumentData>|null = null;
 
 // DB 取得
 const db = getFirestore(app)
@@ -27,15 +30,15 @@ async function addDocument() {
 }
 
 async function fetchDocument() {
-  const docs = await getDocs(testCollection);
+  docs = await getDocs(testCollection);
   const documentsElm = document.getElementById('documents');
   if (documentsElm) {
     docs.forEach((doc) => {
 
       // テンプレ取得
-      const template = document.getElementById('doc-template') as HTMLTemplateElement | null;
+      const template = document.getElementById('doc-show-template') as HTMLTemplateElement | null;
       if (!template) {
-        console.error('#doc-template not found.');
+        console.error('#doc-show-template not found.');
         return
       }
 
@@ -57,8 +60,106 @@ async function fetchDocument() {
         documentDetailElm.textContent = data.detail;
       }
 
+      // 複製したノードにイベントを登録
+      const formElm = appendNode.querySelector('form');
+      formElm?.setAttribute('id', doc.id);
+      formElm?.addEventListener('submit', startEditDocument);
+
       documentsElm.append(appendNode);
     });
+  }
+}
+
+async function startEditDocument(event: SubmitEvent) {
+  event.preventDefault();
+
+  // テンプレ取得
+  const template = document.getElementById('doc-edit-template') as HTMLTemplateElement | null;
+  if (!template) {
+    console.error('#doc-edit-template not found.');
+    return
+  }
+
+  // 追加するために複製
+  const appendNode = template.content.cloneNode(true) as DocumentFragment;
+
+  // 複製したノードに値を注入
+  const doc = docs?.docs.find((d) => d.id === (event.currentTarget as HTMLFormElement).id);
+  if (!doc) {
+    console.error('Document not found for id:', (event.currentTarget as HTMLFormElement).id);
+    return;
+  }
+  const idElm = appendNode.querySelector('.document-id');
+  if (idElm) {
+    idElm.textContent = doc.id;
+  }
+  const titleElm = appendNode.querySelector('.document-title') as HTMLInputElement | null;
+  if (titleElm) {
+    titleElm.value = doc.data().title || '';
+  }
+  const detailElm = appendNode.querySelector('.document-detail') as HTMLTextAreaElement | null;
+  if (detailElm) {
+    detailElm.value = doc.data().detail || '';
+  }
+
+  // 複製したノードにイベントを登録
+  const formElm = appendNode.querySelector('form');
+  formElm?.setAttribute('id', doc.id);
+  formElm?.addEventListener('submit', switchToShowDocument);
+
+  // 追加場所を特定
+  const form = event.currentTarget as HTMLFormElement;
+  if (form) {
+    const parentElement = form.parentElement;
+    form.after(appendNode);
+    parentElement?.removeChild(form);
+  }
+}
+
+async function switchToShowDocument(event: SubmitEvent) {
+  event.preventDefault();
+
+  // テンプレ取得
+  const template = document.getElementById('doc-show-template') as HTMLTemplateElement | null;
+  if (!template) {
+    console.error('#doc-show-template not found.');
+    return
+  }
+
+  // 追加するために複製
+  const appendNode = template.content.cloneNode(true) as DocumentFragment;
+
+  // 複製したノードに値を注入
+  const currentTarget = event.currentTarget as HTMLFormElement;
+  const doc = docs?.docs.find((d) => d.id === currentTarget.id);
+  if (!doc) {
+    console.error('Document not found for id:', currentTarget.id);
+    return;
+  }
+  const idElm = appendNode.querySelector('.document-id');
+  if (idElm) {
+    idElm.textContent = doc.id;
+  }
+  const titleElm = appendNode.querySelector('.document-title') as HTMLInputElement | null;
+  if (titleElm) {
+    titleElm.textContent = doc.data().title || '';
+  }
+  const detailElm = appendNode.querySelector('.document-detail') as HTMLTextAreaElement | null;
+  if (detailElm) {
+    detailElm.textContent = doc.data().detail || '';
+  }
+
+  // 複製したノードにイベントを登録
+  const formElm = appendNode.querySelector('form');
+  formElm?.setAttribute('id', doc.id);
+  formElm?.addEventListener('submit', startEditDocument);
+
+  // 追加場所を特定
+  const form = event.currentTarget as HTMLFormElement;
+  if (form) {
+    const parentElement = form.parentElement;
+    form.after(appendNode);
+    parentElement?.removeChild(form);
   }
 }
 
