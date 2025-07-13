@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { addDoc, collection, doc, getDocs, getFirestore, QuerySnapshot, updateDoc, type DocumentData } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, QuerySnapshot, updateDoc, type DocumentData } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCtgjntK9RJ266HtARxgqynO3UFZl3SwZE",
@@ -29,6 +29,7 @@ async function addDocument() {
   await addDoc(testCollection, {
     title, detail
   });
+  fetchDocument();
 }
 
 async function fetchDocument() {
@@ -64,9 +65,19 @@ async function fetchDocument() {
       }
 
       // 複製したノードにイベントを登録
+      // ドキュメント編集ボタン定義
       const formElm = appendNode.querySelector('form');
       formElm?.setAttribute('id', doc.id);
       formElm?.addEventListener('submit', startEditDocument);
+
+      // ドキュメント削除ボタン定義
+      const deleteButton = formElm?.querySelector('.document-delete-button') as HTMLButtonElement | null;
+      deleteButton?.setAttribute('key', doc.id);
+      if (deleteButton) {
+        deleteButton.addEventListener('click', deleteDocument);
+      } else {
+        console.error('.document-delete-button not found.');
+      }
 
       documentsElm.append(appendNode);
     });
@@ -87,9 +98,10 @@ async function startEditDocument(event: SubmitEvent) {
   const appendNode = template.content.cloneNode(true) as DocumentFragment;
 
   // 複製したノードに値を注入
-  const doc = docs?.docs.find((d) => d.id === (event.currentTarget as HTMLFormElement).id);
+  const currentTarget = event.currentTarget as HTMLFormElement;
+  const doc = docs?.docs.find((d) => d.id === currentTarget.id);
   if (!doc) {
-    console.error('Document not found for id:', (event.currentTarget as HTMLFormElement).id);
+    console.error('Document not found for id:', currentTarget.id);
     return;
   }
   const idElm = appendNode.querySelector('.document-id');
@@ -107,11 +119,15 @@ async function startEditDocument(event: SubmitEvent) {
 
   // 複製したノードにイベントを登録
   const formElm = appendNode.querySelector('form');
+  if (!formElm) {
+    console.error('Form element not found in the template.');
+    return;
+  }
   formElm?.setAttribute('id', doc.id);
   formElm?.addEventListener('submit', updateButtonHandler);
 
   const cancelButton = appendNode.querySelector('.document-cancel-button');
-  cancelButton?.addEventListener('click', (e) => switchToShowDocument(e.currentTarget as HTMLFormElement));
+  cancelButton?.addEventListener('click', () => switchToShowDocument(formElm));
 
   // 追加場所を特定
   const form = event.currentTarget as HTMLFormElement;
@@ -129,7 +145,7 @@ async function updateButtonHandler(event: SubmitEvent) {
     title: ((event.currentTarget as HTMLElement).querySelector('.document-title') as HTMLInputElement).value,
     detail: ((event.currentTarget as HTMLElement).querySelector('.document-detail') as HTMLTextAreaElement).value
   });
-  switchToShowDocument(event.currentTarget as HTMLFormElement);
+  switchToShowDocument(event.target as HTMLFormElement);
   fetchDocument();
 }
 
@@ -175,6 +191,12 @@ async function switchToShowDocument(form: HTMLFormElement) {
     form.after(appendNode);
     parentElement?.removeChild(form);
   }
+}
+
+function deleteDocument(event: MouseEvent) {
+  const docRef = doc(db, DB_NAME, (event.currentTarget as HTMLFormElement).getAttribute('key') || '');
+  deleteDoc(docRef);
+  fetchDocument();
 }
 
 // ドキュメント作成ボタン定義
