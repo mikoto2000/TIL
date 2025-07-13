@@ -33,23 +33,29 @@ async function fetchDocument() {
     docs.forEach((doc) => {
 
       // テンプレ取得
-      const template = document.getElementById('doc-template');
+      const template = document.getElementById('doc-template') as HTMLTemplateElement | null;
       if (!template) {
         console.error('#doc-template not found.');
         return
       }
 
       // 追加するために複製
-      const appendNode = template.cloneNode(true) as HTMLElement;
+      const appendNode = template.content.cloneNode(true) as DocumentFragment;
 
       // 複製したノードに値を注入
       const data: any = doc.data();
-      appendNode.getElementsByClassName('document-id')[0].textContent = doc.id;
-      appendNode.getElementsByClassName('document-title')[0].textContent = data.title;
-      appendNode.getElementsByClassName('document-detail')[0].textContent = data.detail;
-
-      // display: none; を削除
-      appendNode.style.removeProperty('display');
+      const documentIdElm = appendNode.querySelector('.document-id');
+      if (documentIdElm) {
+        documentIdElm.textContent = doc.id;
+      }
+      const documentTitleElm = appendNode.querySelector('.document-title');
+      if (documentTitleElm) {
+        documentTitleElm.textContent = data.title;
+      }
+      const documentDetailElm = appendNode.querySelector('.document-detail');
+      if (documentDetailElm) {
+        documentDetailElm.textContent = data.detail;
+      }
 
       documentsElm.append(appendNode);
     });

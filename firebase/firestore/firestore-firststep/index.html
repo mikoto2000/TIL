@@ -22,17 +22,19 @@
     <div id="documents">
       <h2>fetch したドキュメント</h2>
     </div>
-    <div id="doc-template" style="display: none;">
+    <template id="doc-template">
       <div>
-        <label>id: <span class="document-id"></span></label>
+        <div>
+          <label>id: <span class="document-id"></span></label>
+        </div>
+        <div>
+          <label>タイトル: <span class="document-title"></span></label>
+        </div>
+        <div>
+          <label>詳細 <span class="document-detail"></span></label>
+        </div>
       </div>
-      <div>
-        <label>タイトル: <span class="document-title"></span></label>
-      </div>
-      <div>
-        <label>詳細 <span class="document-detail"></span></label>
-      </div>
-    </div>
+    </template>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
