@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, QuerySnapshot, updateDoc, type DocumentData } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, orderBy, query, QuerySnapshot, updateDoc, type DocumentData } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCtgjntK9RJ266HtARxgqynO3UFZl3SwZE",
@@ -33,7 +33,8 @@ async function addDocument() {
 }
 
 async function fetchDocument() {
-  docs = await getDocs(testCollection);
+  const q = query(testCollection, orderBy('title', 'asc'));
+  docs = await getDocs(q);
   const documentsElm = document.getElementById('documents');
   if (documentsElm) {
     documentsElm.replaceChildren();
