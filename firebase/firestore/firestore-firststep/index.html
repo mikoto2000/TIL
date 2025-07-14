@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + TS</title>
+  </head>
+  <body>
+    <div>
+      <h2>ドキュメント追加</h2>
+      <div>
+        <label>タイトル: <input type="text" id="document-title"></input></label>
+      </div>
+      <div>
+        <label>詳細<textarea id="document-detail"></textarea></label>
+      </div>
+      <div>
+        <button id="document-create-button">Document 作成</button>
+      </div>
+    </div>
+    <div id="documents">
+      <h2>fetch したドキュメント</h2>
+    </div>
+    <template id="doc-show-template">
+      <form class="document-form">
+        <div>
+          <label>id: <span class="document-id"></span></label>
+        </div>
+        <div>
+          <label>タイトル: <span class="document-title"></span></label>
+        </div>
+        <div>
+          <label>詳細 <span class="document-detail"></span></label>
+        </div>
+        <button type="submit" class="document-edit-button">編集</button>
+        <button type="button" class="document-delete-button">削除</button>
+      </form>
+    </template>
+    <template id="doc-edit-template">
+      <form class="document-form">
+        <div>
+          <label>id: <span class="document-id"></span></label>
+        </div>
+        <div>
+          <label>タイトル: <input type="text" class="document-title"></input></label>
+        </div>
+        <div>
+          <label>詳細 <textarea class="document-detail"></textarea></label>
+        </div>
+        <button type="submit" class="document-update-button">更新</button>
+        <button type="button" class="document-cancel-button">キャンセル</button>
+      </form>
+    </template>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
