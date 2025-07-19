@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Canvas Transform</title>
+  <style>
+    #container {
+      width: 100%;
+      height: 100%;
+    }
+    #canvas {
+      cursor: grab;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <canvas id="canvas"></canvas>
+  </div>
+  <div id="controls">
+    <button id="rotate-left">Rotate Left</button>
+    <button id="rotate-right">Rotate Right</button>
+  </div>
+  <script>
+    const canvas = document.getElementById('canvas');
+    const image = new Image();
+    image.src = './bluetoothversion.png';
+    image.onload = () => {
+      // 画像とキャンバスのサイズを同サイズに設定
+      canvas.width = image.width;
+      canvas.height = image.height;
+
+      const ctx = canvas.getContext('2d');
+      const container = document.getElementById('container');
+      const containerWidth = container.clientWidth;
+      const containerHeight = container.clientHeight;
+      const imageWidth = image.width;
+      const imageHeight = image.height;
+
+      console.log(containerWidth, containerHeight, imageWidth, imageHeight);
+
+      ctx.save();
+      ctx.drawImage(image, 0, 0);
+      ctx.restore();
+
+      // 初期スケール
+      let scale = 1.0;
+
+      // マウスの累積移動量
+      let translateX = 0;
+      let translateY = 0;
+
+      // 初期回転角度
+      let rotation = 0;
+
+      // スケーリング→移動→回転の順で描画
+      const redraw = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.save();
+        ctx.scale(scale, scale);
+        ctx.translate(translateX, translateY);
+        ctx.translate(image.width / 2, image.height / 2);
+        ctx.rotate(rotation);
+        ctx.translate(-image.width / 2, -image.height / 2);
+        ctx.drawImage(image, 0, 0);
+        ctx.restore();
+      };
+
+      canvas.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        if (e.ctrlKey) {
+          scale = e.deltaY < 0 ? scale + 0.1 : scale - 0.1;
+          redraw();
+        }
+      });
+
+      canvas.addEventListener('mousedown', (e) => {
+        // 左クリックで移動処理開始
+        if (e.button === 0) {
+          canvas.style.cursor = 'grabbing';
+
+          // キャンバスの位置を取得
+          const rect = canvas.getBoundingClientRect();
+
+          // マウスのキャンバス内での位置を計算
+          const startX = e.clientX - rect.left;
+          const startY = e.clientY - rect.top;
+
+          // ドラッグ開始時の累積移動量を保存
+          const startTranslateX = translateX;
+          const startTranslateY = translateY;
+
+          const onMouseMove = (moveEvent) => {
+            const currentX = moveEvent.clientX - rect.left;
+            const currentY = moveEvent.clientY - rect.top;
+
+            // CSS表示サイズと実際のCanvas座標の比率を計算
+            const scaleX = canvas.width / canvas.clientWidth;
+            const scaleY = canvas.height / canvas.clientHeight;
+
+            // マウスの移動量を計算
+            const dx = (currentX - startX) * scaleX;
+            const dy = (currentY - startY) * scaleY;
+
+            // スケールを考慮して累積移動量を更新
+            translateX = startTranslateX + dx / scale;
+            translateY = startTranslateY + dy / scale;
+
+            // 再描画
+            redraw();
+          };
+
+          const onMouseUp = () => {
+            canvas.removeEventListener('mousemove', onMouseMove);
+            canvas.removeEventListener('mouseup', onMouseUp);
+            canvas.style.cursor = 'grab';
+          };
+
+          canvas.addEventListener('mousemove', onMouseMove);
+          canvas.addEventListener('mouseup', onMouseUp);
+        }
+      });
+
+      // 回転ボタンのイベントリスナー
+      document.getElementById('rotate-left').addEventListener('click', () => {
+        rotation -= Math.PI / 2;
+        redraw();
+      });
+
+      document.getElementById('rotate-right').addEventListener('click', () => {
+        rotation += Math.PI / 2;
+        redraw();
+      });
+    };
+  </script>
+</body>
+</html>
