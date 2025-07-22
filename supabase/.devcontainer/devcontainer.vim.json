@@ -1,0 +1,47 @@
+{
+  "remoteEnv": {
+    "EDITOR": "~/squashfs-root/AppRun",
+    "PAGER": "sed -r 's/\\x1B\\[[0-9;]*[mGKH]//g' | ~/squashfs-root/AppRun -R -",
+    "LESSCHARSET": "utf-8",
+    "SHELL": "bash",
+    "TERM": "xterm-256color",
+    "HISTCONTROL": "erasedups",
+  },
+  "postCreateCommand": "npm install -g @anthropic-ai/claude-code && npm install -g @google/gemini-cli",
+  "appPort": [
+    "5173:5173"
+  ],
+  "mounts": [
+    {
+      "type": "bind",
+      "source": "${localEnv:HOME}/.vim",
+      "target": "/home/node/.vim"
+    },
+    {
+      "type": "bind",
+      "source": "${localEnv:HOME}/.gitconfig",
+      "target": "/home/node/.gitconfig"
+    },
+    {
+      "type": "bind",
+      "source": "${localEnv:HOME}/.ssh",
+      "target": "/home/node/.ssh"
+    },
+    {
+      "type": "bind",
+      "source": "${localEnv:HOME}/.claude.json",
+      "target": "/home/node/.claude.json"
+    },
+    {
+      "type": "bind",
+      "source": "${localEnv:HOME}/.gemini",
+      "target": "/home/node/.gemini"
+    },
+  ],
+  // denops など、別の実行環境が必要な場合や、
+  // 後乗せで追加したいツールがある場合には以下の対象行をコメントアウトするか
+  // https://containers.dev/features から必要な feature を探して追加してください。
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {},
+  }
+}
