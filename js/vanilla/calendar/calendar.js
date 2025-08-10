@@ -1,10 +1,9 @@
-const currentDate = new Date();
 
 document.addEventListener('DOMContentLoaded', function() {
 
   // カレンダーの div を取得
   const calendarDiv = document.getElementById('calendar');
-  calendarDiv.className = 'calendar';
+  calendarDiv.className = 'calendarContainer';
 
   // カレンダーの div が存在する場合のみ処理を続ける
   if (!calendarDiv) {
@@ -12,9 +11,16 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
+  const currentDate = new Date();
+  const calendar = createCalendarView(currentDate.getFullYear(), currentDate.getMonth());
+  calendarDiv.appendChild(calendar);
+});
+
+const createCalendarView = (year, month) => {
+  const calendarDiv = document.createElement('div');
+  calendarDiv.className = 'calendar';
+
   // 初期表示は今月
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth();
   const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
   const daysInMonth = lastDay.getDate();
@@ -51,7 +57,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const row = calendarRow(rowDays);
     calendarDiv.appendChild(row);
   }
-});
+
+  return calendarDiv;
+};
 
 const calendarRow = (days) => {
   const calendarRow = document.createElement('div');
