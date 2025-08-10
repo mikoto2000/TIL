@@ -1,0 +1,17 @@
+.caldndar .calendar-row div.calendar-cell {
+  border: 1px solid #ccc;
+}
+
+.calendar .calendar-row {
+  display: flex;
+  font-size: 1em;
+  margin: 0;
+  padding: 0.2em;
+}
+
+.calendar .calendar-cell h1 {
+  flex-grow: 1;
+  font-size: 1em;
+  margin: 0;
+  padding: 0.2em;
+}
