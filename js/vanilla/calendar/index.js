@@ -1,4 +1,4 @@
-import { createCalendarView } from './calendar.mjs';
+import { createCalendarView } from './calendar.js';
 
 document.addEventListener('DOMContentLoaded', function() {
 
