@@ -8,6 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -52,7 +53,7 @@ public class ApiKeyAuthFilter extends OncePerRequestFilter {
     if (StringUtils.hasText(apiKey) && StringUtils.hasText(requestApiKey) && apiKey.equals(requestApiKey)) {
       // API クライアント用トークン作成
       var token = new UsernamePasswordAuthenticationToken(
-          clientName,
+          User.withUsername(clientName).password("").roles(clientName).build(),
           "N/A",
           List.of(new SimpleGrantedAuthority(String.format("ROLE_%s", clientName))));
       token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
