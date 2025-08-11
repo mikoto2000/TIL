@@ -53,7 +53,7 @@ public class ApiKeyAuthFilter extends OncePerRequestFilter {
       // API クライアント用トークン作成
       var token = new UsernamePasswordAuthenticationToken(
           clientName,
-          "",
+          "N/A",
           List.of(new SimpleGrantedAuthority(String.format("ROLE_%s", clientName))));
       token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
