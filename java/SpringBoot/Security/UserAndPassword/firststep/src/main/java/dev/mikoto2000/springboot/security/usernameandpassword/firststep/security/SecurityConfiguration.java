@@ -20,13 +20,15 @@ public class SecurityConfiguration {
     })
         .authorizeHttpRequests(auth -> {
           auth.
-          // 誰でもアクセスできる(パスワード生成エンドポイント)
-          requestMatchers("/makehash").permitAll()
+              // 誰でもアクセスできる(パスワード生成エンドポイント)
+              requestMatchers("/makehash").permitAll()
               // USER専用ページ
               .requestMatchers("/member/**").hasRole("USER")
               // 認証済みの全員がアクセスできる
               .anyRequest().authenticated();
         })
+        .exceptionHandling(ex -> ex
+            .accessDeniedPage("/access-denied"))
         // ログアウトページ
         .logout(logout -> logout.logoutUrl("/logout"));
 
