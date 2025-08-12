@@ -28,7 +28,7 @@ public class SecurityConfiguration {
               .anyRequest().authenticated();
         })
         .exceptionHandling(ex -> ex
-            .accessDeniedPage("/access-denied"))
+            .accessDeniedPage("/access-denied")) // 権限エラー時に表示するページを設定
         // ログアウトページ
         .logout(logout -> logout.logoutUrl("/logout"));
 
