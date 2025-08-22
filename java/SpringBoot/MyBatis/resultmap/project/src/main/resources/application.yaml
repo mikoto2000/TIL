@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: "jdbc:postgresql://${POSTGRES_HOST:localhost}:5432/${POSTGRES_DB}"
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    driverClassName: org.postgresql.Driver
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+        jdbc:
+          core: TRACE
+
+

@@ -1,0 +1,6 @@
+{
+  "name": "Java & PostgreSQL",
+  "dockerComposeFile": "../docker-compose.yaml",
+  "service": "java",
+  "workspaceFolder": "/workspaces",
+}

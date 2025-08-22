@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.mikoto2000.study.springboot.mybatis.firststep.domain.repository.UserMapper">
+  <resultMap
+    id="UserSearchResultMap"
+    type="dev.mikoto2000.study.springboot.mybatis.firststep.domain.entity.UserSearchResult"
+    autoMapping="true">
+    <id property="id" column="id"/>
+
+    <collection
+      property="userDetails"
+      ofType="dev.mikoto2000.study.springboot.mybatis.firststep.domain.entity.UserDetail"
+      columnPrefix="d_"
+      autoMapping="true">
+      <id property="id" column="_id"/>
+    </collection>
+  </resultMap>
+</mapper>
+
