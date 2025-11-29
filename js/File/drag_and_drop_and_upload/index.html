@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>drag and drop and update</title>
+</head>
+<body>
+  <div id="drop-area" style="width:300px;height:200px;border:2px dashed #ccc;line-height:200px;text-align:center;">
+    ここにファイルをドロップ
+  </div>
+  <button id="upload-button">アップロード</button>
+  <script>
+    const files = new DataTransfer();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      init();
+    });
+    function init() {
+      const dropArea = document.getElementById('drop-area');
+      dropArea.addEventListener("dragover", e => {
+        e.preventDefault();
+        e.stopPropagation();
+        e.target.style.backgroundColor = 'lightblue';
+      });
+      dropArea.addEventListener("dragleave", e => {
+        e.preventDefault();
+        e.stopPropagation();
+        e.target.style.backgroundColor = '';
+      });
+      dropArea.addEventListener("drop", e => {
+        e.preventDefault();
+        e.stopPropagation();
+        e.target.style.backgroundColor = '';
+        const droppedFiles = e.dataTransfer.files;
+        for (let i = 0; i < droppedFiles.length; i++) {
+          files.items.add(droppedFiles[i]);
+        }
+        alert(`Dropped ${files.files.length} file(s).`);
+      });
+
+      const uploadButton = document.getElementById('upload-button');
+      uploadButton.addEventListener("click", () => {
+        const formData = new FormData();
+        for (let i = 0; i < files.files.length; i++) {
+          formData.append('files[]', files.files[i]);
+        }
+        fetch('/upload', {
+          method: 'POST',
+          body: formData,
+        })
+      });
+    };
+  </script>
+</body>
+</html>
