@@ -43,6 +43,7 @@
             .map(e => {
               return {
                 name: e.name,
+                pattern: e.pattern,
                 message: e.validationMessage
               };
             });
@@ -50,7 +51,7 @@
           // エラーメッセージの表示
           errors.forEach(err => {
             const li = document.createElement('li');
-            li.textContent = `${err.name}: ${err.message}`;
+            li.textContent = `${err.name}: ${err.message}${err.pattern ? ` (pattern: ${err.pattern})` : ''}`;
             errorMessagesList.appendChild(li);
           });
         }
