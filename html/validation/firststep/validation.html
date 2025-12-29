@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title></title>
+</head>
+<body>
+  <div id="error-messages-area">
+    <ul id="error-messages-list">
+    </ul>
+  </div>
+  <form id="target">
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" pattern="[a-z]*" maxlength="25" required />
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" minlength="8" required />
+    </div>
+    <div>
+      <label for="note">Note:</label>
+      <textarea id="note" name="note" required></textarea>
+    </div>
+    <input type="button" id="submit" value="Submit" />
+  </form>
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+
+      const button = document.getElementById('submit');
+      button.addEventListener('click', () => {
+        const form = document.getElementById('target');
+        if (!form.reportValidity()) {
+          const errorMessagesList = document.getElementById('error-messages-list');
+
+          // エラーメッセージの削除
+          errorMessagesList.innerHTML = '';
+
+          // エラー情報の収集
+          const inputs = form.querySelectorAll('input, textarea, select');
+          const errors = Array.from(inputs)
+            .filter(i => !i.validity.valid)
+            .map(e => {
+              return {
+                name: e.name,
+                message: e.validationMessage
+              };
+            });
+
+          // エラーメッセージの表示
+          errors.forEach(err => {
+            const li = document.createElement('li');
+            li.textContent = `${err.name}: ${err.message}`;
+            errorMessagesList.appendChild(li);
+          });
+        }
+      });
+
+    });
+  </script>
+</body>
+</html>
