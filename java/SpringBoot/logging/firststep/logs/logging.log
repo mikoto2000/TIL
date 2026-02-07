@@ -1,0 +1,233 @@
+2026-02-07 22:24:59 [] [] ERROR org.springframework.boot.SpringApplication : Application run failed
+java.lang.IllegalStateException: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.model.processor.FileCollisionAnalyser - Collision detected. Skipping initialization of appender named [ACCESS_FILE]
+ERROR in ch.qos.logback.core.model.processor.FileCollisionAnalyser - In appender [ACCESS_FILE] option 'fileNamePattern' has the same value 'logs/access.%d{yyyy-MM-dd}.log' as that set for appender [APPLICATION_FILE] defined earlier
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:352)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:302)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:248)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:225)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:180)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:173)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:151)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:133)
+	at org.springframework.boot.context.event.EventPublishingRunListener.multicastInitialEvent(EventPublishingRunListener.java:137)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:82)
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$0(SpringApplicationRunListeners.java:66)
+	at java.base/java.util.ImmutableCollections$List12.forEach(ImmutableCollections.java:681)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:123)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:117)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:65)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:356)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at dev.mikoto2000.study.springboot.logging.firststep.FirststepApplication.main(FirststepApplication.java:10)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:52)
+Caused by: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.model.processor.FileCollisionAnalyser - Collision detected. Skipping initialization of appender named [ACCESS_FILE]
+ERROR in ch.qos.logback.core.model.processor.FileCollisionAnalyser - In appender [ACCESS_FILE] option 'fileNamePattern' has the same value 'logs/access.%d{yyyy-MM-dd}.log' as that set for appender [APPLICATION_FILE] defined earlier
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.reportConfigurationErrorsIfNecessary(LogbackLoggingSystem.java:296)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:274)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:86)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:65)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:197)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:337)
+	... 22 common frames omitted
+2026-02-07 22:26:39 [] [] INFO  dev.mikoto2000.study.springboot.logging.firststep.FirststepApplication : Starting FirststepApplication using Java 25.0.1 with PID 3014 (/workspaces/TIL/java/SpringBoot/logging/firststep/target/classes started by vscode in /workspaces/TIL/java/SpringBoot/logging/firststep)
+2026-02-07 22:26:39 [] [] INFO  dev.mikoto2000.study.springboot.logging.firststep.FirststepApplication : No active profile set, falling back to 1 default profile: "default"
+2026-02-07 22:26:39 [] [] INFO  org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-02-07 22:26:39 [] [] INFO  org.springframework.boot.devtools.env.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-02-07 22:26:40 [] [] INFO  org.springframework.boot.tomcat.TomcatWebServer : Tomcat initialized with port 8080 (http)
+2026-02-07 22:26:40 [] [] INFO  org.apache.coyote.http11.Http11NioProtocol : Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-07 22:26:40 [] [] INFO  org.apache.catalina.core.StandardService : Starting service [Tomcat]
+2026-02-07 22:26:40 [] [] INFO  org.apache.catalina.core.StandardEngine : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-02-07 22:26:40 [] [] INFO  org.springframework.boot.web.context.servlet.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 491 ms
+2026-02-07 22:26:40 [] [] INFO  org.apache.coyote.http11.Http11NioProtocol : Starting ProtocolHandler ["http-nio-8080"]
+2026-02-07 22:26:40 [] [] INFO  org.springframework.boot.tomcat.TomcatWebServer : Tomcat started on port 8080 (http) with context path '/'
+2026-02-07 22:26:40 [] [] INFO  dev.mikoto2000.study.springboot.logging.firststep.FirststepApplication : Started FirststepApplication in 1.053 seconds (process running for 1.295)
+2026-02-07 22:28:43 [] [] INFO  org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener : Restarting due to 7 class path changes (0 additions, 0 deletions, 7 modifications)
+2026-02-07 22:28:43 [] [] INFO  org.springframework.boot.tomcat.GracefulShutdown : Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-07 22:28:43 [] [] INFO  org.apache.coyote.http11.Http11NioProtocol : Pausing ProtocolHandler ["http-nio-8080"]
+2026-02-07 22:28:43 [] [] INFO  org.springframework.boot.tomcat.GracefulShutdown : Graceful shutdown complete
+2026-02-07 22:28:43 [] [] INFO  org.apache.coyote.http11.Http11NioProtocol : Stopping ProtocolHandler ["http-nio-8080"]
+2026-02-07 22:28:43 [] [] INFO  dev.mikoto2000.study.springboot.logging.firststep.FirststepApplication : Starting FirststepApplication using Java 25.0.1 with PID 3014 (/workspaces/TIL/java/SpringBoot/logging/firststep/target/classes started by vscode in /workspaces/TIL/java/SpringBoot/logging/firststep)
+2026-02-07 22:28:43 [] [] INFO  dev.mikoto2000.study.springboot.logging.firststep.FirststepApplication : No active profile set, falling back to 1 default profile: "default"
+2026-02-07 22:28:44 [] [] INFO  org.springframework.boot.tomcat.TomcatWebServer : Tomcat initialized with port 8080 (http)
+2026-02-07 22:28:44 [] [] INFO  org.apache.coyote.http11.Http11NioProtocol : Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-07 22:28:44 [] [] INFO  org.apache.catalina.core.StandardService : Starting service [Tomcat]
+2026-02-07 22:28:44 [] [] INFO  org.apache.catalina.core.StandardEngine : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-02-07 22:28:44 [] [] INFO  org.springframework.boot.web.context.servlet.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 85 ms
+2026-02-07 22:28:44 [] [] WARN  org.springframework.boot.web.server.servlet.context.AnnotationConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'helloController' defined in file [/workspaces/TIL/java/SpringBoot/logging/firststep/target/classes/dev/mikoto2000/study/springboot/logging/firststep/controller/HelloController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'greetingService' defined in file [/workspaces/TIL/java/SpringBoot/logging/firststep/target/classes/dev/mikoto2000/study/springboot/logging/firststep/service/GreetingService.class]: Failed to instantiate [dev.mikoto2000.study.springboot.logging.firststep.service.GreetingService]: Constructor threw exception
+2026-02-07 22:28:44 [] [] INFO  org.apache.catalina.core.StandardService : Stopping service [Tomcat]
+2026-02-07 22:28:44 [] [] INFO  org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-02-07 22:28:44 [] [] ERROR org.springframework.boot.SpringApplication : Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'helloController' defined in file [/workspaces/TIL/java/SpringBoot/logging/firststep/target/classes/dev/mikoto2000/study/springboot/logging/firststep/controller/HelloController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'greetingService' defined in file [/workspaces/TIL/java/SpringBoot/logging/firststep/target/classes/dev/mikoto2000/study/springboot/logging/firststep/service/GreetingService.class]: Failed to instantiate [dev.mikoto2000.study.springboot.logging.firststep.service.GreetingService]: Constructor threw exception
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1382)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1221)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:993)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:620)
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at dev.mikoto2000.study.springboot.logging.firststep.FirststepApplication.main(FirststepApplication.java:10)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:52)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'greetingService' defined in file [/workspaces/TIL/java/SpringBoot/logging/firststep/target/classes/dev/mikoto2000/study/springboot/logging/firststep/service/GreetingService.class]: Failed to instantiate [dev.mikoto2000.study.springboot.logging.firststep.service.GreetingService]: Constructor threw exception
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1344)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1231)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:229)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1762)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1651)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:912)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	... 24 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [dev.mikoto2000.study.springboot.logging.firststep.service.GreetingService]: Constructor threw exception
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:220)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:106)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1338)
+	... 36 common frames omitted
+Caused by: java.lang.Error: Unresolved compilation problem: 
+	Slf4j cannot be resolved to a type
+
+	at dev.mikoto2000.study.springboot.logging.firststep.service.GreetingService.<init>(GreetingService.java:9)
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:194)
+	... 38 common frames omitted
+2026-02-07 22:29:23 [] [] INFO  dev.mikoto2000.study.springboot.logging.firststep.FirststepApplication : Starting FirststepApplication using Java 25.0.1 with PID 3014 (/workspaces/TIL/java/SpringBoot/logging/firststep/target/classes started by vscode in /workspaces/TIL/java/SpringBoot/logging/firststep)
+2026-02-07 22:29:23 [] [] INFO  dev.mikoto2000.study.springboot.logging.firststep.FirststepApplication : No active profile set, falling back to 1 default profile: "default"
+2026-02-07 22:29:23 [] [] INFO  org.springframework.boot.tomcat.TomcatWebServer : Tomcat initialized with port 8080 (http)
+2026-02-07 22:29:23 [] [] INFO  org.apache.coyote.http11.Http11NioProtocol : Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-07 22:29:23 [] [] INFO  org.apache.catalina.core.StandardService : Starting service [Tomcat]
+2026-02-07 22:29:23 [] [] INFO  org.apache.catalina.core.StandardEngine : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-02-07 22:29:23 [] [] INFO  org.springframework.boot.web.context.servlet.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 56 ms
+2026-02-07 22:29:23 [] [] INFO  org.apache.coyote.http11.Http11NioProtocol : Starting ProtocolHandler ["http-nio-8080"]
+2026-02-07 22:29:23 [] [] INFO  org.springframework.boot.tomcat.TomcatWebServer : Tomcat started on port 8080 (http) with context path '/'
+2026-02-07 22:29:23 [] [] INFO  dev.mikoto2000.study.springboot.logging.firststep.FirststepApplication : Started FirststepApplication in 0.104 seconds (process running for 164.24)
+2026-02-07 22:29:23 [] [] INFO  org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-02-07 22:29:40 [] [] INFO  org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-02-07 22:29:40 [] [] INFO  org.springframework.boot.tomcat.GracefulShutdown : Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-07 22:29:40 [] [] INFO  org.apache.coyote.http11.Http11NioProtocol : Pausing ProtocolHandler ["http-nio-8080"]
+2026-02-07 22:29:40 [] [] INFO  org.springframework.boot.tomcat.GracefulShutdown : Graceful shutdown complete
+2026-02-07 22:29:40 [] [] INFO  org.apache.coyote.http11.Http11NioProtocol : Stopping ProtocolHandler ["http-nio-8080"]
+2026-02-07 22:29:41 [] [] INFO  dev.mikoto2000.study.springboot.logging.firststep.FirststepApplication : Starting FirststepApplication using Java 25.0.1 with PID 3014 (/workspaces/TIL/java/SpringBoot/logging/firststep/target/classes started by vscode in /workspaces/TIL/java/SpringBoot/logging/firststep)
+2026-02-07 22:29:41 [] [] INFO  dev.mikoto2000.study.springboot.logging.firststep.FirststepApplication : No active profile set, falling back to 1 default profile: "default"
+2026-02-07 22:29:41 [] [] INFO  org.springframework.boot.tomcat.TomcatWebServer : Tomcat initialized with port 8080 (http)
+2026-02-07 22:29:41 [] [] INFO  org.apache.coyote.http11.Http11NioProtocol : Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-07 22:29:41 [] [] INFO  org.apache.catalina.core.StandardService : Starting service [Tomcat]
+2026-02-07 22:29:41 [] [] INFO  org.apache.catalina.core.StandardEngine : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-02-07 22:29:41 [] [] INFO  org.springframework.boot.web.context.servlet.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 65 ms
+2026-02-07 22:29:41 [] [] INFO  org.apache.coyote.http11.Http11NioProtocol : Starting ProtocolHandler ["http-nio-8080"]
+2026-02-07 22:29:41 [] [] INFO  org.springframework.boot.tomcat.TomcatWebServer : Tomcat started on port 8080 (http) with context path '/'
+2026-02-07 22:29:41 [] [] INFO  dev.mikoto2000.study.springboot.logging.firststep.FirststepApplication : Started FirststepApplication in 0.105 seconds (process running for 181.788)
+2026-02-07 22:29:41 [] [] INFO  org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2026-02-07 22:29:59 [] [] INFO  org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2026-02-07 22:29:59 [] [] INFO  org.springframework.boot.tomcat.GracefulShutdown : Commencing graceful shutdown. Waiting for active requests to complete
+2026-02-07 22:29:59 [] [] INFO  org.apache.coyote.http11.Http11NioProtocol : Pausing ProtocolHandler ["http-nio-8080"]
+2026-02-07 22:29:59 [] [] INFO  org.springframework.boot.tomcat.GracefulShutdown : Graceful shutdown complete
+2026-02-07 22:29:59 [] [] INFO  org.apache.coyote.http11.Http11NioProtocol : Stopping ProtocolHandler ["http-nio-8080"]
+2026-02-07 22:29:59 [] [] INFO  dev.mikoto2000.study.springboot.logging.firststep.FirststepApplication : Starting FirststepApplication using Java 25.0.1 with PID 3014 (/workspaces/TIL/java/SpringBoot/logging/firststep/target/classes started by vscode in /workspaces/TIL/java/SpringBoot/logging/firststep)
+2026-02-07 22:29:59 [] [] INFO  dev.mikoto2000.study.springboot.logging.firststep.FirststepApplication : No active profile set, falling back to 1 default profile: "default"
+2026-02-07 22:29:59 [] [] INFO  org.springframework.boot.tomcat.TomcatWebServer : Tomcat initialized with port 8080 (http)
+2026-02-07 22:29:59 [] [] INFO  org.apache.coyote.http11.Http11NioProtocol : Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-07 22:29:59 [] [] INFO  org.apache.catalina.core.StandardService : Starting service [Tomcat]
+2026-02-07 22:29:59 [] [] INFO  org.apache.catalina.core.StandardEngine : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-02-07 22:29:59 [] [] INFO  org.springframework.boot.web.context.servlet.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 48 ms
+2026-02-07 22:29:59 [] [] WARN  org.springframework.boot.web.server.servlet.context.AnnotationConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'helloController' defined in file [/workspaces/TIL/java/SpringBoot/logging/firststep/target/classes/dev/mikoto2000/study/springboot/logging/firststep/controller/HelloController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'greetingService' defined in file [/workspaces/TIL/java/SpringBoot/logging/firststep/target/classes/dev/mikoto2000/study/springboot/logging/firststep/service/GreetingService.class]: Failed to instantiate [dev.mikoto2000.study.springboot.logging.firststep.service.GreetingService]: Constructor threw exception
+2026-02-07 22:29:59 [] [] INFO  org.apache.catalina.core.StandardService : Stopping service [Tomcat]
+2026-02-07 22:29:59 [] [] INFO  org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-02-07 22:29:59 [] [] ERROR org.springframework.boot.SpringApplication : Application run failed
+org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'helloController' defined in file [/workspaces/TIL/java/SpringBoot/logging/firststep/target/classes/dev/mikoto2000/study/springboot/logging/firststep/controller/HelloController.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'greetingService' defined in file [/workspaces/TIL/java/SpringBoot/logging/firststep/target/classes/dev/mikoto2000/study/springboot/logging/firststep/service/GreetingService.class]: Failed to instantiate [dev.mikoto2000.study.springboot.logging.firststep.service.GreetingService]: Constructor threw exception
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:804)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:240)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1382)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1221)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:993)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:620)
+	at org.springframework.boot.web.server.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:143)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354)
+	at dev.mikoto2000.study.springboot.logging.firststep.FirststepApplication.main(FirststepApplication.java:10)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:52)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'greetingService' defined in file [/workspaces/TIL/java/SpringBoot/logging/firststep/target/classes/dev/mikoto2000/study/springboot/logging/firststep/service/GreetingService.class]: Failed to instantiate [dev.mikoto2000.study.springboot.logging.firststep.service.GreetingService]: Constructor threw exception
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1344)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1231)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:565)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:201)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:229)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1762)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1651)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:912)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791)
+	... 24 common frames omitted
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [dev.mikoto2000.study.springboot.logging.firststep.service.GreetingService]: Constructor threw exception
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:220)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:106)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1338)
+	... 36 common frames omitted
+Caused by: java.lang.Error: Unresolved compilation problem: 
+	Slf4j cannot be resolved to a type
+
+	at dev.mikoto2000.study.springboot.logging.firststep.service.GreetingService.<init>(GreetingService.java:9)
+	at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:483)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:194)
+	... 38 common frames omitted
+2026-02-07 22:30:07 [] [] INFO  dev.mikoto2000.study.springboot.logging.firststep.FirststepApplication : Starting FirststepApplication using Java 25.0.1 with PID 3014 (/workspaces/TIL/java/SpringBoot/logging/firststep/target/classes started by vscode in /workspaces/TIL/java/SpringBoot/logging/firststep)
+2026-02-07 22:30:07 [] [] INFO  dev.mikoto2000.study.springboot.logging.firststep.FirststepApplication : No active profile set, falling back to 1 default profile: "default"
+2026-02-07 22:30:07 [] [] INFO  org.springframework.boot.tomcat.TomcatWebServer : Tomcat initialized with port 8080 (http)
+2026-02-07 22:30:07 [] [] INFO  org.apache.coyote.http11.Http11NioProtocol : Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-07 22:30:07 [] [] INFO  org.apache.catalina.core.StandardService : Starting service [Tomcat]
+2026-02-07 22:30:07 [] [] INFO  org.apache.catalina.core.StandardEngine : Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-02-07 22:30:07 [] [] INFO  org.springframework.boot.web.context.servlet.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 49 ms
+2026-02-07 22:30:07 [] [] INFO  org.apache.coyote.http11.Http11NioProtocol : Starting ProtocolHandler ["http-nio-8080"]
+2026-02-07 22:30:07 [] [] INFO  org.springframework.boot.tomcat.TomcatWebServer : Tomcat started on port 8080 (http) with context path '/'
+2026-02-07 22:30:07 [] [] INFO  dev.mikoto2000.study.springboot.logging.firststep.FirststepApplication : Started FirststepApplication in 0.086 seconds (process running for 207.794)
+2026-02-07 22:30:07 [] [] INFO  org.springframework.boot.devtools.autoconfigure.ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
