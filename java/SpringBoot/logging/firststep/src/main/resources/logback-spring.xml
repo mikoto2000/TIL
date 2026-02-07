@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- コンソール出力 -->
+    <appender name="STDOUT"
+        class="ch.qos.logback.core.ConsoleAppender">
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%X{traceId}] [%X{ip}] [%thread] %-5level %logger : %msg%n</pattern>
+        </encoder>
+
+    </appender>
+
+    <!-- ACCESS_LOG 用 -->
+    <logger name="ACCESS_LOG"
+            level="INFO"
+            additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <!-- root -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>
+
