@@ -1,5 +1,7 @@
 package dev.mikoto2000.study.springboot.logging.firststep.aop;
 
+import static net.logstash.logback.argument.StructuredArguments.*;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -23,18 +25,27 @@ public class DebugLogAspect {
 
         String methodName = pjp.getSignature().getName();
 
-        log.debug("START {}.{}", className, methodName);
+        log.debug("START",
+            kv("event", "METHOD_START"),
+            kv("className", className),
+            kv("methodName", methodName));
 
         try {
             Object result = pjp.proceed();
 
-            log.debug("END   {}.{}", className, methodName);
+            log.debug("END",
+                kv("event", "METHOD_END"),
+                kv("className", className),
+                kv("methodName", methodName));
 
             return result;
 
         } catch (Throwable e) {
 
-            log.debug("✖ ERROR {}.{}", className, methodName);
+            log.debug("ERROR",
+                kv("event", "METHOD_ERROR"),
+                kv("className", className),
+                kv("methodName", methodName));
 
             throw e;
         }
