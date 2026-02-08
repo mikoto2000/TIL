@@ -2,7 +2,11 @@ spring:
   application:
     name: firststep
 
-logging:
-  level:
-    root: INFO
-    dev.mikoto2000.study.springboot.logging.firststep: DEBUG
+  profiles:
+    active: local
+    group:
+      local:
+        - local-logging
+      prod:
+        - prod-logging
+

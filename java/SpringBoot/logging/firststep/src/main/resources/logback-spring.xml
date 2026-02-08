@@ -84,11 +84,21 @@
     </appender>
 
     <!-- ACCESS_LOG 用 -->
-    <logger name="ACCESS_LOG"
-            level="INFO"
-            additivity="false">
-        <appender-ref ref="ACCESS_FILE"/>
-    </logger>
+    <springProfile name="prod">
+      <logger name="ACCESS_LOG"
+              level="INFO"
+              additivity="false">
+          <appender-ref ref="ACCESS_FILE"/>
+      </logger>
+    </springProfile>
+    <springProfile name="local">
+      <logger name="ACCESS_LOG"
+              level="INFO"
+              additivity="false">
+          <appender-ref ref="STDOUT"/>
+          <appender-ref ref="ACCESS_FILE"/>
+      </logger>
+    </springProfile>
 
     <!-- root -->
     <root level="INFO">
