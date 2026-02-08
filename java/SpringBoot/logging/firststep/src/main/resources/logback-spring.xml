@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- ログ出力先ディレクトリ -->
+    <property name="LOG_DIR" value="logs"/>
+
+    <!-- ========== アプリケーションログ用 Appender ========== -->
+
+    <appender name="APPLICATION_FILE"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <!-- 現在のログ -->
+        <file>${LOG_DIR}/logging.log</file>
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%X{traceId}] [%X{ip}] %-5level %logger : %msg%n</pattern>
+        </encoder>
+
+        <!-- 日次ローテーション -->
+        <rollingPolicy
+            class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+
+            <fileNamePattern>
+                ${LOG_DIR}/logging.%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+
+            <!-- 保存日数 -->
+            <maxHistory>30</maxHistory>
+
+        </rollingPolicy>
+
+    </appender>
+
+    <!-- ========== アクセスログ用 Appender ========== -->
+
+    <appender name="ACCESS_FILE"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <!-- 現在のログ -->
+        <file>${LOG_DIR}/access.log</file>
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%X{traceId}] [%X{ip}] %-5level %logger : %msg%n</pattern>
+        </encoder>
+
+        <!-- 日次ローテーション -->
+        <rollingPolicy
+            class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+
+            <fileNamePattern>
+                ${LOG_DIR}/access.%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+
+            <!-- 保存日数 -->
+            <maxHistory>30</maxHistory>
+
+        </rollingPolicy>
+
+    </appender>
+
+    <!-- コンソール出力 -->
+    <appender name="STDOUT"
+        class="ch.qos.logback.core.ConsoleAppender">
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%X{traceId}] [%X{ip}] [%thread] %-5level %logger : %msg%n</pattern>
+        </encoder>
+
+    </appender>
+
+    <!-- ACCESS_LOG 用 -->
+    <logger name="ACCESS_LOG"
+            level="INFO"
+            additivity="false">
+        <appender-ref ref="ACCESS_FILE"/>
+    </logger>
+
+    <!-- root -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="APPLICATION_FILE"/>
+    </root>
+
+</configuration>
+
