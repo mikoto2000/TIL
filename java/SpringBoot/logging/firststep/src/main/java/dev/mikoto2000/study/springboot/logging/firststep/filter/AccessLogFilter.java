@@ -1,5 +1,7 @@
 package dev.mikoto2000.study.springboot.logging.firststep.filter;
 
+import static net.logstash.logback.argument.StructuredArguments.*;
+
 import java.io.IOException;
 import java.util.UUID;
 
@@ -54,14 +56,14 @@ public class AccessLogFilter extends OncePerRequestFilter {
 
             long time = System.currentTimeMillis() - start;
 
-            accessLogger.info(
-                "method={} uri={} status={} result={} time={}ms",
-                request.getMethod(),
-                request.getRequestURI(),
-                response.getStatus(),
-                success ? "SUCCESS" : "FAIL",
-                time
-            );
+            accessLogger.info("ACCESS",
+                kv("method", request.getMethod()),
+                kv("request_uri", request.getRequestURI()),
+                kv("status", response.getStatus()),
+                kv("success", success ? "SUCCESS" : "FAIL"),
+                kv("time", time),
+                value("event", "access")
+                );
 
             // ★必須
             MDC.clear();

@@ -1,0 +1,4 @@
+logging:
+  level:
+    root: INFO
+    dev.mikoto2000.study.springboot.logging.firststep: INFO

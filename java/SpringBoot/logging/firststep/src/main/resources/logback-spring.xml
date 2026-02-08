@@ -12,8 +12,13 @@
         <!-- 現在のログ -->
         <file>${LOG_DIR}/logging.log</file>
 
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%X{traceId}] [%X{ip}] %-5level %logger : %msg%n</pattern>
+        <!-- logstash 構造化エンコーダー -->
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+
+            <!-- 固定フィールド -->
+            <customFields>
+                {"app":"firststep"}
+            </customFields>
         </encoder>
 
         <!-- 日次ローテーション -->
@@ -39,8 +44,13 @@
         <!-- 現在のログ -->
         <file>${LOG_DIR}/access.log</file>
 
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%X{traceId}] [%X{ip}] %-5level %logger : %msg%n</pattern>
+        <!-- logstash 構造化エンコーダー -->
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+
+            <!-- 固定フィールド -->
+            <customFields>
+                {"app":"firststep"}
+            </customFields>
         </encoder>
 
         <!-- 日次ローテーション -->
@@ -62,18 +72,33 @@
     <appender name="STDOUT"
         class="ch.qos.logback.core.ConsoleAppender">
 
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%X{traceId}] [%X{ip}] [%thread] %-5level %logger : %msg%n</pattern>
+        <!-- logstash 構造化エンコーダー -->
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+
+            <!-- 固定フィールド -->
+            <customFields>
+                {"app":"firststep"}
+            </customFields>
         </encoder>
 
     </appender>
 
     <!-- ACCESS_LOG 用 -->
-    <logger name="ACCESS_LOG"
-            level="INFO"
-            additivity="false">
-        <appender-ref ref="ACCESS_FILE"/>
-    </logger>
+    <springProfile name="prod">
+      <logger name="ACCESS_LOG"
+              level="INFO"
+              additivity="false">
+          <appender-ref ref="ACCESS_FILE"/>
+      </logger>
+    </springProfile>
+    <springProfile name="local">
+      <logger name="ACCESS_LOG"
+              level="INFO"
+              additivity="false">
+          <appender-ref ref="STDOUT"/>
+          <appender-ref ref="ACCESS_FILE"/>
+      </logger>
+    </springProfile>
 
     <!-- root -->
     <root level="INFO">
