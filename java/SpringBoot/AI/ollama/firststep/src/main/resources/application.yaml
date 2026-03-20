@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: springaifirststep
+  ai:
+    ollama:
+      base-url: http://host.docker.internal:11434
+      chat:
+        options:
+          model: mistral
+          temperature: 0.7
