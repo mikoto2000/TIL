@@ -50,12 +50,31 @@ public class SpringaifirststepApplication {
     System.out.println(thinking2);
     String answer2 = response2.getResult().getOutput().getText();
     System.out.println(answer2);
+
+    ChatResponse response3 = ChatClient.create(chatModel)
+        .prompt("このプロジェクト内のすべてのファイルを読んで、プロジェクトを評価してください。")
+        .tools(this)
+        .call()
+        .chatResponse();
+
+    String thinking3 = response3.getResult().getMetadata().get("thinking");
+    System.out.println(thinking3);
+    String answer3 = response3.getResult().getOutput().getText();
+    System.out.println(answer3);
   }
 
   @Tool(name = "rollDice", description = "x 面サイコロをひとつ振る")
   int rollDice(int x) {
     IO.println(String.format("%d 面サイコロをひとつ振るよ", x));
     return (int) (Math.random() * x) + 1;
+  }
+
+  @Tool(name = "listFile", description = "ファイルを検索します")
+  List<String> listFile(String baseDir) throws IOException {
+    IO.println(String.format("%s 以下のファイルを一覧にするよ", baseDir));
+    return Files.walk(Paths.get(baseDir), 20)
+        .map(p -> p.toFile().getAbsolutePath())
+        .toList();
   }
 
   @Tool(name = "findFile", description = "ファイルを検索します")
