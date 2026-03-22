@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.jline.reader.EndOfFileException;
 import org.jline.reader.LineReader;
@@ -16,7 +17,11 @@ import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.ollama.api.OllamaApi;
+import org.springframework.ai.ollama.api.OllamaChatOptions;
+import org.springframework.ai.ollama.api.OllamaApi.ListModelResponse;
 import org.springframework.ai.tool.annotation.Tool;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -34,6 +39,7 @@ public class SpringaifirststepApplication {
 
   private final RootCommand rootCommand;
   private final CommandLine.IFactory factory;
+  private final ModelHolder currentModelHolder;
 
   private final Path HISTORY_FILE = Path.of(
       System.getProperty("user.home"),
@@ -70,9 +76,8 @@ public class SpringaifirststepApplication {
 
     while (true) {
       try {
-        String line = reader.readLine("> ");
+        String line = reader.readLine(currentModelHolder.get() + "> ");
         if (line == null) {
-          IO.println("でた～");
           break;
         }
 
@@ -82,7 +87,6 @@ public class SpringaifirststepApplication {
         }
 
         if (trimmed.equals("/exit") || trimmed.equals("/quit")) {
-          IO.println("きた～");
           break;
         }
 
@@ -99,7 +103,6 @@ public class SpringaifirststepApplication {
       } catch (UserInterruptException e) {
         // Ctrl-C でその行だけキャンセル
       } catch (EndOfFileException e) {
-        IO.println("ここかな～");
         break;
       }
     }
@@ -107,6 +110,26 @@ public class SpringaifirststepApplication {
 
   private String[] splitCommandLine(String line) {
     return line.split("\\s+");
+  }
+}
+
+@Component
+class ModelHolder {
+  private AtomicReference<String> currentModel;
+
+  public ModelHolder(
+      @Value("${spring.ai.ollama.chat.options.model}")
+      String defaultModel
+      ) {
+    this.currentModel = new AtomicReference<>(defaultModel);
+      }
+
+  public String get() {
+    return currentModel.get();
+  }
+
+  public void set(String model) {
+    this.currentModel.set(model);
   }
 }
 
@@ -170,7 +193,9 @@ class ChatConfiguration {
 name = "",
 description = "AI shell",
 subcommands = {
-  ChatCommand.class
+  ChatCommand.class,
+  ModelsCommand.class,
+  ModelCommand.class,
 }
 )
 class RootCommand {
@@ -183,14 +208,21 @@ class ChatCommand implements Runnable {
 
   private final ChatClient chatClient;
 
+  private final ModelHolder currentModelHolder;
+
   @Parameters(arity = "1..*", paramLabel = "PROMPT", description = "メッセージ")
   private String[] prompts;
 
   @Override
   public void run() {
 
+    String model = currentModelHolder.get();
+
     ChatResponse response2 = chatClient
       .prompt(String.join(" ", prompts))
+      .options(OllamaChatOptions.builder()
+          .model(model)
+          .build())
       .call()
       .chatResponse();
 
@@ -198,5 +230,38 @@ class ChatCommand implements Runnable {
     System.out.println(thinking2);
     String answer2 = response2.getResult().getOutput().getText();
     System.out.println(answer2);
+  }
+}
+
+@Component
+@Command(name = "models", description = "モデルの一覧を表示します")
+@RequiredArgsConstructor
+class ModelsCommand implements Runnable {
+
+  private final OllamaApi ollamaApi;
+
+  @Override
+  public void run() {
+
+    ListModelResponse modelsRes = ollamaApi.listModels();
+
+    modelsRes.models().stream()
+      .forEach(e -> IO.println(e.name()));
+  }
+}
+
+@Component
+@Command(name = "model", description = "使用するモデルを指定します")
+@RequiredArgsConstructor
+class ModelCommand implements Runnable {
+
+  private final ModelHolder currentModelHolder;
+
+  @Parameters(arity = "1..1")
+  String modelName;
+
+  @Override
+  public void run() {
+    currentModelHolder.set(modelName);
   }
 }
