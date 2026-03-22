@@ -1,0 +1,19 @@
+{
+  "name": "Java",
+  "image": "mcr.microsoft.com/devcontainers/java:3-25-trixie",
+  "mounts": [
+    {
+      "type": "bind",
+      "source": "${localEnv:HOME}/.m2",
+      "target": "/home/vscode/.m2"
+    },
+  ],
+
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "none",
+      "installMaven": "false",
+      "installGradle": "false"
+    }
+  }
+}
