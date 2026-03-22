@@ -16,6 +16,8 @@ import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.ollama.api.OllamaApi;
+import org.springframework.ai.ollama.api.OllamaApi.ListModelResponse;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -167,7 +169,8 @@ class ChatConfiguration {
 name = "",
 description = "AI shell",
 subcommands = {
-  ChatCommand.class
+  ChatCommand.class,
+  ModelsCommand.class,
 }
 )
 class RootCommand {
@@ -195,5 +198,22 @@ class ChatCommand implements Runnable {
     System.out.println(thinking2);
     String answer2 = response2.getResult().getOutput().getText();
     System.out.println(answer2);
+  }
+}
+
+@Component
+@Command(name = "models", description = "モデルの一覧を表示します")
+@RequiredArgsConstructor
+class ModelsCommand implements Runnable {
+
+  private final OllamaApi ollamaApi;
+
+  @Override
+  public void run() {
+
+    ListModelResponse modelsRes = ollamaApi.listModels();
+
+    modelsRes.models().stream()
+      .forEach(e -> IO.println(e.name()));
   }
 }
