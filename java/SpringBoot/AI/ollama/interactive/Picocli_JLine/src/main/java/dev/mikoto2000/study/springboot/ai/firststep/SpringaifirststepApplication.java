@@ -72,7 +72,6 @@ public class SpringaifirststepApplication {
       try {
         String line = reader.readLine("> ");
         if (line == null) {
-          IO.println("でた～");
           break;
         }
 
@@ -82,7 +81,6 @@ public class SpringaifirststepApplication {
         }
 
         if (trimmed.equals("/exit") || trimmed.equals("/quit")) {
-          IO.println("きた～");
           break;
         }
 
@@ -99,7 +97,6 @@ public class SpringaifirststepApplication {
       } catch (UserInterruptException e) {
         // Ctrl-C でその行だけキャンセル
       } catch (EndOfFileException e) {
-        IO.println("ここかな～");
         break;
       }
     }
