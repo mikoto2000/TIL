@@ -90,6 +90,11 @@ public class SpringaifirststepApplication {
           break;
         }
 
+        if (trimmed.equals("/help")) {
+          cmd.execute("--help");
+          continue;
+        }
+
         if (trimmed.startsWith("/")) {
           String commandText = trimmed.substring(1).trim();
           if (commandText.isEmpty()) {
