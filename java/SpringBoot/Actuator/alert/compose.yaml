@@ -16,6 +16,14 @@ services:
      - './prometheus.yaml:/etc/prometheus/prometheus.yml'
      - './rules.yaml:/etc/prometheus/rules.yml'
      - 'prometheus-data:/prometheus'
+  alertmanager:
+    image: prom/alertmanager
+    ports:
+      - '9093'
+    volumes:
+     - './alertmanager.yaml:/etc/alertmanager/alertmanager.yml'
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
 volumes:
   prometheus-data: {}
   m2-cache:
