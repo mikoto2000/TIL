@@ -1,0 +1,21 @@
+services:
+  app:
+    image: "mcr.microsoft.com/devcontainers/java:3-25-trixie"
+    ports:
+      - "8080"
+    command: ['sh', '-c',  'trap "exit 0" TERM; sleep infinity & wait']
+    volumes:
+      - .:/workspaces
+    working_dir: "/workspaces"
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - '9090'
+    volumes:
+    # 以下を追加
+     - './prometheus.yaml:/etc/prometheus/prometheus.yml'
+     - 'prometheus-data:/prometheus'
+volumes:
+  prometheus-data: {}
+  m2-cache:
+    external: true
