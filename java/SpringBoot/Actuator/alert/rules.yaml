@@ -1,0 +1,24 @@
+groups:
+  - name: spring-boot-app-down
+    rules:
+    - alert: instance_down
+      expr: up == 0
+      for: 30s
+      annotations:
+        summary: "インスタンスが 30 秒ダウンしたとき"
+    - alert: cpu_used
+      expr: 100 * (1 - avg(rate(node_cpu{job='node',mode='idle'}[5m])) BY (instance)) > 90
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: "CPU 使用率が 5 分間 90% を超えた時"
+        description: "cpu of {{ $labels.instance }} has been used over 90% for more than 5 minutes."
+    - alert: memory_used
+      # メモリ使用量が 90% を超えた時
+      expr: 100 * (1 - node_memory_MemFree{job='node'} / node_memory_MemTotal{job='node'}) > 90 
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: "メモリ使用量が 5 分間 90% を超えた時"

@@ -1,0 +1,22 @@
+services:
+  app:
+    image: "mcr.microsoft.com/devcontainers/java:3-25-trixie"
+    ports:
+      - "8080"
+    command: ['sh', '-c',  'trap "exit 0" TERM; sleep infinity & wait']
+    volumes:
+      - .:/workspaces
+      - m2-cache:/home/vscode/.m2
+    working_dir: "/workspaces"
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - '9090'
+    volumes:
+     - './prometheus.yaml:/etc/prometheus/prometheus.yml'
+     - './rules.yaml:/etc/prometheus/rules.yml'
+     - 'prometheus-data:/prometheus'
+volumes:
+  prometheus-data: {}
+  m2-cache:
+    external: true
