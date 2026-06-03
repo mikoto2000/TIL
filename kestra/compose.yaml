@@ -1,0 +1,16 @@
+services:
+  kestra:
+    image: kestra/kestra:latest
+    volumes:
+      - kestra_data:/app/storage
+      - kestra_db:/app/data
+    ports:
+      - 0.0.0.0:8080:8080
+    user: "root"
+    command: "server local"
+
+volumes:
+  kestra_data:
+    driver: local
+  kestra_db:
+    driver: local
