@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Barcord</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      line-height: 1.5;
+    }
+
+    #qr-reader,
+    #qr-reader-results,
+    #paste-reader {
+      max-width: 500px;
+    }
+
+    #paste-reader {
+      display: none;
+    }
+
+    #paste-area {
+      align-items: center;
+      border: 2px dashed #888;
+      display: flex;
+      min-height: 120px;
+      justify-content: center;
+      margin-top: 16px;
+      padding: 16px;
+      text-align: center;
+      width: 464px;
+    }
+
+    #paste-area:focus {
+      border-color: #006bd6;
+      outline: none;
+    }
+
+    #pasted-image {
+      display: none;
+      margin-top: 16px;
+      max-height: 320px;
+      max-width: 500px;
+    }
+
+    #qr-reader-results {
+      margin-top: 16px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body>
+
+  <section>
+    <h1>Barcord</h1>
+    <div id="qr-reader" style="width:500px"></div>
+    <div
+      id="paste-area"
+      tabindex="0"
+      aria-label="クリップボードの画像貼り付けエリア"
+    >
+      ここをクリックして、クリップボードの画像を貼り付けてください。
+    </div>
+    <img id="pasted-image" alt="貼り付けた画像のプレビュー" />
+    <div id="paste-reader"></div>
+    <div id="qr-reader-results" style="width:500px"></div>
+  </section>
+  <script src="https://unpkg.com/html5-qrcode"></script>
+  <script type="module">
+    function main() {
+      const pasteArea = document.getElementById('paste-area');
+      const pastedImage = document.getElementById('pasted-image');
+      const resultContainer = document.getElementById('qr-reader-results');
+      let lastResult, countResults = 0;
+      const clipboardQrcode = new Html5Qrcode('paste-reader');
+
+      function showMessage(message) {
+          resultContainer.textContent = message;
+      }
+
+      function showPastedImage(file) {
+          const imageUrl = URL.createObjectURL(file);
+
+          if (pastedImage.dataset.objectUrl) {
+              URL.revokeObjectURL(pastedImage.dataset.objectUrl);
+          }
+
+          pastedImage.src = imageUrl;
+          pastedImage.dataset.objectUrl = imageUrl;
+          pastedImage.style.display = 'block';
+      }
+
+      function onScanSuccess(decodedText, decodedResult) {
+          if (decodedText !== lastResult) {
+              ++countResults;
+              lastResult = decodedText;
+              showMessage(`Scan result ${countResults}: ${decodedText}`);
+              console.log(`Scan result ${decodedText}`, decodedResult);
+          }
+      }
+
+      function onScanFailure(error) {
+          showMessage(`スキャンに失敗しました: ${error}`);
+      }
+
+      async function scanClipboardImage(file) {
+          if (!file) {
+              showMessage('貼り付けられた画像を読み取れませんでした。');
+              return;
+          }
+
+          showPastedImage(file);
+          showMessage('貼り付けられた画像をスキャンしています...');
+
+          try {
+              const decodedText = await clipboardQrcode.scanFile(file, false);
+              onScanSuccess(decodedText, { source: 'clipboard' });
+          } catch (error) {
+              onScanFailure(error);
+          }
+      }
+
+      pasteArea.addEventListener('paste', (event) => {
+          if (!event.clipboardData) {
+              showMessage('このブラウザーでは貼り付けデータを読み取れません。');
+              return;
+          }
+
+          const imageItem = [...event.clipboardData.items]
+              .find((item) => item.type.startsWith('image/'));
+
+          if (!imageItem) {
+              showMessage('クリップボードに画像がありません。');
+              return;
+          }
+
+          event.preventDefault();
+          scanClipboardImage(imageItem.getAsFile());
+      });
+
+      const html5QrcodeScanner = new Html5QrcodeScanner(
+          "qr-reader", { fps: 10, qrbox: 250 }
+      );
+      html5QrcodeScanner.render(onScanSuccess);
+    }
+
+    main();
+  </script>
+</body>
+</html>
