@@ -3,7 +3,7 @@ using Azure.Identity;
 using Microsoft.Graph;
 using Microsoft.Graph.Models;
 
-namespace show_site_drives;
+namespace show_site_drive;
 
 public sealed class GraphHelper
 {
@@ -44,5 +44,32 @@ public sealed class GraphHelper
 
     return _graphHelper;
   }
-}
 
+  public async Task<Drive> GetSiteDefaultDriveAsync(string siteId) {
+    // Ensure client isn't null
+    _ = appClient ??
+      throw new NullReferenceException("Graph has not been initialized for app-only auth");
+
+    var drive = await appClient.Sites[siteId].Drive.GetAsync();
+    if (drive == null)
+    {
+      throw new Exception($"Failed to get default drive for site {siteId}");
+    }
+
+    return drive;
+  }
+
+  public async Task<List<DriveItem>> GetDriveChildren(Drive drive) {
+    // Ensure client isn't null
+    _ = appClient ??
+      throw new NullReferenceException("Graph has not been initialized for app-only auth");
+
+    var children = await appClient.Drives[drive.Id].Items["root"].Children.GetAsync();
+    if (drive == null)
+    {
+      throw new Exception($"Failed to get default drive for site {drive?.Name}");
+    }
+
+    return children?.Value?.ToList() ?? [];
+  }
+}

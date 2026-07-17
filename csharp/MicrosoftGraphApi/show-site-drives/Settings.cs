@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Configuration;
 
-namespace show_site_drives;
+namespace show_site_drive;
 
 public record class Settings
 {
