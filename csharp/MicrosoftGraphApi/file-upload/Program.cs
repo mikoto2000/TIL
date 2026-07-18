@@ -1,4 +1,7 @@
 ﻿using file_upload;
+using System.Text;
+
+const string DIST_PATH = "./tmp";
 
 // 設定を読み込み（クライアントID, テナントID, クライアントシークレット）
 var settings = Settings.LoadSettings();
@@ -26,6 +29,20 @@ Console.WriteLine("ドライブ名: " + drive.Name);
 // ドライブのルートに UUIDv4 名のテキストを作成
 Guid uuid = Guid.NewGuid();
 string fileName = uuid.ToString() + ".txt";
-Stream fileContentStream = new MemoryStream(uuid.ToByteArray());
-g.UploadFile(drive, fileName, fileContentStream);
+var encoding = Encoding.GetEncoding("UTF-8");
+Stream fileContentStream = new MemoryStream(encoding.GetBytes(fileName));
+await g.UploadFile(drive, fileName, fileContentStream);
+
+// ドライブルートに作成したファイルをダウンロード
+var fileStream = await g.DownloadFile(drive, fileName);
+var tmp = new MemoryStream();
+fileStream.CopyTo(tmp);
+var fileContent = tmp.ToArray();
+
+// 出力ディレクトリが無ければ作ってファイル作成
+if (!Directory.Exists(DIST_PATH))
+{
+    Directory.CreateDirectory(DIST_PATH);
+}
+File.WriteAllBytes($"{DIST_PATH}/{fileName}", fileContent);
 

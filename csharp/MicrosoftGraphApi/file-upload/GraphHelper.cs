@@ -74,11 +74,31 @@ public sealed class GraphHelper
    * @param fileName アップロード先ファイル名
    * @param fileContent アップロードするファイル内容
    */
-  public async void UploadFile(Drive drive, string fileName, Stream fileContent) {
+  public async Task UploadFile(Drive drive, string fileName, Stream fileContent) {
     // Ensure client isn't null
     _ = appClient ??
       throw new NullReferenceException("Graph has not been initialized for app-only auth");
 
     await appClient.Drives[drive.Id].Items["root"].ItemWithPath(fileName).Content.PutAsync(fileContent);
+  }
+
+  /**
+   * ドライブルートのファイルをダウンロードする。
+   *
+   * @param drive ダウンロードするドライブ
+   * @param fileName ダウンロードファイル名
+   */
+  public async Task<Stream> DownloadFile(Drive drive, string fileName) {
+    // Ensure client isn't null
+    _ = appClient ??
+      throw new NullReferenceException("Graph has not been initialized for app-only auth");
+
+    var fileContentStream = await appClient.Drives[drive.Id].Items["root"].ItemWithPath(fileName).Content.GetAsync();
+    if (fileContentStream == null)
+    {
+      throw new Exception($"Failed to get file from {drive.Name}/{fileName}");
+    }
+
+    return fileContentStream;
   }
 }
