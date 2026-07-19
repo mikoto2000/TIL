@@ -40,6 +40,13 @@ var worksheets = await g.CountExcelSheet(drive, excelFile);
 foreach (var worksheet in worksheets)
 {
   Console.WriteLine(worksheet.Name);
+  await g.InsertRows(drive, excelFile, worksheet, 1, [
+      ["No.", "氏名", "誕生日"],
+      [1, "mikoto2000", "1970-01-01"],
+      [2, "mikoto2001", "1970-01-02"],
+      [3, "mikoto2002", "1970-01-03"]
+  ]);
+  await g.UpdateRow(drive, excelFile, worksheet, 3, [3, "mikoto2003", "1970-01-04"]);
 }
 
 await g.CloseExcelSession(drive, excelFile);
