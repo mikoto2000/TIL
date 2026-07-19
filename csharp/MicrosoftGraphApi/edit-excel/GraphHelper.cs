@@ -96,6 +96,46 @@ public sealed class GraphHelper
   }
 
   /**
+   * 埋め込みテンプレートから空の Excel ファイルをドライブルートに作成する。
+   *
+   * @param drive Excel ファイルを作成するドライブ
+   * @param fileName 作成する Excel ファイル名
+   */
+  public async Task<DriveItem> CreateEmptyExcelFile(Drive drive, string fileName) {
+    if (!fileName.EndsWith(".xlsx", StringComparison.OrdinalIgnoreCase))
+    {
+      throw new ArgumentException("Excel file name must end with .xlsx", nameof(fileName));
+    }
+
+    using var resourceStream = OpenEmptyWorkbookTemplateStream();
+    using var workbookStream = new MemoryStream();
+    await resourceStream.CopyToAsync(workbookStream);
+    workbookStream.Position = 0;
+    await UploadFile(drive, fileName, workbookStream);
+
+    return await GetDriveItemByPath(drive, fileName);
+  }
+
+  private static Stream OpenEmptyWorkbookTemplateStream() {
+    var assembly = typeof(GraphHelper).Assembly;
+    var resourceName = assembly.GetManifestResourceNames()
+      .SingleOrDefault(name => name.EndsWith("empty-workbook.xlsx", StringComparison.Ordinal));
+    if (resourceName == null)
+    {
+      throw new FileNotFoundException("Embedded empty workbook template was not found.");
+    }
+
+    var stream = assembly.GetManifestResourceStream(resourceName);
+    if (stream == null)
+    {
+      throw new FileNotFoundException($"Embedded empty workbook template {resourceName} was not found.");
+    }
+
+    return stream;
+  }
+
+
+  /**
    * ドライブルートのファイルをダウンロードする。
    *
    * @param drive ダウンロードするドライブ

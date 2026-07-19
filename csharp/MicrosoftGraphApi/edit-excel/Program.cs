@@ -33,7 +33,11 @@ if (drive == null)
 }
 Console.WriteLine("ドライブ名: " + drive.Name);
 
-var excelFile = await g.GetDriveItemByPath(drive, "test.xlsx");
+// ドライブのルートに UUIDv4 名のテキストを作成
+Guid uuid = Guid.NewGuid();
+string fileName = uuid.ToString() + ".xlsx";
+await g.CreateEmptyExcelFile(drive, fileName);
+var excelFile = await g.GetDriveItemByPath(drive, fileName);
 await g.CreateExcelSession(drive, excelFile);
 
 var worksheets = await g.CountExcelSheet(drive, excelFile);
@@ -46,7 +50,7 @@ foreach (var worksheet in worksheets)
       [2, "mikoto2001", "1970-01-02"],
       [3, "mikoto2002", "1970-01-03"]
   ]);
-  await g.UpdateRow(drive, excelFile, worksheet, 3, [3, "mikoto2003", "1970-01-04"]);
+  await g.UpdateRow(drive, excelFile, worksheet, 3, ["X", "mikoto200X", "2000-12-24"]);
 }
 
 await g.CloseExcelSession(drive, excelFile);
