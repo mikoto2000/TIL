@@ -22,8 +22,17 @@ public sealed class GraphHelper
   // TODO: Map にして複数同時対応できるか確認
   private string? currentEditExcelSessionId;
 
+  /**
+   * シングルトンとして利用するため、外部からのインスタンス生成を禁止する。
+   */
   private GraphHelper() {}
 
+  /**
+   * ユーザー認証用の Graph クライアントを初期化する。
+   *
+   * @param settings Microsoft Graph 接続設定
+   * @param deviceCodePrompt デバイスコード認証時に表示するコールバック
+   */
   public static GraphHelper InitializeGraphForUserAuth(
       Settings settings,
       Func<DeviceCodeInfo, CancellationToken, Task> deviceCodePrompt)
@@ -114,6 +123,9 @@ public sealed class GraphHelper
     return await GetDriveItemByPath(drive, fileName);
   }
 
+  /**
+   * 埋め込みリソースから空の Excel ブックテンプレートを開く。
+   */
   private static Stream OpenEmptyWorkbookTemplateStream() {
     var assembly = typeof(GraphHelper).Assembly;
     var resourceName = assembly.GetManifestResourceNames()
@@ -153,6 +165,12 @@ public sealed class GraphHelper
     return fileContentStream;
   }
 
+  /**
+   * ドライブルートから指定したパスの DriveItem を取得する。
+   *
+   * @param drive Excel ファイルのあるドライブ
+   * @param fileName 取得するファイル名またはパス
+   */
   public async Task<DriveItem> GetDriveItemByPath(Drive drive, string fileName) {
     _ = userClient ??
       throw new NullReferenceException("Graph has not been initialized for user auth");
@@ -170,7 +188,7 @@ public sealed class GraphHelper
    * Excel 編集セッションを開始する。
    *
    * @param drive Excel ファイルのあるドライブ
-   * @param fileName Excel ファイル名
+   * @param driveItem Excel ファイルの DriveItem
    */
   public async Task CreateExcelSession(Drive drive, DriveItem driveItem) {
     // Ensure client isn't null
@@ -198,7 +216,7 @@ public sealed class GraphHelper
    * Excel 編集セッションを閉じる。
    *
    * @param drive Excel ファイルのあるドライブ
-   * @param fileName Excel ファイル名
+   * @param driveItem Excel ファイルの DriveItem
    */
   public async Task CloseExcelSession(Drive drive, DriveItem driveItem) {
     // Ensure client isn't null
