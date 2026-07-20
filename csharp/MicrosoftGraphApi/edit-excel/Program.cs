@@ -88,5 +88,7 @@ Console.WriteLine("Address: " + newWorksheetRange.Address);
 Console.WriteLine("Row Count: " + newWorksheetRange.RowCount);
 Console.WriteLine("Column Count: " + newWorksheetRange.ColumnCount);
 
+await g.SetRangeValues(drive, excelFile, newWorksheet, "C3", [["a", "b"],["c", "d"]]);
+
 await g.CloseExcelSession(drive, excelFile);
 

@@ -377,6 +377,59 @@ public sealed class GraphHelper
   }
 
   /**
+   * 指定したセルを始点として、二重配列で指定した値を Range に設定する。
+   *
+   * @param drive Excel ファイルのあるドライブ
+   * @param excelFile Excel ファイルの DriveItem
+   * @param worksheet 値を設定するワークシート
+   * @param startCellAddress 値を設定する Range の始点セルの A1 形式アドレス
+   * @param values 設定する値の二重配列
+   */
+  public async Task<WorkbookRange> SetRangeValues(Drive drive, DriveItem exelFile, WorkbookWorksheet worksheet, string startCellAddress, object?[][] values) {
+    _ = userClient ??
+      throw new NullReferenceException("Graph has not been initialized for user auth");
+
+    _ = exelFile.Id ??
+      throw new NullReferenceException("Drive item id cannot be null");
+
+    _ = worksheet.Id ??
+      throw new NullReferenceException("Worksheet id cannot be null");
+
+    ValidateRangeValues(values);
+
+    var rangeAddress = ToRangeAddress(startCellAddress, values.Length, values[0].Length);
+    var worksheetRequestBuilder = userClient.Drives[drive.Id].Items[exelFile.Id].Workbook.Worksheets[worksheet.Id];
+    var rangeValues = new WorkbookRange
+    {
+      Values = new UntypedArray(values.Select(row => new UntypedArray(row.Select(ToUntypedNode)))),
+    };
+
+    var requestInfo = worksheetRequestBuilder.RangeWithAddress(rangeAddress).ToGetRequestInformation(requestConfiguration =>
+    {
+      AddWorkbookSessionHeader(requestConfiguration.Headers);
+    });
+    requestInfo.HttpMethod = Method.PATCH;
+    requestInfo.SetContentFromParsable(userClient.RequestAdapter, "application/json", rangeValues);
+
+    var errorMapping = new Dictionary<string, ParsableFactory<IParsable>>
+    {
+      { "4XX", ODataError.CreateFromDiscriminatorValue },
+      { "5XX", ODataError.CreateFromDiscriminatorValue },
+    };
+
+    var updatedRange = await userClient.RequestAdapter.SendAsync(
+      requestInfo,
+      WorkbookRange.CreateFromDiscriminatorValue,
+      errorMapping);
+    if (updatedRange == null)
+    {
+      throw new NullReferenceException("Updated range is null");
+    }
+
+    return updatedRange;
+  }
+
+  /**
    * 指定したセルの値を取得する。
    *
    * @param drive Excel ファイルのあるドライブ
@@ -764,6 +817,40 @@ public sealed class GraphHelper
     }
   }
   /**
+   * Range に設定する二重配列が空でなく、すべて同じ列数であることを検証する。
+   */
+  private static void ValidateRangeValues(object?[][] values) {
+    if (values == null)
+    {
+      throw new ArgumentNullException(nameof(values));
+    }
+
+    if (values.Length == 0)
+    {
+      throw new ArgumentException("Values must contain at least one row.", nameof(values));
+    }
+
+    if (values[0] == null || values[0].Length == 0)
+    {
+      throw new ArgumentException("Values must contain at least one cell.", nameof(values));
+    }
+
+    var columnCount = values[0].Length;
+    foreach (var row in values)
+    {
+      if (row == null || row.Length == 0)
+      {
+        throw new ArgumentException("Each row must contain at least one cell.", nameof(values));
+      }
+
+      if (row.Length != columnCount)
+      {
+        throw new ArgumentException("All rows must contain the same number of cells.", nameof(values));
+      }
+    }
+  }
+
+  /**
    * Kiota の UntypedNode を通常の C# 値に変換する。
    */
   private static object? FromUntypedNode(UntypedNode node) {
@@ -805,6 +892,85 @@ public sealed class GraphHelper
     return $"A{firstRowNumber}:{ToExcelColumnName(columnCount)}{lastRowNumber}";
   }
 
+  /**
+   * 始点セルとサイズから A1 形式 Range アドレスを生成する。
+   */
+  private static string ToRangeAddress(string startCellAddress, int rowCount, int columnCount) {
+    var (firstColumnNumber, firstRowNumber) = ParseCellAddress(startCellAddress);
+    if (rowCount <= 0)
+    {
+      throw new ArgumentOutOfRangeException(nameof(rowCount), "Row count must be greater than zero.");
+    }
+
+    if (columnCount <= 0)
+    {
+      throw new ArgumentOutOfRangeException(nameof(columnCount), "Column count must be greater than zero.");
+    }
+
+    var lastColumnNumber = firstColumnNumber + columnCount - 1;
+    var lastRowNumber = firstRowNumber + rowCount - 1;
+    return $"{ToExcelColumnName(firstColumnNumber)}{firstRowNumber}:{ToExcelColumnName(lastColumnNumber)}{lastRowNumber}";
+  }
+
+  /**
+   * A1 形式の単一セルアドレスを列番号と行番号に分解する。
+   */
+  private static (int ColumnNumber, int RowNumber) ParseCellAddress(string cellAddress) {
+    if (string.IsNullOrWhiteSpace(cellAddress))
+    {
+      throw new ArgumentException("Cell address cannot be empty.", nameof(cellAddress));
+    }
+
+    var normalizedAddress = cellAddress.Trim();
+    var addressSeparatorIndex = normalizedAddress.LastIndexOf('!');
+    if (addressSeparatorIndex >= 0)
+    {
+      normalizedAddress = normalizedAddress[(addressSeparatorIndex + 1)..];
+    }
+
+    normalizedAddress = normalizedAddress.Replace("$", string.Empty).Trim().ToUpperInvariant();
+
+    var index = 0;
+    while (index < normalizedAddress.Length && normalizedAddress[index] >= 'A' && normalizedAddress[index] <= 'Z')
+    {
+      index++;
+    }
+
+    if (index == 0 || index == normalizedAddress.Length)
+    {
+      throw new ArgumentException("Cell address must be A1 format.", nameof(cellAddress));
+    }
+
+    var columnName = normalizedAddress[..index];
+    var rowText = normalizedAddress[index..];
+    if (!int.TryParse(rowText, out var rowNumber) || rowNumber <= 0)
+    {
+      throw new ArgumentException("Cell address row number must be greater than zero.", nameof(cellAddress));
+    }
+
+    return (ToExcelColumnNumber(columnName), rowNumber);
+  }
+
+  /**
+   * Excel の列名を 1 始まりの列番号に変換する。
+   */
+  private static int ToExcelColumnNumber(string columnName) {
+    var columnNumber = 0;
+    foreach (var columnChar in columnName)
+    {
+      if (columnChar < 'A' || columnChar > 'Z')
+      {
+        throw new ArgumentException("Column name must contain only A-Z.", nameof(columnName));
+      }
+
+      checked
+      {
+        columnNumber = columnNumber * 26 + columnChar - 'A' + 1;
+      }
+    }
+
+    return columnNumber;
+  }
 
 
   /**
