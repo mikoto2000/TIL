@@ -59,5 +59,7 @@ await g.UpdateRow(drive, excelFile, worksheet, 3, ["X", "mikoto200X", "2000-12-2
 var newWorksheet = await g.CreateWorksheet(drive, excelFile, "売上");
 await g.SetCellValue(drive, excelFile, newWorksheet, "B2", "設定した値だよ！");
 
+Console.WriteLine(await g.GetCellValue(drive, excelFile, newWorksheet, "B2"));
+
 await g.CloseExcelSession(drive, excelFile);
 

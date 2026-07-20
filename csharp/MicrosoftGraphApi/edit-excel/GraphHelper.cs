@@ -377,6 +377,46 @@ public sealed class GraphHelper
   }
 
   /**
+   * 指定したセルの値を取得する。
+   *
+   * @param drive Excel ファイルのあるドライブ
+   * @param excelFile Excel ファイルの DriveItem
+   * @param worksheet 値を取得するワークシート
+   * @param cellAddress 値を取得するセルの A1 形式アドレス
+   */
+  public async Task<object?> GetCellValue(Drive drive, DriveItem exelFile, WorkbookWorksheet worksheet, string cellAddress) {
+    _ = userClient ??
+      throw new NullReferenceException("Graph has not been initialized for user auth");
+
+    _ = exelFile.Id ??
+      throw new NullReferenceException("Drive item id cannot be null");
+
+    _ = worksheet.Id ??
+      throw new NullReferenceException("Worksheet id cannot be null");
+
+    if (string.IsNullOrWhiteSpace(cellAddress))
+    {
+      throw new ArgumentException("Cell address cannot be empty.", nameof(cellAddress));
+    }
+
+    var range = await userClient.Drives[drive.Id].Items[exelFile.Id].Workbook.Worksheets[worksheet.Id].RangeWithAddress(cellAddress).GetAsync(requestConfiguration =>
+    {
+      AddWorkbookSessionHeader(requestConfiguration.Headers);
+    });
+    if (range == null)
+    {
+      throw new NullReferenceException("Cell range is null");
+    }
+
+    if (range.Values is not UntypedArray rows || rows.GetValue().FirstOrDefault() is not UntypedArray firstRow)
+    {
+      return null;
+    }
+
+    return firstRow.GetValue().Select(FromUntypedNode).FirstOrDefault();
+  }
+
+  /**
    * Excel のシートに行を追加する。
    *
    * @param drive Excel ファイルのあるドライブ
@@ -629,6 +669,22 @@ public sealed class GraphHelper
         throw new ArgumentException("All rows must contain the same number of cells.", nameof(rows));
       }
     }
+  }
+  /**
+   * Kiota の UntypedNode を通常の C# 値に変換する。
+   */
+  private static object? FromUntypedNode(UntypedNode node) {
+    return node switch
+    {
+      UntypedNull => null,
+      UntypedString stringValue => stringValue.GetValue(),
+      UntypedBoolean boolValue => boolValue.GetValue(),
+      UntypedInteger intValue => intValue.GetValue(),
+      UntypedDouble doubleValue => doubleValue.GetValue(),
+      UntypedArray arrayValue => arrayValue.GetValue().Select(FromUntypedNode).ToArray(),
+      UntypedObject objectValue => objectValue.GetValue().ToDictionary(item => item.Key, item => FromUntypedNode(item.Value)),
+      _ => node.GetValue(),
+    };
   }
 
   /**
