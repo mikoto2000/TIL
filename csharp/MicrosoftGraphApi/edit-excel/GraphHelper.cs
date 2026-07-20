@@ -489,6 +489,27 @@ public sealed class GraphHelper
   }
 
   /**
+   * 指定した Range 内の全セルの値を取得する。
+   *
+   * @param drive Excel ファイルのあるドライブ
+   * @param excelFile Excel ファイルの DriveItem
+   * @param worksheet 値を取得するワークシート
+   * @param range 値を取得する Range
+   */
+  public async Task<object?[][]> GetRangeValues(Drive drive, DriveItem exelFile, WorkbookWorksheet worksheet, WorkbookRange range) {
+    var rangeAddress = range.Address ??
+      throw new NullReferenceException("Range address cannot be null");
+
+    var addressSeparatorIndex = rangeAddress.LastIndexOf('!');
+    if (addressSeparatorIndex >= 0)
+    {
+      rangeAddress = rangeAddress[(addressSeparatorIndex + 1)..];
+    }
+
+    return await GetRangeValues(drive, exelFile, worksheet, rangeAddress);
+  }
+
+  /**
    * Excel のシートに行を追加する。
    *
    * @param drive Excel ファイルのあるドライブ
