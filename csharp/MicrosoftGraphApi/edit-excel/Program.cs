@@ -61,6 +61,21 @@ Console.WriteLine("Address: " + worksheetRange.Address);
 Console.WriteLine("Row Count: " + worksheetRange.RowCount);
 Console.WriteLine("Column Count: " + worksheetRange.ColumnCount);
 
+var addressStr = worksheetRange?.Address?.Split('!')?.Last();
+
+if (addressStr == null)
+{
+  throw new Exception("addressStr が null...");
+}
+
+var values = await g.GetRangeValues(drive, excelFile, worksheet, addressStr);
+
+foreach (var row in values)
+{
+    Console.WriteLine(string.Join(", ", row));
+}
+
+
 // 新規シートを作成
 var newWorksheet = await g.CreateWorksheet(drive, excelFile, "売上");
 await g.SetCellValue(drive, excelFile, newWorksheet, "B2", "設定した値だよ！");

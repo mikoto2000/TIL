@@ -446,6 +446,49 @@ public sealed class GraphHelper
   }
 
   /**
+   * 指定した Range 内の全セルの値を取得する。
+   *
+   * @param drive Excel ファイルのあるドライブ
+   * @param excelFile Excel ファイルの DriveItem
+   * @param worksheet 値を取得するワークシート
+   * @param rangeAddress 値を取得する Range の A1 形式アドレス
+   */
+  public async Task<object?[][]> GetRangeValues(Drive drive, DriveItem exelFile, WorkbookWorksheet worksheet, string rangeAddress) {
+    _ = userClient ??
+      throw new NullReferenceException("Graph has not been initialized for user auth");
+
+    _ = exelFile.Id ??
+      throw new NullReferenceException("Drive item id cannot be null");
+
+    _ = worksheet.Id ??
+      throw new NullReferenceException("Worksheet id cannot be null");
+
+    if (string.IsNullOrWhiteSpace(rangeAddress))
+    {
+      throw new ArgumentException("Range address cannot be empty.", nameof(rangeAddress));
+    }
+
+    var range = await userClient.Drives[drive.Id].Items[exelFile.Id].Workbook.Worksheets[worksheet.Id].RangeWithAddress(rangeAddress).GetAsync(requestConfiguration =>
+    {
+      AddWorkbookSessionHeader(requestConfiguration.Headers);
+    });
+    if (range == null)
+    {
+      throw new NullReferenceException("Range is null");
+    }
+
+    if (range.Values is not UntypedArray rows)
+    {
+      return Array.Empty<object?[]>();
+    }
+
+    return rows.GetValue()
+      .OfType<UntypedArray>()
+      .Select(row => row.GetValue().Select(FromUntypedNode).ToArray())
+      .ToArray();
+  }
+
+  /**
    * Excel のシートに行を追加する。
    *
    * @param drive Excel ファイルのあるドライブ
