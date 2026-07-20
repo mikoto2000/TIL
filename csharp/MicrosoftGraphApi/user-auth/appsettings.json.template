@@ -1,0 +1,10 @@
+{
+  "settings": {
+    "clientId": "",
+    "tenantId": "",
+    "graphUserScopes": [
+      "Sites.ReadWrite.All"
+    ]
+  }
+}
+
