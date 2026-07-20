@@ -319,6 +319,64 @@ public sealed class GraphHelper
   }
 
   /**
+   * 指定したセルに値を設定する。
+   *
+   * @param drive Excel ファイルのあるドライブ
+   * @param excelFile Excel ファイルの DriveItem
+   * @param worksheet 値を設定するワークシート
+   * @param cellAddress 値を設定するセルの A1 形式アドレス
+   * @param value 設定する値
+   */
+  public async Task<WorkbookRange> SetCellValue(Drive drive, DriveItem exelFile, WorkbookWorksheet worksheet, string cellAddress, object? value) {
+    _ = userClient ??
+      throw new NullReferenceException("Graph has not been initialized for user auth");
+
+    _ = exelFile.Id ??
+      throw new NullReferenceException("Drive item id cannot be null");
+
+    _ = worksheet.Id ??
+      throw new NullReferenceException("Worksheet id cannot be null");
+
+    if (string.IsNullOrWhiteSpace(cellAddress))
+    {
+      throw new ArgumentException("Cell address cannot be empty.", nameof(cellAddress));
+    }
+
+    var worksheetRequestBuilder = userClient.Drives[drive.Id].Items[exelFile.Id].Workbook.Worksheets[worksheet.Id];
+    var values = new WorkbookRange
+    {
+      Values = new UntypedArray(new UntypedNode[]
+      {
+        new UntypedArray(new UntypedNode[] { ToUntypedNode(value) }),
+      }),
+    };
+
+    var requestInfo = worksheetRequestBuilder.RangeWithAddress(cellAddress).ToGetRequestInformation(requestConfiguration =>
+    {
+      AddWorkbookSessionHeader(requestConfiguration.Headers);
+    });
+    requestInfo.HttpMethod = Method.PATCH;
+    requestInfo.SetContentFromParsable(userClient.RequestAdapter, "application/json", values);
+
+    var errorMapping = new Dictionary<string, ParsableFactory<IParsable>>
+    {
+      { "4XX", ODataError.CreateFromDiscriminatorValue },
+      { "5XX", ODataError.CreateFromDiscriminatorValue },
+    };
+
+    var updatedRange = await userClient.RequestAdapter.SendAsync(
+      requestInfo,
+      WorkbookRange.CreateFromDiscriminatorValue,
+      errorMapping);
+    if (updatedRange == null)
+    {
+      throw new NullReferenceException("Updated range is null");
+    }
+
+    return updatedRange;
+  }
+
+  /**
    * Excel のシートに行を追加する。
    *
    * @param drive Excel ファイルのあるドライブ
