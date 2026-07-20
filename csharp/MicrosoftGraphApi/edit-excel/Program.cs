@@ -41,11 +41,11 @@ var excelFile = await g.GetDriveItemByPath(drive, fileName);
 await g.CreateExcelSession(drive, excelFile);
 
 var worksheets = await g.CountExcelSheet(drive, excelFile);
+
+// 1 シート目を「誕生日」シートとしてデータを作成
 var worksheet = worksheets[0];
 
 await g.RenameWorksheet(drive, excelFile, worksheet, "誕生日");
-
-Console.WriteLine(worksheet.Name);
 
 await g.InsertRows(drive, excelFile, worksheet, 1, [
     ["No.", "氏名", "誕生日"],
@@ -54,6 +54,9 @@ await g.InsertRows(drive, excelFile, worksheet, 1, [
     [3, "mikoto2002", "1970-01-03"]
 ]);
 await g.UpdateRow(drive, excelFile, worksheet, 3, ["X", "mikoto200X", "2000-12-24"]);
+
+// 新規シートを作成
+await g.CreateWorksheet(drive, excelFile, "売上");
 
 await g.CloseExcelSession(drive, excelFile);
 

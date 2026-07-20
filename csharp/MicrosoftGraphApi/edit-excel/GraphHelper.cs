@@ -1,4 +1,3 @@
-using Azure.Core;
 using Azure.Identity;
 
 using Microsoft.Graph;
@@ -7,7 +6,6 @@ using Microsoft.Kiota.Abstractions.Serialization;
 using Microsoft.Graph.Models.ODataErrors;
 using Microsoft.Graph.Models;
 using Microsoft.Graph.Drives.Item.Items.Item.Workbook.CreateSession;
-using Microsoft.Graph.Drives.Item.Items.Item.Workbook.CloseSession;
 
 namespace edit_excel;
 
@@ -242,6 +240,42 @@ public sealed class GraphHelper
     }
 
     return worksheets.Value;
+  }
+
+  /**
+   * Excel ブックに新しいワークシートを作成する。
+   *
+   * @param drive Excel ファイルのあるドライブ
+   * @param excelFile Excel ファイルの DriveItem
+   * @param worksheetName 作成するワークシート名
+   */
+  public async Task<WorkbookWorksheet> CreateWorksheet(Drive drive, DriveItem exelFile, string worksheetName) {
+    _ = userClient ??
+      throw new NullReferenceException("Graph has not been initialized for user auth");
+
+    _ = exelFile.Id ??
+      throw new NullReferenceException("Drive item id cannot be null");
+
+    if (string.IsNullOrWhiteSpace(worksheetName))
+    {
+      throw new ArgumentException("Worksheet name cannot be empty.", nameof(worksheetName));
+    }
+
+    var requestBody = new Microsoft.Graph.Drives.Item.Items.Item.Workbook.Worksheets.Add.AddPostRequestBody
+    {
+      Name = worksheetName,
+    };
+
+    var worksheet = await userClient.Drives[drive.Id].Items[exelFile.Id].Workbook.Worksheets.Add.PostAsync(requestBody, requestConfiguration =>
+    {
+      AddWorkbookSessionHeader(requestConfiguration.Headers);
+    });
+    if (worksheet == null)
+    {
+      throw new NullReferenceException("Created worksheet is null");
+    }
+
+    return worksheet;
   }
 
   /**
