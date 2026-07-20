@@ -33,7 +33,7 @@ if (drive == null)
 }
 Console.WriteLine("ドライブ名: " + drive.Name);
 
-// ドライブのルートに UUIDv4 名のテキストを作成
+// ドライブのルートに UUIDv4 名の Excel を作成
 Guid uuid = Guid.NewGuid();
 string fileName = uuid.ToString() + ".xlsx";
 await g.CreateEmptyExcelFile(drive, fileName);
@@ -41,17 +41,19 @@ var excelFile = await g.GetDriveItemByPath(drive, fileName);
 await g.CreateExcelSession(drive, excelFile);
 
 var worksheets = await g.CountExcelSheet(drive, excelFile);
-foreach (var worksheet in worksheets)
-{
-  Console.WriteLine(worksheet.Name);
-  await g.InsertRows(drive, excelFile, worksheet, 1, [
-      ["No.", "氏名", "誕生日"],
-      [1, "mikoto2000", "1970-01-01"],
-      [2, "mikoto2001", "1970-01-02"],
-      [3, "mikoto2002", "1970-01-03"]
-  ]);
-  await g.UpdateRow(drive, excelFile, worksheet, 3, ["X", "mikoto200X", "2000-12-24"]);
-}
+var worksheet = worksheets[0];
+
+await g.RenameWorksheet(drive, excelFile, worksheet, "誕生日");
+
+Console.WriteLine(worksheet.Name);
+
+await g.InsertRows(drive, excelFile, worksheet, 1, [
+    ["No.", "氏名", "誕生日"],
+    [1, "mikoto2000", "1970-01-01"],
+    [2, "mikoto2001", "1970-01-02"],
+    [3, "mikoto2002", "1970-01-03"]
+]);
+await g.UpdateRow(drive, excelFile, worksheet, 3, ["X", "mikoto200X", "2000-12-24"]);
 
 await g.CloseExcelSession(drive, excelFile);
 

@@ -245,6 +245,46 @@ public sealed class GraphHelper
   }
 
   /**
+   * 指定した Excel シートの名前を変更する。
+   *
+   * @param drive Excel ファイルのあるドライブ
+   * @param excelFile Excel ファイルの DriveItem
+   * @param worksheet 名前を変更するワークシート
+   * @param newName 新しいシート名
+   */
+  public async Task<WorkbookWorksheet> RenameWorksheet(Drive drive, DriveItem exelFile, WorkbookWorksheet worksheet, string newName) {
+    _ = userClient ??
+      throw new NullReferenceException("Graph has not been initialized for user auth");
+
+    _ = exelFile.Id ??
+      throw new NullReferenceException("Drive item id cannot be null");
+
+    _ = worksheet.Id ??
+      throw new NullReferenceException("Worksheet id cannot be null");
+
+    if (string.IsNullOrWhiteSpace(newName))
+    {
+      throw new ArgumentException("Worksheet name cannot be empty.", nameof(newName));
+    }
+
+    var requestBody = new WorkbookWorksheet
+    {
+      Name = newName,
+    };
+
+    var updatedWorksheet = await userClient.Drives[drive.Id].Items[exelFile.Id].Workbook.Worksheets[worksheet.Id].PatchAsync(requestBody, requestConfiguration =>
+    {
+      AddWorkbookSessionHeader(requestConfiguration.Headers);
+    });
+    if (updatedWorksheet == null)
+    {
+      throw new NullReferenceException("Updated worksheet is null");
+    }
+
+    return updatedWorksheet;
+  }
+
+  /**
    * Excel のシートに行を追加する。
    *
    * @param drive Excel ファイルのあるドライブ
