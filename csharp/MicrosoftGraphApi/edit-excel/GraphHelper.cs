@@ -417,6 +417,35 @@ public sealed class GraphHelper
   }
 
   /**
+   * 指定したワークシートの有効な Range を取得する。
+   *
+   * @param drive Excel ファイルのあるドライブ
+   * @param excelFile Excel ファイルの DriveItem
+   * @param worksheet 有効な Range を取得するワークシート
+   */
+  public async Task<WorkbookRange> GetUsedRange(Drive drive, DriveItem exelFile, WorkbookWorksheet worksheet) {
+    _ = userClient ??
+      throw new NullReferenceException("Graph has not been initialized for user auth");
+
+    _ = exelFile.Id ??
+      throw new NullReferenceException("Drive item id cannot be null");
+
+    _ = worksheet.Id ??
+      throw new NullReferenceException("Worksheet id cannot be null");
+
+    var usedRange = await userClient.Drives[drive.Id].Items[exelFile.Id].Workbook.Worksheets[worksheet.Id].UsedRange.GetAsync(requestConfiguration =>
+    {
+      AddWorkbookSessionHeader(requestConfiguration.Headers);
+    });
+    if (usedRange == null)
+    {
+      throw new NullReferenceException("Used range is null");
+    }
+
+    return usedRange;
+  }
+
+  /**
    * Excel のシートに行を追加する。
    *
    * @param drive Excel ファイルのあるドライブ

@@ -55,11 +55,23 @@ await g.InsertRows(drive, excelFile, worksheet, 1, [
 ]);
 await g.UpdateRow(drive, excelFile, worksheet, 3, ["X", "mikoto200X", "2000-12-24"]);
 
+var worksheetRange = await g.GetUsedRange(drive, excelFile, worksheet);
+
+Console.WriteLine("Address: " + worksheetRange.Address);
+Console.WriteLine("Row Count: " + worksheetRange.RowCount);
+Console.WriteLine("Column Count: " + worksheetRange.ColumnCount);
+
 // 新規シートを作成
 var newWorksheet = await g.CreateWorksheet(drive, excelFile, "売上");
 await g.SetCellValue(drive, excelFile, newWorksheet, "B2", "設定した値だよ！");
 
 Console.WriteLine(await g.GetCellValue(drive, excelFile, newWorksheet, "B2"));
+
+var newWorksheetRange = await g.GetUsedRange(drive, excelFile, newWorksheet);
+
+Console.WriteLine("Address: " + newWorksheetRange.Address);
+Console.WriteLine("Row Count: " + newWorksheetRange.RowCount);
+Console.WriteLine("Column Count: " + newWorksheetRange.ColumnCount);
 
 await g.CloseExcelSession(drive, excelFile);
 
